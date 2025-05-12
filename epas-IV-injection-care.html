@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>靜脈注射照護-專業可信賴活動即時評量表</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .feedback-options {
+      display: block;
+    }
+    .feedback-button {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    .left-align {
+      text-align: left;
+    }
+    @media print {
+      .feedback-options,
+      .button-container {
+        display: none;
+      }
+      input[type="date"],
+      input[type="text"],
+      input[type="checkbox"],
+      textarea {
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        width: auto;
+        overflow: hidden;
+      }
+      input[type="date"] {
+        width: 150px;
+      }
+      input[type="text"] {
+        width: 100px;
+      }
+      textarea {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>靜脈注射照護-專業可信賴活動即時評量表</h2>
+
+<div class="button-container">
+  <button onclick="updateTitleAndPrint()">列印/另存PDF</button>
+</div>
+
+<table>
+  <tr>
+    <td colspan="7">
+      日期: <input type="date" id="date"> 學員: <input type="text" id="student"> 
+        教師: <input type="text" id="teacher"> 
+    </td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align"><b>主題:</b> 靜脈注射照護</td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align">
+      <b>任務描述:</b> 
+      護理師執行常規給藥、臨時給藥及管制用藥，如下:
+      <ol>
+        <li>進行醫囑確認-靜脈輸液</li>
+        <li>靜脈注射用物準備</li>
+        <li>進行病人確認、說明目的及取得同意</li>
+        <li>選擇合適的靜脈注射部位</li>
+        <li>依無菌原則執行皮膚消毒</li>
+        <li>建立靜脈輸液管路及調整流速</li>
+        <li>運用固定板固定 (限兒科)</li>
+        <li>進行衛教指導</li>
+      </ol>
+      限制: 急救時建立靜脈輸液管路
+    </td>
+  </tr>
+  <tr>
+    <th>信賴等級(Level)評估</th>
+    <th>I.學習者在旁觀察</th>
+    <th>II.教師直接觀察</th>
+    <th>III.教師間接觀察</th>
+    <th>IV.可獨立執行</th>
+    <th>V.可對他人進行教學</th>
+  </tr>
+  <tr>
+    <td>整體評估</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+ 
+  <tr>
+    <td colspan="7"><b>質性回饋</b></td>
+  </tr>
+  <tr>
+    <td colspan="7"><textarea id="feedback" rows="5" cols="80"></textarea></td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="7">
+       <h3>一、正面開始：</h3>
+      <button class="feedback-button" onclick="addFeedback('準備充分：我注意到你在進行靜脈注射前，仔細確認醫囑並準備好所有用物，展現出你的細心和專業。')">準備充分：我注意到你在進行靜脈注射前，仔細確認醫囑並準備好所有用物，展現出你的細心和專業。</button>
+      <button class="feedback-button" onclick="addFeedback('溝通良好：你在與病人溝通時，能清楚說明注射目的，並耐心解答病人的疑問，取得有效的知情同意。')">溝通良好：你在與病人溝通時，能清楚說明注射目的，並耐心解答病人的疑問，取得有效的知情同意。</button>
+      <button class="feedback-button" onclick="addFeedback('技術熟練：你選擇靜脈注射部位的技巧純熟，並能依無菌原則進行皮膚消毒，操作過程流暢，減少了病人的不適感。')">技術熟練：你選擇靜脈注射部位的技巧純熟，並能依無菌原則進行皮膚消毒，操作過程流暢，減少了病人的不適感。</button>
+      <button class="feedback-button" onclick="addFeedback('觀察入微：你在建立靜脈輸液管路後，會仔細觀察注射部位，並根據病人狀況調整流速，展現出你對病人安全的重視。')">觀察入微：你在建立靜脈輸液管路後，會仔細觀察注射部位，並根據病人狀況調整流速，展現出你對病人安全的重視。</button>
+      <button class="feedback-button" onclick="addFeedback('安全意識高：你能正確使用固定板固定靜脈輸液管路，避免針頭滑脫，確保兒童病人的安全。')">安全意識高：你能正確使用固定板固定靜脈輸液管路，避免針頭滑脫，確保兒童病人的安全。</button>
+      <button class="feedback-button" onclick="addFeedback('衛教清晰：你提供的衛教指導清晰易懂，幫助病人瞭解靜脈注射過程中需要注意的事項。')">衛教清晰：你提供的衛教指導清晰易懂，幫助病人瞭解靜脈注射過程中需要注意的事項。</button>
+      <button class="feedback-button" onclick="addFeedback('態度親切：你在整個靜脈注射過程中，始終保持親切的態度，讓病人感到安心和舒適。')">態度親切：你在整個靜脈注射過程中，始終保持親切的態度，讓病人感到安心和舒適。</button>
+      <button class="feedback-button" onclick="addFeedback('持續學習：你能積極參與相關的繼續教育，不斷精進自己的靜脈注射技術和知識。')">持續學習：你能積極參與相關的繼續教育，不斷精進自己的靜脈注射技術和知識。</button>
+      <button class="feedback-button" onclick="addFeedback('具備護理專業精神：你的表現展現出專業護理師應有的態度和素養，值得肯定。')">具備護理專業精神：你的表現展現出專業護理師應有的態度和素養，值得肯定。</button>
+    </td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="7">
+      <h3>二、建設性批評：</h3>
+      <button class="feedback-button" onclick="addFeedback('醫囑確認：建議在確認靜脈輸液醫囑時，可以口頭複誦一次藥物名稱、劑量、濃度、途徑和時間，確保理解無誤。')">醫囑確認：建議在確認靜脈輸液醫囑時，可以口頭複誦一次藥物名稱、劑量、濃度、途徑和時間，確保理解無誤。</button>
+      <button class="feedback-button" onclick="addFeedback('靜脈選擇：可以嘗試瞭解常使用靜脈的解剖位置，更容易找到合適的靜脈。')">靜脈選擇：可以嘗試瞭解常使用靜脈的解剖位置，更容易找到合適的靜脈。</button>
+      <button class="feedback-button" onclick="addFeedback('無菌操作：可以更加注意無菌操作的細節，例如避免觸碰針頭、消毒棉棒使用一次性等，降低感染風險。')">無菌操作：可以更加注意無菌操作的細節，例如避免觸碰針頭、消毒棉棒使用一次性等，降低感染風險。</button>
+      <button class="feedback-button" onclick="addFeedback('輸液速度調整：可以根據病人的實際狀況和藥物特性，更靈活地調整輸液速度。')">輸液速度調整：可以根據病人的實際狀況和藥物特性，更靈活地調整輸液速度。</button>
+      <button class="feedback-button" onclick="addFeedback('注射部位觀察：可以建立規律的注射部位觀察，並詳細記錄觀察結果，以便及早發現問題。')">注射部位觀察：可以建立規律的注射部位觀察，並詳細記錄觀察結果，以便及早發現問題。</button>
+      <button class="feedback-button" onclick="addFeedback('應變能力：當遇到突發狀況時，例如針頭滑脫或病人出現過敏反應，可以試著依照標準流程處理，並及時通知醫師。')">應變能力：當遇到突發狀況時，例如針頭滑脫或病人出現過敏反應，可以試著依照標準流程處理，並及時通知醫師。</button>
+      <button class="feedback-button" onclick="addFeedback('病人舒適度：可以嘗試使用一些方法減輕病人在注射過程中的不適感，例如固定針頭角度，不要反覆調整角度等。')">病人舒適度：可以嘗試使用一些方法減輕病人在注射過程中的不適感，例如固定針頭角度，不要反覆調整角度等。</button>
+      <button class="feedback-button" onclick="addFeedback('自我反思：每次執行完靜脈注射照護後，可以花些時間自我反思，思考還有哪些地方可以做得更好。')">自我反思：每次執行完靜脈注射照護後，可以花些時間自我反思，思考還有哪些地方可以做得更好。</button>
+      <button class="feedback-button" onclick="addFeedback('模擬練習：可以利用模擬情境練習靜脈注射技術，提升操作熟練度和應變能力。')">模擬練習：可以利用模擬情境練習靜脈注射技術，提升操作熟練度和應變能力。</button>
+      <button class="feedback-button" onclick="addFeedback('文獻查閱：建議查閱的靜脈注射治療指引，加強自己的知識和技能。')">文獻查閱：建議查閱的靜脈注射治療指引，加強自己的知識和技能。</button>
+    </td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="7">
+      <h3>三、正面結束：</h3>
+<button class="feedback-button" onclick="addFeedback('肯定與鼓勵：你在靜脈注射照護方面展現出專業的能力，相信你會持續進步，成為更優秀的護理人員。')">肯定與鼓勵：你在靜脈注射照護方面展現出專業的能力，相信你會持續進步，成為更優秀的護理人員。</button>
+      <button class="feedback-button" onclick="addFeedback('展現信心：繼續保持積極的學習態度，並勇於接受挑戰，你一定能在護理專業上發光發熱。')">展現信心：繼續保持積極的學習態度，並勇於接受挑戰，你一定能在護理專業上發光發熱。</button>
+      <button class="feedback-button" onclick="addFeedback('提供支援：如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。')">提供支援：如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。</button>
+      <button class="feedback-button" onclick="addFeedback('強調價值：你的付出和努力對病人來說非常重要，感謝你為病人提供的優質照護。')">強調價值：你的付出和努力對病人來說非常重要，感謝你為病人提供的優質照護。</button>
+      <button class="feedback-button" onclick="addFeedback('展望未來：我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。')">展望未來：我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。</button>
+      <button class="feedback-button" onclick="addFeedback('設定目標：我們可以一起設定一些目標，例如學習新的靜脈注射技術或加強應變能力，幫助你持續進步。')">設定目標：我們可以一起設定一些目標，例如學習新的靜脈注射技術或加強應變能力，幫助你持續進步。</button>
+      <button class="feedback-button" onclick="addFeedback('正向回饋：我會將你的優點和進步回饋給你的主管，讓他們也能夠肯定你的努力。')">正向回饋：我會將你的優點和進步回饋給你的主管，讓他們也能夠肯定你的努力。</button>
+      <button class="feedback-button" onclick="addFeedback('建立連結：護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。')">建立連結：護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。</button>
+      <button class="feedback-button" onclick="addFeedback('共同成長：我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。')">共同成長：我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。</button>
+      <button class="feedback-button" onclick="addFeedback('感謝付出：感謝你對護理工作的熱忱和付出，你熟練的靜脈注射技術和細心的照護，為病人提供了安全又舒適的治療體驗。')">感謝付出：感謝你對護理工作的熱忱和付出，你熟練的靜脈注射技術和細心的照護，為病人提供了安全又舒適的治療體驗。</button>
+    </td>
+  </tr>
+</table>
+
+<script>
+  function addFeedback(text) {
+    var feedbackField = document.getElementById('feedback');
+    feedbackField.value += (feedbackField.value ? '\n' : '') + text;
+  }
+
+  function updateTitleAndPrint() {
+    var date = document.getElementById('date').value;
+    var student = document.getElementById('student').value;
+    var topic = "口服給藥照護"; // 如果有多個主題，這裡應根據選擇設置
+    document.title = "口服給藥照護-專業可信賴活動即時評量表-" + student + "-" + date;
+    window.print();
+  }
+</script>
+
+</body>
+</html>
