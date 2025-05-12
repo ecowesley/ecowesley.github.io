@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>口服給藥照護-專業可信賴活動即時評量表</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .feedback-options {
+      display: block;
+    }
+    .feedback-button {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+          }
+    .left-align {
+      text-align: left;
+    }
+    @media print {
+      .feedback-options,
+      .button-container {
+        display: none;
+      }
+      input[type="date"],
+      input[type="text"],
+      input[type="checkbox"],
+      textarea {
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        width: auto;
+        overflow: hidden;
+      }
+      input[type="date"] {
+        width: 150px;
+      }
+      input[type="text"] {
+        width: 100px;
+      }
+      textarea {
+        width: 100%;
+      }
+    }
+    @media screen and (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border: none;
+      }
+      th {
+        background-color: transparent;
+      }
+      tr {
+        border: 1px solid black;
+        margin-bottom: 10px;
+      }
+      td {
+        border-bottom: 1px solid black;
+      }
+      td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 150px;
+      }
+      .button-container {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>口服給藥照護-專業可信賴活動即時評量表</h2>
+
+<div class="button-container">
+  <button onclick="updateTitleAndPrint()">列印/另存PDF</button>
+</div>
+
+<table>
+  <tr>
+    <td colspan="7">
+      日期: <input type="date" id="date"> 學員: <input type="text" id="student"> 
+      教師: <input type="text" id="teacher"> 
+    </td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align"><b>主題:</b> 口服給藥照護</td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align">
+      <b>任務描述:</b> 
+      護理師執行常規給藥、臨時給藥及管制用藥，如下:
+      <ol>
+        <li>進行醫囑確認</li>
+        <li>給藥前評估(生命徵象、藥物過敏史、疼痛評估、檢驗報告…)</li>
+        <li>進行病人確認</li>
+        <li>說明給藥作用、副作用及注意事項</li>
+        <li>執行三讀五對</li>
+        <li>雙重核對藥物(限管制藥物)</li>
+        <li>給藥後30-60分鐘後追蹤用藥反應(限臨時醫囑給藥)</li>
+        <li>完成給藥資訊化作業</li>
+      </ol>
+      限制: 急救時給藥、化療給藥
+    </td>
+  </tr>
+  <tr>
+    <th data-label="信賴等級(Level)評估">信賴等級(Level)評估</th>
+    <th data-label="I.學習者在旁觀察">I.學習者在旁觀察</th>
+    <th data-label="II.教師直接觀察">II.教師直接觀察</th>
+    <th data-label="III.教師間接觀察">III.教師間接觀察</th>
+    <th data-label="IV.可獨立執行">IV.可獨立執行</th>
+    <th data-label="V.可對他人進行教學">V.可對他人進行教學</th>
+  </tr>
+  <tr>
+    <td data-label="整體評估">整體評估</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+  <tr>
+    <td colspan="7"><b>質性回饋</b></td>
+  </tr>
+  <tr>
+    <td colspan="7"><textarea id="feedback" rows="5" cols="80"></textarea></td>
+  </tr>
+   <tr class="feedback-options">
+    <td colspan="8">
+      <h3>一、正面開始：</h3>
+      <button class="feedback-button" onclick="addFeedback('觀察入微：我觀察到你能夠非常準確地進行病人確認，這是非常重要的。')">觀察入微：我觀察到你能夠非常準確地進行病人確認，這是非常重要的。</button>
+      <button class="feedback-button" onclick="addFeedback('我注意到你執行三讀五對和病人確認時非常仔細。')">我注意到你執行三讀五對和病人確認時非常仔細。</button>
+      <button class="feedback-button" onclick="addFeedback('技巧純熟：你的給藥技術很熟練，操作過程流暢，展現出專業的態度。')">技巧純熟：你的給藥技術很熟練，操作過程流暢，展現出專業的態度。</button>
+      <button class="feedback-button" onclick="addFeedback('病人互動佳：你在與病人溝通時很有耐心，清楚向病人解釋給藥的作用和可能的副作用，並關心病人的感受。')">病人互動佳：你在與病人溝通時很有耐心，清楚向病人解釋給藥的作用和可能的副作用，並關心病人的感受。</button>
+      <button class="feedback-button" onclick="addFeedback('語氣溫和：你在給病人講解藥物使用注意事項時，語氣溫和，病人很容易接受。')">語氣溫和：你在給病人講解藥物使用注意事項時，語氣溫和，病人很容易接受。</button>
+      <button class="feedback-button" onclick="addFeedback('資訊掌握完整：你在給藥前能確實掌握病人的相關資訊，例如過敏史、檢驗報告等，展現出你的細心。')">資訊掌握完整：你在給藥前能確實掌握病人的相關資訊，例如過敏史、檢驗報告等，展現出你的細心。</button>
+      <button class="feedback-button" onclick="addFeedback('安全意識高：你對於管制藥物的雙重核對程式執行確實，展現出你對病人安全的重視。')">安全意識高：你對於管制藥物的雙重核對程式執行確實，展現出你對病人安全的重視。</button>
+      <button class="feedback-button" onclick="addFeedback('主動積極：你在給藥後會主動追蹤病人的用藥反應，並詳細記錄，展現出你對病人負責任的態度。')">主動積極：你在給藥後會主動追蹤病人的用藥反應，並詳細記錄，展現出你對病人負責任的態度。</button>
+      <button class="feedback-button" onclick="addFeedback('資訊化作業熟練：你能夠熟練地完成給藥資訊化作業，展現出你對科技的應用能力。')">資訊化作業熟練：你能夠熟練地完成給藥資訊化作業，展現出你對科技的應用能力。</button>
+      <button class="feedback-button" onclick="addFeedback('持續學習：你積極查詢藥物相關資訊，不斷精進自己的專業知識和技能。')">持續學習：你積極查詢藥物相關資訊，不斷精進自己的專業知識和技能。</button>
+      <button class="feedback-button" onclick="addFeedback('具備護理專業精神：你的表現展現出專業護理師應有的態度和素養，值得肯定。')">具備護理專業精神：你的表現展現出專業護理師應有的態度和素養，值得肯定。</button>
+    </td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="8">
+      <h3>二、建設性批評：</h3>
+      <button class="feedback-button" onclick="addFeedback('醫囑確認：建議在確認醫囑時，可以口頭複誦一次給藥途徑和頻率，確保理解無誤。')">醫囑確認：建議在確認醫囑時，可以口頭複誦一次給藥途徑和頻率，確保理解無誤。</button>
+      <button class="feedback-button" onclick="addFeedback('給藥前評估：雖然你已完成大部分評估，但可以考慮在給藥前詢問病人是否有任何主觀不適，例如噁心、頭暈等。')">給藥前評估：雖然你已完成大部分評估，但可以考慮在給藥前詢問病人是否有任何主觀不適，例如噁心、頭暈等。</button>
+      <button class="feedback-button" onclick="addFeedback('病人確認：建議在進行病人確認時，除了姓名之外，也可以詢問病人出生年月日，更加確保病人身份。')">病人確認：建議在進行病人確認時，除了姓名之外，也可以詢問病人出生年月日，更加確保病人身份。</button>
+      <button class="feedback-button" onclick="addFeedback('說明藥物資訊：可以嘗試用更簡潔易懂的語言向病人說明藥物作用和副作用，並鼓勵病人提出問題。')">說明藥物資訊：可以嘗試用更簡潔易懂的語言向病人說明藥物作用和副作用，並鼓勵病人提出問題。</button>
+      <button class="feedback-button" onclick="addFeedback('給藥後追蹤：建議詳細記錄給藥後病人的主訴和客觀觀察結果，以便後續評估用藥效果。')">給藥後追蹤：建議詳細記錄給藥後病人的主訴和客觀觀察結果，以便後續評估用藥效果。</button>
+      <button class="feedback-button" onclick="addFeedback('時間掌握：可以試著調整給藥流程，盡量在預計時間內完成給藥，避免延誤。')">時間掌握：可以試著調整給藥流程，盡量在預計時間內完成給藥，避免延誤。</button>
+      <button class="feedback-button" onclick="addFeedback('應變能力：當遇到突發狀況時，例如病人拒絕服藥，可以試著先瞭解原因，並尋求適當的解決方案。')">應變能力：當遇到突發狀況時，例如病人拒絕服藥，可以試著先瞭解原因，並尋求適當的解決方案。</button>
+      <button class="feedback-button" onclick="addFeedback('批判性思考：可以試著多思考藥物的作用機轉和可能的副作用，並將其應用於臨床照護中。')">批判性思考：可以試著多思考藥物的作用機轉和可能的副作用，並將其應用於臨床照護中。</button>
+      <button class="feedback-button" onclick="addFeedback('文件記錄：建議在檔記錄上更加詳細、具體地描述你的評估和處置措施。')">文件記錄：建議在檔記錄上更加詳細、具體地描述你的評估和處置措施。</button>
+      <button class="feedback-button" onclick="addFeedback('自我反思：每次執行完給藥照護後，可以花些時間自我反思，思考還有哪些地方可以做得更好。')">自我反思：每次執行完給藥照護後，可以花些時間自我反思，思考還有哪些地方可以做得更好。</button>
+    </td>
+    </tr>
+    <tr class="feedback-options">
+    <td colspan="8">
+    <h3>三、正面結束：</h3>
+      <button class="feedback-button" onclick="addFeedback('肯定與鼓勵：你展現出作為一位護理師的專業能力，我相信你會持續進步，成為更優秀的護理人員。')">肯定與鼓勵：你展現出作為一位護理師的專業能力，我相信你會持續進步，成為更優秀的護理人員。</button>
+      <button class="feedback-button" onclick="addFeedback('展現信心：繼續保持積極的學習態度，並勇於接受挑戰，你一定能在護理專業上發光發熱。')">展現信心：繼續保持積極的學習態度，並勇於接受挑戰，你一定能在護理專業上發光發熱。</button>
+      <button class="feedback-button" onclick="addFeedback('提供支援：如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。')">提供支援：如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。</button>
+      <button class="feedback-button" onclick="addFeedback('強調價值：你的付出和努力對病人來說非常重要，感謝你為病人提供的優質照護。')">強調價值：你的付出和努力對病人來說非常重要，感謝你為病人提供的優質照護。</button>
+      <button class="feedback-button" onclick="addFeedback('展望未來：我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。')">展望未來：我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。</button>
+      <button class="feedback-button" onclick="addFeedback('設定目標：我們可以一起設定一些目標，例如學習新的給藥技巧或加強病人溝通技巧，幫助你持續進步。')">設定目標：我們可以一起設定一些目標，例如學習新的給藥技巧或加強病人溝通技巧，幫助你持續進步。</button>
+      <button class="feedback-button" onclick="addFeedback('正向回饋：我會將你的優點和進步回饋給你的主管，讓他們也能夠肯定你的努力。')">正向回饋：我會將你的優點和進步回饋給你的主管，讓他們也能夠肯定你的努力。</button>
+      <button class="feedback-button" onclick="addFeedback('建立連結：護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。')">建立連結：護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。</button>
+      <button class="feedback-button" onclick="addFeedback('共同成長：我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。')">共同成長：我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。</button>
+      <button class="feedback-button" onclick="addFeedback('感謝付出：感謝你對護理工作的熱忱和付出，你是團隊中不可或缺的一份子。')">感謝付出：感謝你對護理工作的熱忱和付出，你是團隊中不可或缺的一份子。</button>
+</td>
+  </tr>
+</table>
+
+<script>
+  function addFeedback(text) {
+    var feedbackField = document.getElementById('feedback');
+    feedbackField.value += (feedbackField.value ? '\n' : '') + text;
+  }
+
+  function updateTitleAndPrint() {
+    var date = document.getElementById('date').value;
+    var student = document.getElementById('student').value;
+    var topic = "口服給藥照護"; // 如果有多個主題，這裡應根據選擇設置
+    document.title = "口服給藥照護-專業可信賴活動即時評量表-" + student + "-" + date;
+    window.print();
+  }
+</script>
+
+</body>
+</html>
