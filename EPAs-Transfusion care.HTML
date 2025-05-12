@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>輸血照護-專業可信賴活動即時評量表</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .feedback-options {
+      display: block;
+    }
+    .feedback-button {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    .left-align {
+      text-align: left;
+    }
+    @media print {
+      .feedback-options,
+      .button-container {
+        display: none;
+      }
+      input[type="date"],
+      input[type="text"],
+      input[type="checkbox"],
+      textarea {
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        width: auto;
+        overflow: hidden;
+      }
+      input[type="date"] {
+        width: 150px;
+      }
+      input[type="text"] {
+        width: 100px;
+      }
+      textarea {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>輸血照護-專業可信賴活動即時評量表</h2>
+
+<div class="button-container">
+  <button onclick="updateTitleAndPrint()">列印/另存PDF</button>
+</div>
+
+<table>
+  <tr>
+    <td colspan="7">
+      日期: <input type="date" id="date"> 學員: <input type="text" id="student"> 
+        教師: <input type="text" id="teacher"> 
+    </td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align"><b>主題:</b> 輸血照護</td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align">
+      <b>任務描述:</b> 
+      醫囑開立輸血醫囑，執行輸血相關事項:
+      <ol>
+        <li>進行醫囑確認</li>
+        <li>核對血袋血品及病人確認(雙人核對)</li>
+        <li>輸血前評估(測量生命徵象及血壓)</li>
+        <li>說明輸血目的及取得同意</li>
+        <li>建立輸血管路</li>
+        <li>進行輸血</li>
+        <li>
+          最初 10-15 分鐘，流速不超過20滴/分
+          <br>
+          在輸血 15 分鐘後測量生命徵象及血壓，若無輸血反應，流速可調整至60-80滴/分，但老人及心臟病患輸血速度宜緩慢，流速為40-60滴/分
+        </li>
+        <li>給予衛教指導</li>
+        <li>進行輸血反應評估</li>
+        <li>輸血紀錄</li>
+      </ol>
+      限制: 無
+    </td>
+  </tr>
+  <tr>
+    <th>信賴等級(Level)評估</th>
+    <th>I.學習者在旁觀察</th>
+    <th>II.教師直接觀察</th>
+    <th>III.教師間接觀察</th>
+    <th>IV.可獨立執行</th>
+    <th>V.可對他人進行教學</th>
+  </tr>
+  <tr>
+    <td>整體評估</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+ 
+  <tr>
+    <td colspan="7"><b>4. 質性回饋</b></td>
+  </tr>
+  <tr>
+    <td colspan="7"><textarea id="feedback" rows="5" cols="80"></textarea></td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="7">
+     <h3>一、正面：</h3>
+      <button class="feedback-button" onclick="addFeedback('謹慎小心：我注意到你在核對血袋血品和病人確認時非常謹慎，嚴格執行雙人核對，確保輸血安全。')">謹慎小心：我注意到你在核對血袋血品和病人確認時非常謹慎，嚴格執行雙人核對，確保輸血安全。</button>
+      <button class="feedback-button" onclick="addFeedback('評估完整：你在輸血前進行了詳細的生命徵象和血壓評估，展現出你對病人狀況的掌握。')">評估完整：你在輸血前進行了詳細的生命徵象和血壓評估，展現出你對病人狀況的掌握。</button>
+      <button class="feedback-button" onclick="addFeedback('溝通良好：你在說明輸血目的時，使用病人能理解的語言，並耐心解答病人的疑問，取得有效的知情同意。')">溝通良好：你在說明輸血目的時，使用病人能理解的語言，並耐心解答病人的疑問，取得有效的知情同意。</button>
+      <button class="feedback-button" onclick="addFeedback('技術熟練：你建立輸血管路的技術純熟，操作過程流暢，減少了病人的不適感。')">技術熟練：你建立輸血管路的技術純熟，操作過程流暢，減少了病人的不適感。</button>
+      <button class="feedback-button" onclick="addFeedback('安全至上：你確實掌握輸血初期流速，並在觀察期間密切監測病人的反應，展現出你對病人安全的重視。')">安全至上：你確實掌握輸血初期流速，並在觀察期間密切監測病人的反應，展現出你對病人安全的重視。</button>
+      <button class="feedback-button" onclick="addFeedback('個別化照護：你能根據病人的年齡和身體狀況調整輸血速度，提供個別化的照護。')">個別化照護：你能根據病人的年齡和身體狀況調整輸血速度，提供個別化的照護。</button>
+      <button class="feedback-button" onclick="addFeedback('衛教清晰：你提供的衛教指導清晰易懂，幫助病人瞭解輸血過程中需要注意的事項。')">衛教清晰：你提供的衛教指導清晰易懂，幫助病人瞭解輸血過程中需要注意的事項。</button>
+      <button class="feedback-button" onclick="addFeedback('觀察敏銳：你能密切觀察病人的輸血反應，並準確評估及記錄相關症狀。')">觀察敏銳：你能密切觀察病人的輸血反應，並準確評估及記錄相關症狀。</button>
+      <button class="feedback-button" onclick="addFeedback('檔完整：你完整地記錄了輸血過程中的各項數據和觀察結果，方便後續查閱和追蹤。')">檔完整：你完整地記錄了輸血過程中的各項數據和觀察結果，方便後續查閱和追蹤。</button>
+      <button class="feedback-button" onclick="addFeedback('專業負責：你的表現展現出專業護理師應有的態度和素養，令人安心。')">專業負責：你的表現展現出專業護理師應有的態度和素養，令人安心。</button>
+    </td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="7">
+      <h3>二、建設性批評：</h3>
+      <button class="feedback-button" onclick="addFeedback('醫囑確認：建議在確認輸血醫囑時，可以口頭複誦一次血品種類、單位數和輸注時間，確保理解無誤。')">醫囑確認：建議在確認輸血醫囑時，可以口頭複誦一次血品種類、單位數和輸注時間，確保理解無誤。</button>
+      <button class="feedback-button" onclick="addFeedback('輸血前評估：除了生命徵象和血壓，可以考慮在輸血前詢問病人是否有任何主觀不適，例如寒顫、發熱等。')">輸血前評估：除了生命徵象和血壓，可以考慮在輸血前詢問病人是否有任何主觀不適，例如寒顫、發熱等。</button>
+      <button class="feedback-button" onclick="addFeedback('病人確認：建議在進行病人確認時，除了姓名之外，也可以詢問病人出生年月日或身分證字號，更加確保病人身份。')">病人確認：建議在進行病人確認時，除了姓名之外，也可以詢問病人出生年月日或身分證字號，更加確保病人身份。</button>
+      <button class="feedback-button" onclick="addFeedback('說明輸血目的：可以嘗試用簡單的言語，更生動地向病人說明輸血的目的和流程。')">說明輸血目的：可以嘗試用簡單的言語，更生動地向病人說明輸血的目的和流程。</button>
+      <button class="feedback-button" onclick="addFeedback('輸血速度調整：可以根據病人的實際狀況和輸血反應，更靈活地調整輸血速度。')">輸血速度調整：可以根據病人的實際狀況和輸血反應，更靈活地調整輸血速度。</button>
+      <button class="feedback-button" onclick="addFeedback('衛教內容：可以考慮在衛教內容中加入輸血可能出現的副作用，以及如何應對。')">衛教內容：可以考慮在衛教內容中加入輸血可能出現的副作用，以及如何應對。</button>
+      <button class="feedback-button" onclick="addFeedback('應變能力： 當遇到突發狀況時，例如懷疑病人出現輸血反應，可以試著依照標準流程處理，並及時通知醫師。')">應變能力： 當遇到突發狀況時，例如懷疑病人出現輸血反應，可以試著依照標準流程處理，並及時通知醫師。</button>
+      <button class="feedback-button" onclick="addFeedback('自我反思：每次執行完輸血照護後，可以花些時間自我反思，思考還有哪些地方可以做得更好。')">自我反思：每次執行完輸血照護後，可以花些時間自我反思，思考還有哪些地方可以做得更好。</button>
+      <button class="feedback-button" onclick="addFeedback('持續學習： 建議持續關注輸血治療的最新進展，並積極參與相關的繼續教育課程，不斷提升自己的專業技能。')">持續學習： 建議持續關注輸血治療的最新進展，並積極參與相關的繼續教育課程，不斷提升自己的專業技能。</button>
+    </td>
+  </tr>
+  <tr class="feedback-options">
+    <td colspan="7">
+      <h3>三、正面結束：</h3>
+<button class="feedback-button" onclick="addFeedback('肯定與鼓勵：你在輸血照護方面展現出專業的能力，相信你會持續進步，成為更優秀的護理人員。')">肯定與鼓勵：你在輸血照護方面展現出專業的能力，相信你會持續進步，成為更優秀的護理人員。</button>
+      <button class="feedback-button" onclick="addFeedback('展現信心：繼續保持積極的學習態度，並勇於接受挑戰，你一定能在護理專業上發光發熱。')">展現信心：繼續保持積極的學習態度，並勇於接受挑戰，你一定能在護理專業上發光發熱。</button>
+      <button class="feedback-button" onclick="addFeedback('提供支援： 如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。')">提供支援： 如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。</button>
+      <button class="feedback-button" onclick="addFeedback('強調價值： 你的付出和努力對病人來說非常重要，感謝你為病人提供的優質照護。')">強調價值： 你的付出和努力對病人來說非常重要，感謝你為病人提供的優質照護。</button>
+      <button class="feedback-button" onclick="addFeedback('展望未來： 我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。')">展望未來： 我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。</button>
+      <button class="feedback-button" onclick="addFeedback('設定目標：我們可以一起設定一些目標，例如學習新的輸血技術或加強輸血反應的處理，幫助你持續進步。')">設定目標：我們可以一起設定一些目標，例如學習新的輸血技術或加強輸血反應的處理，幫助你持續進步。</button>
+      <button class="feedback-button" onclick="addFeedback('正向回饋： 我會將你的優點和進步回饋給你的主管，讓他們也能夠肯定你的努力。')">正向回饋： 我會將你的優點和進步回饋給你的主管，讓他們也能夠肯定你的努力。</button>
+      <button class="feedback-button" onclick="addFeedback('建立連結： 護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。')">建立連結： 護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。</button>
+      <button class="feedback-button" onclick="addFeedback('共同成長： 我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。')">共同成長： 我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。</button>
+      <button class="feedback-button" onclick="addFeedback('感謝付出：感謝你對護理工作的熱忱和付出，你細心和專業的態度，為病人提供了安全的輸血照護。')">感謝付出：感謝你對護理工作的熱忱和付出，你細心和專業的態度，為病人提供了安全的輸血照護。</button>
+    </td>
+  </tr>
+</table>
+
+<script>
+  function addFeedback(text) {
+    var feedbackField = document.getElementById('feedback');
+    feedbackField.value += (feedbackField.value ? '\n' : '') + text;
+  }
+
+  function updateTitleAndPrint() {
+    var date = document.getElementById('date').value;
+    var student = document.getElementById('student').value;
+    var topic = "輸血照護"; // 如果有多個主題，這裡應根據選擇設置
+    document.title = "輸血照護-專業可信賴活動即時評量表-" + student + "-" + date;
+    window.print();
+  }
+</script>
+
+</body>
+</html>
