@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memletic 學習風格</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .tab-container { display: flex; background-color: #f1f1f1; border-bottom: 1px solid #ccc; }
+        .tab { padding: 10px 20px; cursor: pointer; background-color: #f1f1f1; border: none; outline: none; transition: background-color 0.3s; }
+        .tab:hover { background-color: #ddd; }
+        .tab.active { background-color: #fff; font-weight: bold; border-top: 2px solid #000; }
+        .content { padding: 20px; display: none; }
+        .content.active { display: block; }
+        .sticky { position: sticky; top: 0; background: #fff; z-index: 10; padding: 10px; border-bottom: 1px solid #ccc; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        input[type="number"] { width: 50px; }
+        .black { background-color: #000; color: #fff; }
+        .chart-container { width: 800px; height: 800px; margin: auto; }
+    </style>
+</head>
+
+<body>
+    <div class="tab-container">
+        <button class="tab active" onclick="showTab('tab1')">Memletic 指導說明與資訊</button>
+        <button class="tab" onclick="showTab('tab2')">Memletic 學習風格問卷</button>
+        <button class="tab" onclick="showTab('tab3')">學習風格雷達圖</button>
+        <button class="tab" onclick="showTab('tab4')">評分表</button>
+    </div>
+
+    <div id="tab1" class="content active">
+        <h1>Memletic 指導說明與資訊</h1>
+        <h2>指導說明</h2>
+        <p>此網頁將幫助您辨識自己的偏好學習風格。完成問卷時，請按照以下指導進行：</p>
+        <ol>
+            <li>使用此網頁頂部的標籤來切換不同部分。</li>
+            <li>點擊第二個「Memletic 學習風格問卷」標籤以開始答題。</li>
+            <li>回答每個陳述時，在每個答案框中輸入 0、1 或 2。使用以下評分標準作為指導：
+                <ul>
+                    <li>0：此陳述完全不像我</li>
+                    <li>1：此陳述部分像我</li>
+                    <li>2：此陳述非常像我</li>
+                </ul>
+            </li>
+            <li>完成 70 道問題後，點擊第三個頁籤「學習風格雷達圖」標籤查看結果。並列印下來</li>
+            <li>按「列印/另存PDF」按鈕，列印後貼在學習護照中。</li>
+            <li>若想了解更多關於 Memletics 手冊和學習風格的資訊，請參考以下內容。</li>
+        </ol>
+        <hr>
+        <h2>什麼是 Memletics？</h2>
+        <p>Memletics 計畫旨在為全球社群提供加速學習的工具。Memletics 手冊是 Memletics 學習的主要參考資源。基於截至 2003 年的最新研究成果，該手冊是一本實用指南，能幫助您更快學習並提升記憶表現。</p>
+        <ul>
+            <li>第一章 提供 Memletics 的概覽，並詳細列出可應用 Memletics 的各類活動。</li>
+            <li>第二章 描述如何進入 Memletic 狀態，即最佳學習狀態。</li>
+            <li>第三章 解釋 Memletic 流程，涵蓋學習任何主題的步驟。</li>
+            <li>第四章 包含 Memletic 技術，分為聯想、可視化、言語化、模擬、執行與重複技術。</li>
+            <li>第五章 幫助您找出主要與次要的學習風格，並描述如何充分利用這些風格。</li>
+            <li>第六章 提供規劃與追蹤學習活動的方式。</li>
+        </ul>
+        <p>更多資訊請訪問：http://www.memletics.com/</p>
+    </div>
+
+    <div id="tab2" class="content">
+        <div class="sticky">
+            <h1>Memletic 學習風格問卷</h1>
+            <p>0：此陳述完全不像我<br>1：此陳述部分像我<br>2：此陳述非常像我</p>
+        </div>
+        <ol>
+    <li>你有獨自做事的嗜好
+        <div>
+            <label><input type="radio" name="q1" value="0" onchange="updateScore(1, this.value)"> 0</label>
+            <label><input type="radio" name="q1" value="1" onchange="updateScore(1, this.value)"> 1</label>
+            <label><input type="radio" name="q1" value="2" onchange="updateScore(1, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你會將交辦事項列表寫下,並註記處理的優先順序
+        <div>
+            <label><input type="radio" name="q2" value="0" onchange="updateScore(2, this.value)"> 0</label>
+            <label><input type="radio" name="q2" value="1" onchange="updateScore(2, this.value)"> 1</label>
+            <label><input type="radio" name="q2" value="2" onchange="updateScore(2, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你的腦海裡會隨意出現廣告歌曲、主題或流行歌曲
+        <div>
+            <label><input type="radio" name="q3" value="0" onchange="updateScore(3, this.value)"> 0</label>
+            <label><input type="radio" name="q3" value="1" onchange="updateScore(3, this.value)"> 1</label>
+            <label><input type="radio" name="q3" value="2" onchange="updateScore(3, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>在學校時你喜歡數學和科學科目
+        <div>
+            <label><input type="radio" name="q4" value="0" onchange="updateScore(4, this.value)"> 0</label>
+            <label><input type="radio" name="q4" value="1" onchange="updateScore(4, this.value)"> 1</label>
+            <label><input type="radio" name="q4" value="2" onchange="updateScore(4, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡獨自做事且感到快樂
+        <div>
+            <label><input type="radio" name="q5" value="0" onchange="updateScore(5, this.value)"> 0</label>
+            <label><input type="radio" name="q5" value="1" onchange="updateScore(5, this.value)"> 1</label>
+            <label><input type="radio" name="q5" value="2" onchange="updateScore(5, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡的學習風格是如同在課室環境中與他人一起學習。你喜歡藉由互動過程來幫助學習
+        <div>
+            <label><input type="radio" name="q6" value="0" onchange="updateScore(6, this.value)"> 0</label>
+            <label><input type="radio" name="q6" value="1" onchange="updateScore(6, this.value)"> 1</label>
+            <label><input type="radio" name="q6" value="2" onchange="updateScore(6, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡閱讀所有東西,如書本、報紙、雜誌、菜單、標誌等等
+        <div>
+            <label><input type="radio" name="q7" value="0" onchange="updateScore(7, this.value)"> 0</label>
+            <label><input type="radio" name="q7" value="1" onchange="updateScore(7, this.value)"> 1</label>
+            <label><input type="radio" name="q7" value="2" onchange="updateScore(7, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>在描述物體、場景或建築物過程中,你的腦海裡可輕易呈現相關影像
+        <div>
+            <label><input type="radio" name="q8" value="0" onchange="updateScore(8, this.value)"> 0</label>
+            <label><input type="radio" name="q8" value="1" onchange="updateScore(8, this.value)"> 1</label>
+            <label><input type="radio" name="q8" value="2" onchange="updateScore(8, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>您是屬於目標導向的,知道自己想要的方向
+        <div>
+            <label><input type="radio" name="q9" value="0" onchange="updateScore(9, this.value)"> 0</label>
+            <label><input type="radio" name="q9" value="1" onchange="updateScore(9, this.value)"> 1</label>
+            <label><input type="radio" name="q9" value="2" onchange="updateScore(9, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡團隊的遊戲和運動,如足球、籃球、排球、棒球等等
+        <div>
+            <label><input type="radio" name="q10" value="0" onchange="updateScore(10, this.value)"> 0</label>
+            <label><input type="radio" name="q10" value="1" onchange="updateScore(10, this.value)"> 1</label>
+            <label><input type="radio" name="q10" value="2" onchange="updateScore(10, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你可自如使用導航及地圖,很少迷路,有方向感
+        <div>
+            <label><input type="radio" name="q11" value="0" onchange="updateScore(11, this.value)"> 0</label>
+            <label><input type="radio" name="q11" value="1" onchange="updateScore(11, this.value)"> 1</label>
+            <label><input type="radio" name="q11" value="2" onchange="updateScore(11, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡獨自學習或工作
+        <div>
+            <label><input type="radio" name="q12" value="0" onchange="updateScore(12, this.value)"> 0</label>
+            <label><input type="radio" name="q12" value="1" onchange="updateScore(12, this.value)"> 1</label>
+            <label><input type="radio" name="q12" value="2" onchange="updateScore(12, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>您就像一位導師或指導他人
+        <div>
+            <label><input type="radio" name="q13" value="0" onchange="updateScore(13, this.value)"> 0</label>
+            <label><input type="radio" name="q13" value="1" onchange="updateScore(13, this.value)"> 1</label>
+            <label><input type="radio" name="q13" value="2" onchange="updateScore(13, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你會自我省思,想想自己人生的重要性
+        <div>
+            <label><input type="radio" name="q14" value="0" onchange="updateScore(14, this.value)"> 0</label>
+            <label><input type="radio" name="q14" value="1" onchange="updateScore(14, this.value)"> 1</label>
+            <label><input type="radio" name="q14" value="2" onchange="updateScore(14, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>在一般的談話中,你經常提出自己聽過或讀到的議題或事件
+        <div>
+            <label><input type="radio" name="q15" value="0" onchange="updateScore(15, this.value)"> 0</label>
+            <label><input type="radio" name="q15" value="1" onchange="updateScore(15, this.value)"> 1</label>
+            <label><input type="radio" name="q15" value="2" onchange="updateScore(15, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡將事件分類或分組以助於了解它們之間的關聯性
+        <div>
+            <label><input type="radio" name="q16" value="0" onchange="updateScore(16, this.value)"> 0</label>
+            <label><input type="radio" name="q16" value="1" onchange="updateScore(16, this.value)"> 1</label>
+            <label><input type="radio" name="q16" value="2" onchange="updateScore(16, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你會將自己想法寫下或做日記
+        <div>
+            <label><input type="radio" name="q17" value="0" onchange="updateScore(17, this.value)"> 0</label>
+            <label><input type="radio" name="q17" value="1" onchange="updateScore(17, this.value)"> 1</label>
+            <label><input type="radio" name="q17" value="2" onchange="updateScore(17, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你善與他人溝通及協調兩個人之間的問題
+        <div>
+            <label><input type="radio" name="q18" value="0" onchange="updateScore(18, this.value)"> 0</label>
+            <label><input type="radio" name="q18" value="1" onchange="updateScore(18, this.value)"> 1</label>
+            <label><input type="radio" name="q18" value="2" onchange="updateScore(18, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡運動
+        <div>
+            <label><input type="radio" name="q19" value="0" onchange="updateScore(19, this.value)"> 0</label>
+            <label><input type="radio" name="q19" value="1" onchange="updateScore(19, this.value)"> 1</label>
+            <label><input type="radio" name="q19" value="2" onchange="updateScore(19, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡傾聽,且別人也喜歡跟你說話,因為他們覺得你能了解他們
+        <div>
+            <label><input type="radio" name="q20" value="0" onchange="updateScore(20, this.value)"> 0</label>
+            <label><input type="radio" name="q20" value="1" onchange="updateScore(20, this.value)"> 1</label>
+            <label><input type="radio" name="q20" value="2" onchange="updateScore(20, this.value)"> 2</label>
+        </div>
+    </li>
+    <li>你喜歡聽音樂,如在車上、學習、工作或在任何地方
+    <div>
+        <label><input type="radio" name="q21" value="0" onchange="updateScore(21, this.value)"> 0</label>
+        <label><input type="radio" name="q21" value="1" onchange="updateScore(21, this.value)"> 1</label>
+        <label><input type="radio" name="q21" value="2" onchange="updateScore(21, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您可以平衡收支。你會設置預算及將目標量化
+    <div>
+        <label><input type="radio" name="q22" value="0" onchange="updateScore(22, this.value)"> 0</label>
+        <label><input type="radio" name="q22" value="1" onchange="updateScore(22, this.value)"> 1</label>
+        <label><input type="radio" name="q22" value="2" onchange="updateScore(22, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你有一些非常親密的朋友
+    <div>
+        <label><input type="radio" name="q23" value="0" onchange="updateScore(23, this.value)"> 0</label>
+        <label><input type="radio" name="q23" value="1" onchange="updateScore(23, this.value)"> 1</label>
+        <label><input type="radio" name="q23" value="2" onchange="updateScore(23, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您善用手勢或其他身體語言來與人溝通
+    <div>
+        <label><input type="radio" name="q24" value="0" onchange="updateScore(24, this.value)"> 0</label>
+        <label><input type="radio" name="q24" value="1" onchange="updateScore(24, this.value)"> 1</label>
+        <label><input type="radio" name="q24" value="2" onchange="updateScore(24, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>在校時,你最喜歡的科目是語文與文學
+    <div>
+        <label><input type="radio" name="q25" value="0" onchange="updateScore(25, this.value)"> 0</label>
+        <label><input type="radio" name="q25" value="1" onchange="updateScore(25, this.value)"> 1</label>
+        <label><input type="radio" name="q25" value="2" onchange="updateScore(25, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡製作模型或拼圖
+    <div>
+        <label><input type="radio" name="q26" value="0" onchange="updateScore(26, this.value)"> 0</label>
+        <label><input type="radio" name="q26" value="1" onchange="updateScore(26, this.value)"> 1</label>
+        <label><input type="radio" name="q26" value="2" onchange="updateScore(26, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡與他人談論問題、事件或想法,而不是自己獨自面對
+    <div>
+        <label><input type="radio" name="q27" value="0" onchange="updateScore(27, this.value)"> 0</label>
+        <label><input type="radio" name="q27" value="1" onchange="updateScore(27, this.value)"> 1</label>
+        <label><input type="radio" name="q27" value="2" onchange="updateScore(27, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>在校時音樂是你最喜歡的科目,或者你喜歡參加樂隊
+    <div>
+        <label><input type="radio" name="q28" value="0" onchange="updateScore(28, this.value)"> 0</label>
+        <label><input type="radio" name="q28" value="1" onchange="updateScore(28, this.value)"> 1</label>
+        <label><input type="radio" name="q28" value="2" onchange="updateScore(28, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>在校時你喜歡藝術、畫圖或幾何
+    <div>
+        <label><input type="radio" name="q29" value="0" onchange="updateScore(29, this.value)"> 0</label>
+        <label><input type="radio" name="q29" value="1" onchange="updateScore(29, this.value)"> 1</label>
+        <label><input type="radio" name="q29" value="2" onchange="updateScore(29, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡講故事
+    <div>
+        <label><input type="radio" name="q30" value="0" onchange="updateScore(30, this.value)"> 0</label>
+        <label><input type="radio" name="q30" value="1" onchange="updateScore(30, this.value)"> 1</label>
+        <label><input type="radio" name="q30" value="2" onchange="updateScore(30, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>在他人的言論或行動中,你能有邏輯的確認問題點
+    <div>
+        <label><input type="radio" name="q31" value="0" onchange="updateScore(31, this.value)"> 0</label>
+        <label><input type="radio" name="q31" value="1" onchange="updateScore(31, this.value)"> 1</label>
+        <label><input type="radio" name="q31" value="2" onchange="updateScore(31, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡用相機或攝影捕捉到周遭事情
+    <div>
+        <label><input type="radio" name="q32" value="0" onchange="updateScore(32, this.value)"> 0</label>
+        <label><input type="radio" name="q32" value="1" onchange="updateScore(32, this.value)"> 1</label>
+        <label><input type="radio" name="q32" value="2" onchange="updateScore(32, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您善用節奏或韻律來記住事情,例如電話號碼、PIN碼和其他項目
+    <div>
+        <label><input type="radio" name="q33" value="0" onchange="updateScore(33, this.value)"> 0</label>
+        <label><input type="radio" name="q33" value="1" onchange="updateScore(33, this.value)"> 1</label>
+        <label><input type="radio" name="q33" value="2" onchange="updateScore(33, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>在校時你喜歡運動、工藝、雕塑、陶器
+    <div>
+        <label><input type="radio" name="q34" value="0" onchange="updateScore(34, this.value)"> 0</label>
+        <label><input type="radio" name="q34" value="1" onchange="updateScore(34, this.value)"> 1</label>
+        <label><input type="radio" name="q34" value="2" onchange="updateScore(34, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你知道很多字彙,且運用在適當場合
+    <div>
+        <label><input type="radio" name="q35" value="0" onchange="updateScore(35, this.value)"> 0</label>
+        <label><input type="radio" name="q35" value="1" onchange="updateScore(35, this.value)"> 1</label>
+        <label><input type="radio" name="q35" value="2" onchange="updateScore(35, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您喜歡有質感的衣服、家具和其他物體
+    <div>
+        <label><input type="radio" name="q36" value="0" onchange="updateScore(36, this.value)"> 0</label>
+        <label><input type="radio" name="q36" value="1" onchange="updateScore(36, this.value)"> 1</label>
+        <label><input type="radio" name="q36" value="2" onchange="updateScore(36, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您渡假時較喜歡獨自一人在荒島上，而不是與許多人在酒店或遊輪
+    <div>
+        <label><input type="radio" name="q37" value="0" onchange="updateScore(37, this.value)"> 0</label>
+        <label><input type="radio" name="q37" value="1" onchange="updateScore(37, this.value)"> 1</label>
+        <label><input type="radio" name="q37" value="2" onchange="updateScore(37, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡閱讀有較多圖表、插圖或照片的書籍
+    <div>
+        <label><input type="radio" name="q38" value="0" onchange="updateScore(38, this.value)"> 0</label>
+        <label><input type="radio" name="q38" value="1" onchange="updateScore(38, this.value)"> 1</label>
+        <label><input type="radio" name="q38" value="2" onchange="updateScore(38, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您可以輕鬆地藉由語言或書面方式表達自己，且能將訊息解釋清楚
+    <div>
+        <label><input type="radio" name="q39" value="0" onchange="updateScore(39, this.value)"> 0</label>
+        <label><input type="radio" name="q39" value="1" onchange="updateScore(39, this.value)"> 1</label>
+        <label><input type="radio" name="q39" value="2" onchange="updateScore(39, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡與他人一起玩遊戲，如紙牌或棋盤遊戲
+    <div>
+        <label><input type="radio" name="q40" value="0" onchange="updateScore(40, this.value)"> 0</label>
+        <label><input type="radio" name="q40" value="1" onchange="updateScore(40, this.value)"> 1</label>
+        <label><input type="radio" name="q40" value="2" onchange="updateScore(40, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你你能善於舉例或找相關性來支持你個人觀點
+    <div>
+        <label><input type="radio" name="q41" value="0" onchange="updateScore(41, this.value)"> 0</label>
+        <label><input type="radio" name="q41" value="1" onchange="updateScore(41, this.value)"> 1</label>
+        <label><input type="radio" name="q41" value="2" onchange="updateScore(41, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你會注意周圍的聲音。你可依據聲音來判別汽車或飛機之機型之差別
+    <div>
+        <label><input type="radio" name="q42" value="0" onchange="updateScore(42, this.value)"> 0</label>
+        <label><input type="radio" name="q42" value="1" onchange="updateScore(42, this.value)"> 1</label>
+        <label><input type="radio" name="q42" value="2" onchange="updateScore(42, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你對色彩有好的敏感度
+    <div>
+        <label><input type="radio" name="q43" value="0" onchange="updateScore(43, this.value)"> 0</label>
+        <label><input type="radio" name="q43" value="1" onchange="updateScore(43, this.value)"> 1</label>
+        <label><input type="radio" name="q43" value="2" onchange="updateScore(43, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡說雙關語、繞口令或押韻詞句
+    <div>
+        <label><input type="radio" name="q44" value="0" onchange="updateScore(44, this.value)"> 0</label>
+        <label><input type="radio" name="q44" value="1" onchange="updateScore(44, this.value)"> 1</label>
+        <label><input type="radio" name="q44" value="2" onchange="updateScore(44, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你常在做一些體能活動時找到問題的解決方法
+    <div>
+        <label><input type="radio" name="q45" value="0" onchange="updateScore(45, this.value)"> 0</label>
+        <label><input type="radio" name="q45" value="1" onchange="updateScore(45, this.value)"> 1</label>
+        <label><input type="radio" name="q45" value="2" onchange="updateScore(45, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你會為了更了解自己而讀一些相關書籍或參加工作坊
+    <div>
+        <label><input type="radio" name="q46" value="0" onchange="updateScore(46, this.value)"> 0</label>
+        <label><input type="radio" name="q46" value="1" onchange="updateScore(46, this.value)"> 1</label>
+        <label><input type="radio" name="q46" value="2" onchange="updateScore(46, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你可以玩一種樂器，或可哼唱
+    <div>
+        <label><input type="radio" name="q47" value="0" onchange="updateScore(47, this.value)"> 0</label>
+        <label><input type="radio" name="q47" value="1" onchange="updateScore(47, this.value)"> 1</label>
+        <label><input type="radio" name="q47" value="2" onchange="updateScore(47, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡玩填字或拼字等文字遊戲
+    <div>
+        <label><input type="radio" name="q48" value="0" onchange="updateScore(48, this.value)"> 0</label>
+        <label><input type="radio" name="q48" value="1" onchange="updateScore(48, this.value)"> 1</label>
+        <label><input type="radio" name="q48" value="2" onchange="updateScore(48, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡玩有邏輯性的遊戲。你喜歡象棋或戰略性遊戲
+    <div>
+        <label><input type="radio" name="q49" value="0" onchange="updateScore(49, this.value)"> 0</label>
+        <label><input type="radio" name="q49" value="1" onchange="updateScore(49, this.value)"> 1</label>
+        <label><input type="radio" name="q49" value="2" onchange="updateScore(49, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡參加聚會或其他社交活動
+    <div>
+        <label><input type="radio" name="q50" value="0" onchange="updateScore(50, this.value)"> 0</label>
+        <label><input type="radio" name="q50" value="1" onchange="updateScore(50, this.value)"> 1</label>
+        <label><input type="radio" name="q50" value="2" onchange="updateScore(50, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你偶爾會意識到自己也會跟著哼唱線上音樂,即使只聽幾次,亦可能記住它
+    <div>
+        <label><input type="radio" name="q51" value="0" onchange="updateScore(51, this.value)"> 0</label>
+        <label><input type="radio" name="q51" value="1" onchange="updateScore(51, this.value)"> 1</label>
+        <label><input type="radio" name="q51" value="2" onchange="updateScore(51, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你會藉由自我對談或不斷在腦海內思考來解決問題
+    <div>
+        <label><input type="radio" name="q52" value="0" onchange="updateScore(52, this.value)"> 0</label>
+        <label><input type="radio" name="q52" value="1" onchange="updateScore(52, this.value)"> 1</label>
+        <label><input type="radio" name="q52" value="2" onchange="updateScore(52, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡跳舞
+    <div>
+        <label><input type="radio" name="q53" value="0" onchange="updateScore(53, this.value)"> 0</label>
+        <label><input type="radio" name="q53" value="1" onchange="updateScore(53, this.value)"> 1</label>
+        <label><input type="radio" name="q53" value="2" onchange="updateScore(53, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡獨自學習
+    <div>
+        <label><input type="radio" name="q54" value="0" onchange="updateScore(54, this.value)"> 0</label>
+        <label><input type="radio" name="q54" value="1" onchange="updateScore(54, this.value)"> 1</label>
+        <label><input type="radio" name="q54" value="2" onchange="updateScore(54, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你不喜歡沉默。你希望有一些背景音樂或其他聲音存在
+    <div>
+        <label><input type="radio" name="q55" value="0" onchange="updateScore(55, this.value)"> 0</label>
+        <label><input type="radio" name="q55" value="1" onchange="updateScore(55, this.value)"> 1</label>
+        <label><input type="radio" name="q55" value="2" onchange="updateScore(55, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡有較多肢體活動的主題公園,或者不喜歡原因是因較敏感它們會對身體產生一些影響
+    <div>
+        <label><input type="radio" name="q56" value="0" onchange="updateScore(56, this.value)"> 0</label>
+        <label><input type="radio" name="q56" value="1" onchange="updateScore(56, this.value)"> 1</label>
+        <label><input type="radio" name="q56" value="2" onchange="updateScore(56, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你會畫畫,且發現自己在思考時也常在塗鴉記事本
+    <div>
+        <label><input type="radio" name="q57" value="0" onchange="updateScore(57, this.value)"> 0</label>
+        <label><input type="radio" name="q57" value="1" onchange="updateScore(57, this.value)"> 1</label>
+        <label><input type="radio" name="q57" value="2" onchange="updateScore(57, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您可以輕鬆地算數,甚至用心算
+    <div>
+        <label><input type="radio" name="q58" value="0" onchange="updateScore(58, this.value)"> 0</label>
+        <label><input type="radio" name="q58" value="1" onchange="updateScore(58, this.value)"> 1</label>
+        <label><input type="radio" name="q58" value="2" onchange="updateScore(58, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>您會用圖表和塗鴉工具來與人交流想法或訊息
+    <div>
+        <label><input type="radio" name="q59" value="0" onchange="updateScore(59, this.value)"> 0</label>
+        <label><input type="radio" name="q59" value="1" onchange="updateScore(59, this.value)"> 1</label>
+        <label><input type="radio" name="q59" value="2" onchange="updateScore(59, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你可聽到其他人所未能聽到的小事物
+    <div>
+        <label><input type="radio" name="q60" value="0" onchange="updateScore(60, this.value)"> 0</label>
+        <label><input type="radio" name="q60" value="1" onchange="updateScore(60, this.value)"> 1</label>
+        <label><input type="radio" name="q60" value="2" onchange="updateScore(60, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你較喜歡直接處理事情而不是只有了解如何處理
+    <div>
+        <label><input type="radio" name="q61" value="0" onchange="updateScore(61, this.value)"> 0</label>
+        <label><input type="radio" name="q61" value="1" onchange="updateScore(61, this.value)"> 1</label>
+        <label><input type="radio" name="q61" value="2" onchange="updateScore(61, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你是帶頭的或做示範動作給他人看
+    <div>
+        <label><input type="radio" name="q62" value="0" onchange="updateScore(62, this.value)"> 0</label>
+        <label><input type="radio" name="q62" value="1" onchange="updateScore(62, this.value)"> 1</label>
+        <label><input type="radio" name="q62" value="2" onchange="updateScore(62, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你可容易地透過閱讀、錄音帶或演講方式來吸收新知
+    <div>
+        <label><input type="radio" name="q63" value="0" onchange="updateScore(63, this.value)"> 0</label>
+        <label><input type="radio" name="q63" value="1" onchange="updateScore(63, this.value)"> 1</label>
+        <label><input type="radio" name="q63" value="2" onchange="updateScore(63, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡了解事情發生原因及解決之道。你能跟得上科學與技術
+    <div>
+        <label><input type="radio" name="q64" value="0" onchange="updateScore(64, this.value)"> 0</label>
+        <label><input type="radio" name="q64" value="1" onchange="updateScore(64, this.value)"> 1</label>
+        <label><input type="radio" name="q64" value="2" onchange="updateScore(64, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你像個修補匠，如拆解某物後，能輕易依指示或圖解再整併
+    <div>
+        <label><input type="radio" name="q65" value="0" onchange="updateScore(65, this.value)"> 0</label>
+        <label><input type="radio" name="q65" value="1" onchange="updateScore(65, this.value)"> 1</label>
+        <label><input type="radio" name="q65" value="2" onchange="updateScore(65, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>音樂可喚起你強烈的情感和圖像,甚至讓你想起某件事
+    <div>
+        <label><input type="radio" name="q66" value="0" onchange="updateScore(66, this.value)"> 0</label>
+        <label><input type="radio" name="q66" value="1" onchange="updateScore(66, this.value)"> 1</label>
+        <label><input type="radio" name="q66" value="2" onchange="updateScore(66, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你可獨立思考,能了解自己的優缺點與內心想法
+    <div>
+        <label><input type="radio" name="q67" value="0" onchange="updateScore(67, this.value)"> 0</label>
+        <label><input type="radio" name="q67" value="1" onchange="updateScore(67, this.value)"> 1</label>
+        <label><input type="radio" name="q67" value="2" onchange="updateScore(67, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡親手做園藝工作
+    <div>
+        <label><input type="radio" name="q68" value="0" onchange="updateScore(68, this.value)"> 0</label>
+        <label><input type="radio" name="q68" value="1" onchange="updateScore(68, this.value)"> 1</label>
+        <label><input type="radio" name="q68" value="2" onchange="updateScore(68, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你喜歡視覺藝術、繪畫、雕塑、拼圖和迷宮
+    <div>
+        <label><input type="radio" name="q69" value="0" onchange="updateScore(69, this.value)"> 0</label>
+        <label><input type="radio" name="q69" value="1" onchange="updateScore(69, this.value)"> 1</label>
+        <label><input type="radio" name="q69" value="2" onchange="updateScore(69, this.value)"> 2</label>
+    </div>
+    </li>
+    <li>你能按部就班用明確的程序來解決問題
+    <div>
+        <label><input type="radio" name="q70" value="0" onchange="updateScore(70, this.value)"> 0</label>
+        <label><input type="radio" name="q70" value="1" onchange="updateScore(70, this.value)"> 1</label>
+        <label><input type="radio" name="q70" value="2" onchange="updateScore(70, this.value)"> 2</label>
+    </div>
+    </li>
+    </ol>
+    </div>
+
+    <div id="tab3" class="content">
+  <h1>學習風格雷達圖</h1>
+  <button id="printButton" onclick="printRadarChart()">列印/另存PDF</button>
+  <div class="chart-container" style="width: 400px; height: 400px;">
+    <canvas id="radarChart"></canvas>
+  </div>
+  <div style="text-align: center; margin-top: 20px;">
+    <p>此雷達圖顯示您在各個學習風格上的得分分布</p>
+  </div>
+</div>
+
+    <div id="tab4" class="content">
+        <h1>評分表</h1>
+        <p>每一題都有7個空格,對應7種不同的學習風格。黑色空格代表該題對應的主要學習風格,需要計入總分。</p>
+        <table>
+            <tr>
+                <th>題號</th>
+                <th>視覺型</th>
+                <th>聽覺型</th>
+                <th>語言型</th>
+                <th>身體動覺型</th>
+                <th>邏輯型</th>
+                <th>社交型</th>
+                <th>內省型</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q1-score"></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q2-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q3-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q4-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q5-score"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q6-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q7-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q8-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q9-score"></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q10-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q11-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q12-score"></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q13-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q14-score"></td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q15-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q16-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q17-score"></td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q18-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q19-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q20-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q21-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q22-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q23-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q24-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q25-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q26-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q27-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q28-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q29-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q30-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q31-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q32-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q33-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q34-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q35-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q36-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q37-score"></td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q38-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q39-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q40-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q41-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q42-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q43-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q44-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q45-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q46-score"></td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q47-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q48-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q49-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q50-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>51</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q51-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>52</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q52-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>53</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q53-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>54</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q54-score"></td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q55-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>56</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q56-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>57</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q57-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>58</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q58-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>59</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q59-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <<td><input type="number" min="0" max="2" readonly class="black" id="q60-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>61</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q61-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q62-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>63</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q63-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>64</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q64-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q65-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>66</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q66-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>67</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q67-score"></td>
+            </tr>
+            <tr>
+                <td>68</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q68-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>69</td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q69-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly class="black" id="q70-score"></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+                <td><input type="number" min="0" max="2" readonly></td>
+            </tr>
+        </table>
+        <h2>學習風格總分</h2>
+        <table>
+            <tr>
+                <th>學習風格</th>
+                <th>總分</th>
+            </tr>
+            <tr>
+                <td>視覺型 (Visual)</td>
+                <td><input type="number" id="visual-total" readonly></td>
+            </tr>
+            <tr>
+                <td>聽覺型 (Aural)</td>
+                <td><input type="number" id="aural-total" readonly></td>
+            </tr>
+            <tr>
+                <td>語言型 (Verbal)</td>
+                <td><input type="number" id="verbal-total" readonly></td>
+            </tr>
+            <tr>
+                <td>身體動覺型 (Physical)</td>
+                <td><input type="number" id="physical-total" readonly></td>
+            </tr>
+            <tr>
+                <td>邏輯型 (Logical)</td>
+                <td><input type="number" id="logical-total" readonly></td>
+            </tr>
+            <tr>
+                <td>社交型 (Social)</td>
+                <td><input type="number" id="social-total" readonly></td>
+            </tr>
+            <tr>
+                <td>內省型 (Solitary)</td>
+                <td><input type="number" id="solitary-total" readonly></td>
+            </tr>
+            <tr>
+                <td><strong>整體總分 (OVERALL TOTAL)</strong></td>
+                <td><input type="number" id="overall-total" readonly></td>
+            </tr>
+        </table>
+    </div>
+       <script>
+// 定義學習風格映射
+const styleMap = {
+    1: 'solitary', 2: 'logical', 3: 'aural', 4: 'logical', 5: 'solitary',
+    6: 'social', 7: 'verbal', 8: 'visual', 9: 'logical', 10: 'social',
+    11: 'visual', 12: 'solitary', 13: 'social', 14: 'solitary', 15: 'verbal',
+    16: 'logical', 17: 'verbal', 18: 'social', 19: 'physical', 20: 'aural',
+    21: 'aural', 22: 'logical', 23: 'social', 24: 'physical', 25: 'verbal',
+    26: 'visual', 27: 'social', 28: 'aural', 29: 'visual', 30: 'verbal',
+    31: 'logical', 32: 'visual', 33: 'aural', 34: 'physical', 35: 'verbal',
+    36: 'physical', 37: 'solitary', 38: 'visual', 39: 'verbal', 40: 'social',
+    41: 'logical', 42: 'aural', 43: 'visual', 44: 'verbal', 45: 'physical',
+    46: 'solitary', 47: 'aural', 48: 'verbal', 49: 'logical', 50: 'social',
+    51: 'aural', 52: 'solitary', 53: 'physical', 54: 'solitary', 55: 'aural',
+    56: 'physical', 57: 'visual', 58: 'logical', 59: 'visual', 60: 'aural',
+    61: 'physical', 62: 'social', 63: 'verbal', 64: 'logical', 65: 'physical',
+    66: 'aural', 67: 'solitary', 68: 'physical', 69: 'visual', 70: 'logical'
+};
+
+// 頁籤切換函數
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    contents.forEach(content => content.classList.remove('active'));
+    document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    
+    if (tabId === 'tab3') {
+        updateRadarChart();
+    }
+}
+// 更新分數函數
+function updateScore(questionNumber, score) {
+    const scoreInput = document.querySelector(`#tab4 #q${questionNumber}-score`);
+    if (scoreInput) {
+        scoreInput.value = score;
+    }
+    calculateTotals();
+}
+// 計算總分函數（加在這裡）
+function calculateTotals() {
+    const styles = ['visual', 'aural', 'verbal', 'physical', 'logical', 'social', 'solitary'];
+    let overallTotal = 0;
+
+    styles.forEach(style => {
+        const inputs = document.querySelectorAll(`#tab4 input[id^="q"][id$="-score"].black`);
+        const total = Array.from(inputs).reduce((sum, input) => {
+            const questionNumber = input.id.match(/q(\d+)-score/)[1];
+            const questionStyle = styleMap[questionNumber];
+            return questionStyle === style ? sum + (parseInt(input.value) || 0) : sum;
+        }, 0);
+
+        document.getElementById(`${style}-total`).value = total;
+        overallTotal += total;
+    });
+
+    document.getElementById('overall-total').value = overallTotal;
+    updateRadarChart(); // 在這裡加入更新雷達圖的調用
+}
+function updateRadarChart() {
+    const ctx = document.getElementById('radarChart');
+    
+    const visual = parseInt(document.getElementById('visual-total').value) || 0;
+    const aural = parseInt(document.getElementById('aural-total').value) || 0;
+    const verbal = parseInt(document.getElementById('verbal-total').value) || 0;
+    const physical = parseInt(document.getElementById('physical-total').value) || 0;
+    const logical = parseInt(document.getElementById('logical-total').value) || 0;
+    const social = parseInt(document.getElementById('social-total').value) || 0;
+    const solitary = parseInt(document.getElementById('solitary-total').value) || 0;
+
+    if (window.myRadarChart) {
+        window.myRadarChart.destroy();
+    }
+
+    window.myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: [
+                '視覺型 (Visual)',
+                '聽覺型 (Aural)',
+                '語言型 (Verbal)',
+                '身體動覺型 (Physical)',
+                '邏輯型 (Logical)',
+                '社交型 (Social)',
+                '內省型 (Solitary)'
+            ],
+            datasets: [{
+                label: '學習風格分數',
+                data: [visual, aural, verbal, physical, logical, social, solitary],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgb(54, 162, 235)',
+                pointBackgroundColor: 'rgb(54, 162, 235)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(54, 162, 235)'
+            }]
+        },
+        options: {
+            scales: {
+                r: {
+                    angleLines: {
+                        display: true
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 20,
+                    ticks: {
+                        stepSize: 5
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    });
+}
+function printRadarChart() {
+  const printWindow = window.open('', '', 'width=600,height=600');
+  printWindow.document.write('<html><head><title>學習風格雷達圖</title>');
+  printWindow.document.write('<style>body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }</style>');
+  printWindow.document.write('</head><body>');
+  printWindow.document.write('<img src="' + document.getElementById('radarChart').toDataURL() + '" width="400" height="400"/>');
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(function() {
+    printWindow.print();
+    printWindow.close();
+  }, 500);
+}
+
+
+
+
+
+    </script>
+</body>
+</html>
