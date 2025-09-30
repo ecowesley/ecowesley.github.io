@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>單位內交班-護理照護訓練EPAs</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid black; padding: 8px; text-align: center; }
+    th { background-color: #f2f2f2; }
+    .button-container { text-align: right; margin-bottom: 10px; }
+    .feedback-options { display: block; }
+    .feedback-button { display: block; margin-bottom: 5px; text-align: left; }
+    .left-align { text-align: left; }
+
+    textarea{
+      width:100%;
+      min-height:50px;
+      height:auto;
+      resize:none;
+      box-sizing:border-box;
+      margin:2px 0;
+      overflow:hidden; /* 配合 JS 自動撐高 */
+    }
+
+    /* 僅供列印的鏡像區塊（平時不顯示） */
+    .print-mirror{ display:none; }
+
+    .form-group{ margin-bottom:5px; }
+    ol.isbar li{ list-style:none; counter-increment:item; }
+    ol.isbar li::before{ content:"(" counter(item) ")"; margin-right:5px; }
+
+    @media print {
+      .feedback-options, .button-container { display:none !important; }
+
+      /* 列印時隱藏原本的標題（由鏡像補上，與內容同頁） */
+      .print-hide { display:none !important; }
+
+      /* 列印時，用鏡像取代 textarea，確保內容完整輸出 */
+      textarea{ display:none !important; }
+      .print-mirror{
+        display:block !important;
+        border:1px solid #000;
+        padding:6px;
+        min-height:50px;
+        white-space:pre-wrap;      /* 保留換行 */
+        word-break:break-word;
+        page-break-inside:avoid;
+        break-inside:avoid;
+        box-sizing:border-box;
+        margin-top:2px;
+      }
+      /* 每個鏡像前加上動態標題（由 JS 設定 data-heading） */
+      .print-mirror::before{
+        content: attr(data-heading);
+        display:block;
+        font-weight:bold;
+        margin-bottom:4px;
+        white-space:pre-wrap;
+      }
+
+      input[type="date"],
+      input[type="text"],
+      input[type="checkbox"]{
+        display:inline-block;
+        border:none;
+        box-shadow:none;
+        font-size:16px;
+        text-align:left;
+      }
+    }
+
+    input[type="date"]{ width:150px; }
+    input[type="text"]{ width:150px; }
+
+    @media screen and (max-width:600px){
+      table, thead, tbody, th, td, tr { display:block; }
+      th, td{ text-align:left; padding:8px; border:none; }
+      th{ background-color:transparent; }
+      tr{ border:1px solid black; margin-bottom:10px; }
+      td{ border-bottom:1px solid black; }
+      td:before{ content:attr(data-label); font-weight:bold; display:inline-block; width:150px; }
+      .button-container{ text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<h2>單位內交班-護理照護訓練EPAs</h2>
+
+<div class="button-container">
+  <button onclick="updateTitleAndPrint()">列印/另存PDF</button>
+</div>
+
+<table>
+  <tr>
+    <td colspan="7" style="text-align:left;">
+      日期: <input type="date" id="date" style="display:inline-block; width:150px;">
+      學員: <input type="text" id="student" style="display:inline-block; width:150px;">
+      教師: <input type="text" id="teacher" style="display:inline-block; width:150px;">
+    </td>
+  </tr>
+  <tr><td colspan="7" class="left-align"><b>主題:</b> 單位內交班</td></tr>
+  <tr>
+    <td colspan="7" class="left-align">
+      <b>任務描述:</b>
+      <ol>
+        <li>交班前，接班者查看病人護理資訊系統，歸納交班留言重點，對疑慮處於交班時提出及澄清問題。</li>
+        <li>以護理資訊系統進行ISBAR交班：
+          <ol class="isbar">
+            <li><b>Introduction:</b> 介紹病人基本資料，如：床號、姓名、年齡、性別、病歷號、診斷、科別、特殊註記事項(壓傷、跌倒、自殺搞危險群、出院準備、隔離、DNR、病危、不公布姓名、過敏)等。</li>
+            <li><b>Situation:</b> 說明病人現況、生命徵象、意識狀態、身上管路、護理問題。</li>
+            <li><b>Background:</b> 描述病人的過去病史、特殊用藥、入院經過、重要護理評估、目前用藥及治療情形等。</li>
+            <li><b>Assessment:</b> 最近檢驗/檢查/會診結果、血糖值/胰島素施打、傷口照護、手術狀況等。</li>
+            <li><b>Recommendation:</b> 建議後續處理措施或方向、可能發生危急事件的預防，例如建議用藥：升壓劑、強心劑、胰島素、抗凝血劑等。</li>
+          </ol>
+        </li>
+        <li>交班時，接班者針對交班內容有疑問立即提出。</li>
+        <li>交班畢，共同進入病室，接班者向病人進行自我介紹並與交班者一同檢視病人意識狀況、身上管路、約束、皮膚肢體狀況、手圈、評估傷口變化、水腫變化、床旁機器設定等。</li>
+      </ol>
+    </td>
+  </tr>
+  <tr>
+    <th data-label="信賴等級(Level)評估">信賴等級(Level)評估</th>
+    <th data-label="I.學習者在旁觀察">I.學習者在旁觀察</th>
+    <th data-label="II.教師直接觀察">II.教師直接觀察</th>
+    <th data-label="III.教師間接觀察">III.教師間接觀察</th>
+    <th data-label="IV.可獨立執行">IV.可獨立執行</th>
+    <th data-label="V.可對他人進行教學">V.可對他人進行教學</th>
+  </tr>
+  <tr>
+    <td data-label="整體評估">整體評估</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+</table>
+
+<!-- 回饋評語 -->
+<div class="form-group"><label class="print-hide">回饋評語：</label></div>
+
+<div class="form-group">
+  <label class="print-hide">（值得嘉許）</label>
+  <div style="display:flex;">
+    <div style="flex:1;">
+      <textarea id="praise"></textarea>
+      <div class="print-mirror" data-for="praise"></div>
+    </div>
+    <div class="feedback-options" style="width:50%; padding-left:10px;">
+      <h4>一、值得嘉許：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','你在交班過程中展示了高度的專業素養，能夠詳細介紹病人的基本資料和現況，這對於接班者非常有幫助。')">你在交班過程中展示了高度的專業素養，能夠詳細介紹病人的基本資料和現況，這對於接班者非常有幫助。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','你在交班時涵蓋了病人的基本資料、現況、過去病史、特殊用藥、檢查結果等各個方面，展現出你的細心。')">你在交班時涵蓋了病人的基本資料、現況、過去病史、特殊用藥、檢查結果等各個方面，展現出你的細心。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','我觀察到你能發現病人問題，主動提出討論，透過良好的溝通，釐清交班內容。')">我觀察到你能發現病人問題，主動提出討論，透過良好的溝通，釐清交班內容。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','你的交班過程流暢，口條伶俐，能簡明扼要說出交班重點，對病人資訊掌握的完整，展現出專業的態度。')">你的交班過程流暢，口條伶俐，能簡明扼要說出交班重點，對病人資訊掌握的完整，展現出專業的態度。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','你對於交接班時，在核對手圈、病人意識、管路、約束、皮膚狀況、床旁機器設定等執行病人辨識時非常仔細，展現出你對病人安全的重視。')">你對於交接班時，在核對手圈、病人意識、管路、約束、皮膚狀況、床旁機器設定等執行病人辨識時非常仔細，展現出你對病人安全的重視。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','你在交接班前能主動查詢報告及檢查回覆，展現出你對病人狀況的掌握。')">你在交接班前能主動查詢報告及檢查回覆，展現出你對病人狀況的掌握。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','你能夠熟練地按照ISBAR的順序完成交班作業，展現出你對交班作業的瞭解。')">你能夠熟練地按照ISBAR的順序完成交班作業，展現出你對交班作業的瞭解。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','我注意到你能積極查詢病人的檢驗值及報告及相關照護資訊，不斷精進自己的專業知識和技能。')">我注意到你能積極查詢病人的檢驗值及報告及相關照護資訊，不斷精進自己的專業知識和技能。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise','我注意到在交班畢，你能完成交班資料的完成整性，如檢驗、檢查、會診，報告結果及異常等處理，讓接班者可掌控完整訊息。')">我注意到在交班畢，你能完成交班資料的完成整性，如檢驗、檢查、會診，報告結果及異常等處理，讓接班者可掌控完整訊息。</button>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="print-hide">（可再精進）</label>
+  <div style="display:flex;">
+    <div style="flex:1;">
+      <textarea id="improve"></textarea>
+      <div class="print-mirror" data-for="improve"></div>
+    </div>
+    <div class="feedback-options" style="width:50%; padding-left:10px;">
+      <h4>二、可再精進：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','交接班有任何疑問，需即時主動提出討論及釐清，以確保無誤。')">交接班有任何疑問，需即時主動提出討論及釐清，以確保無誤。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','你已完成大部分病人檢視，建議病人身上管路、皮膚狀況等也需一併檢視確認。')">你已完成大部分病人檢視，建議病人身上管路、皮膚狀況等也需一併檢視確認。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','建議可以嘗試用更簡短的語句，向接班人摘要病人住院間之護理問題及處置。')">建議可以嘗試用更簡短的語句，向接班人摘要病人住院間之護理問題及處置。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','交班前建議確認交班內容完整性，如將追蹤處置開立完成及檢驗報告結果即時呈現。')">交班前建議確認交班內容完整性，如將追蹤處置開立完成及檢驗報告結果即時呈現。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','可以試著多練習交班內容的表達，調整交班內容簡潔性，確保訊息正確傳達，並避免交班內容過於冗長。')">可以試著多練習交班內容的表達，調整交班內容簡潔性，確保訊息正確傳達，並避免交班內容過於冗長。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','每次執行單位內交班流程後，可以花些時間自我反思，思考還有哪些地方可以做得更好。')">每次執行單位內交班流程後，可以花些時間自我反思，思考還有哪些地方可以做得更好。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve','建議進一步了解病人的檢驗值及相關照護資訊報告，以精進自己的專業知識和技能。')">建議進一步了解病人的檢驗值及相關照護資訊報告，以精進自己的專業知識和技能。</button>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="print-hide">（共識行動）</label>
+  <div style="display:flex;">
+    <div style="flex:1;">
+      <textarea id="consensus"></textarea>
+      <div class="print-mirror" data-for="consensus"></div>
+    </div>
+    <div class="feedback-options" style="width:50%; padding-left:10px;">
+      <h4>三、共識行動：(可複選)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','你在交班過程中展現出作為一位護理師的專業能力，我相信你會持續進步，成為更優秀的護理人員。')">你在交班過程中展現出作為一位護理師的專業能力，我相信你會持續進步，成為更優秀的護理人員。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','繼續保持積極的學習態度並勇於接受挑戰，你一定能在護理專業上發光發熱。')">繼續保持積極的學習態度並勇於接受挑戰，你一定能在護理專業上發光發熱。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。')">如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。')">我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','我們可以一起設定一些目標，例如單位間交接班溝通技巧，幫助你持續進步。')">我們可以一起設定一些目標，例如單位間交接班溝通技巧，幫助你持續進步。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。')">護理工作充滿挑戰，但也充滿成就感，讓我們一起努力，為病人提供最好的照護。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus','我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。')">我很高興能有機會和你一起學習和成長，讓我們一起在護理專業上不斷精進。</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* 將文字加入 textarea，並自動撐高 */
+  function addFeedbackToField(fieldId, text){
+    var field = document.getElementById(fieldId);
+    if(!field) return;
+    field.value += (field.value ? '\n' : '') + text;
+    autoResize(field);
+  }
+
+  /* 自動依內容撐高 textarea（畫面上更好寫） */
+  function autoResize(el){
+    if(!el) return;
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
+  /* 依內容建立/更新列印鏡像，並把標題綁在同一頁 */
+  function buildPrintMirrors(){
+    // 清掉舊鏡像
+    document.querySelectorAll('.print-mirror').forEach(function(el){ el.remove(); });
+
+    var sections = [
+      { id:'praise',    label:'（值得嘉許）' },
+      { id:'improve',   label:'（可再精進）' },
+      { id:'consensus', label:'（共識行動）' }
+    ];
+
+    // 找到第一個有內容的區段，用它來同時印出「回饋評語：」
+    var firstIndex = -1;
+    sections.forEach(function(s, idx){
+      var ta = document.getElementById(s.id);
+      if(ta && ta.value.trim() && firstIndex === -1){ firstIndex = idx; }
+    });
+
+    sections.forEach(function(s, idx){
+      var ta = document.getElementById(s.id);
+      if(!ta) return;
+      var val = ta.value.trim();
+      if(!val) return;  // 空內容就不建立鏡像，避免列印一個空標題
+
+      var mirror = document.createElement('div');
+      mirror.className = 'print-mirror';
+      mirror.setAttribute('data-for', s.id);
+
+      // 第一個非空區塊：前綴「回饋評語：」
+      var heading = (idx === firstIndex) ? ('回饋評語：\n' + s.label) : s.label;
+      mirror.setAttribute('data-heading', heading);
+
+      mirror.textContent = val;
+      ta.parentNode.insertBefore(mirror, ta.nextSibling);
+    });
+  }
+
+  /* 事件：進入/結束列印 */
+  window.addEventListener('beforeprint', buildPrintMirrors);
+  window.addEventListener('afterprint', function(){
+    document.querySelectorAll('.print-mirror').forEach(function(el){ el.remove(); });
+  });
+
+  /* 初始化：讓現有 textarea 依內容撐高 */
+  window.addEventListener('load', function(){
+    document.querySelectorAll('textarea').forEach(function(ta){
+      ta.addEventListener('input', function(){ autoResize(ta); });
+      autoResize(ta);
+    });
+  });
+
+  function updateTitleAndPrint(){
+    var date = document.getElementById('date').value;
+    var student = document.getElementById('student').value;
+    document.title = "單位內交班-護理照護訓練EPAs-" + student + "-" + date;
+    buildPrintMirrors();           // 立即同步一次
+    window.print();
+  }
+</script>
+
+</body>
+</html>
