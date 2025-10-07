@@ -1,1 +1,362 @@
-test dahsin
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>大新倉頡 Web IME（純前端，GitHub Pages 可用）</title>
+  <style>
+    :root { --gap: 12px; --radius: 14px; }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Noto Sans TC, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; line-height: 1.5; margin: 0; background: #0b1020; color: #eef2ff; }
+    header { padding: 18px 20px; border-bottom: 1px solid #202a44; background: #0e152b; position: sticky; top: 0; z-index: 10; }
+    header h1 { margin: 0; font-size: 18px; }
+    main { max-width: 980px; margin: 0 auto; padding: 20px; display: grid; gap: var(--gap); }
+    .card { background: #0f172a; border: 1px solid #1e293b; border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .row { display: grid; grid-template-columns: 1fr; gap: var(--gap); }
+    @media (min-width: 880px) { .row.two { grid-template-columns: 1fr 1fr; } }
+    .section { padding: 16px; }
+    label.switch { display: inline-flex; align-items: center; gap: 10px; user-select: none; cursor: pointer; }
+    .switch input { appearance: none; width: 48px; height: 28px; border-radius: 999px; background: #334155; position: relative; outline: none; transition: .2s ease; }
+    .switch input:checked { background: #2563eb; }
+    .switch input::after { content: ""; position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 50%; background: white; transition: .2s ease; }
+    .switch input:checked::after { transform: translateX(20px); }
+    textarea#editor { width: 100%; min-height: 260px; resize: vertical; background: #0b1222; color: #e2e8f0; border: 1px solid #21314d; border-radius: 12px; padding: 14px; font-size: 18px; line-height: 1.6; caret-color: #60a5fa; }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; border: 1px solid #334155; border-bottom-width: 2px; background: #111827; color: #e5e7eb; border-radius: 8px; padding: 2px 6px; font-size: 12px; }
+    .status { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .status .dot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; }
+    .status.enabled .dot { background: #22c55e; }
+    .comp { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 600; letter-spacing: 0.5px; padding: 6px 10px; border-radius: 10px; background: #0b1222; border: 1px solid #21314d; min-height: 34px; }
+    .cands { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; }
+    .cand { padding: 10px 8px; border: 1px solid #1e293b; border-radius: 10px; text-align: center; background: #0b1222; cursor: pointer; user-select: none; }
+    .cand.active { outline: 2px solid #2563eb; }
+    .muted { color: #94a3b8; }
+    .small { font-size: 12px; }
+    .footer { padding: 14px 16px; border-top: 1px solid #1e293b; display: flex; gap: 12px; justify-content: space-between; align-items: center; border-radius: 0 0 var(--radius) var(--radius); background: #0d162b; flex-wrap: wrap; }
+    .hl { color: #60a5fa; }
+    .note { background: #0b1222; border-left: 3px solid #2563eb; border-radius: 8px; padding: 10px 12px; }
+    .hidden { display: none; }
+    button, input[type=file] { background: #1f2a44; color: white; border: 1px solid #2b3a5e; border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+    button:hover { background: #253355; }
+    a { color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>大新倉頡 Web IME（純前端，免安裝）</h1>
+  </header>
+  <main>
+    <section class="card section">
+      <div class="status" id="status"><span class="dot"></span>
+        <strong id="imeStateText">IME 已停用</strong>
+        <span class="muted small">（切換熱鍵：<span class="kbd">Ctrl</span> + <span class="kbd">/</span>）</span>
+      </div>
+      <div style="margin-top: 10px">
+        <label class="switch">
+          <input type="checkbox" id="toggleIme" />
+          <span>啟用本頁 IME 並套用到下方文字區</span>
+        </label>
+      </div>
+      <div class="note" style="margin-top: 12px;">
+        <div><strong>使用方式</strong>：在下方文字區直接輸入 <span class="kbd">A–Z</span> 與 <span class="kbd">.;',[]/?`</span> 等（依 <code>%keyname</code>）的倉頡碼，候選框會出現；
+          <span class="kbd">1–9</span> 或碼表定義的數字選字，<span class="kbd">Space</span> 取第一，<span class="kbd">Backspace</span> 退碼，<span class="kbd">Esc</span> 清空組字；<span class="kbd">[</span>/<span class="kbd">]</span> 換頁。</div>
+        <div class="small muted" style="margin-top:6px">說明：此為教學／自用工具，內建的是 <em>示範用小型碼表</em>。可用下方「載入碼表」改為完整版（支援 JSON 與 CIN，會讀取 <code>%keyname</code> 與 <code>%selkey</code>）。所有資料皆於本機瀏覽器處理，不上傳網路。</div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <div class="row two">
+        <div>
+          <label for="editor" class="muted">輸入區（支援 IME）</label>
+          <textarea id="editor" placeholder="在這裡打字…（啟用 IME 後可直接以大新倉頡輸入，或貼到其他地方）"></textarea>
+        </div>
+        <div>
+          <div class="muted">組字狀態</div>
+          <div class="comp" id="comp">（未組字）</div>
+          <div style="margin-top:10px; display:grid; gap:8px;">
+            <div class="muted">候選（<span id="pageInfo">0/0</span>）</div>
+            <div class="cands" id="cands"></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="small muted">載入自訂碼表（JSON 或 CIN）
+          <input type="file" id="fileInput" accept="application/json,.json,.cin,text/plain" />
+        </div>
+        <div class="small">示範碼表：<span class="hl">大新（newcj）風格，四碼上限 + 前綴簡碼</span></div>
+        <div class="small">
+          <button id="exportJson">匯出目前碼表為 JSON</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h3 style="margin-top:0">如何使用你的大新 .CIN？</h3>
+      <ol>
+        <li>從你的電腦選擇 <code>.cin</code> 檔案，點「載入碼表」。本頁會自動解析 <code>%keyname</code> 與 <code>%chardef</code> 區塊。</li>
+        <li>若你的 <code>.cin</code> 以 <em>U+XXXX</em> 代碼表示字元，也會自動轉碼。</li>
+        <li>部分舊檔可能是 Big5 編碼，瀏覽器讀入會亂碼；請先用編輯器另存為 UTF‑8 再載入（如：Notepad++、VS Code）。</li>
+      </ol>
+      <p class="small muted">備註：請自行確認 .CIN 檔案的授權與使用範圍。官方大新倉頡屬商業軟體，請遵守授權條款。</p>
+    </section>
+
+    <section class="card section">
+      <h3 style="margin-top:0">部署到 GitHub Pages（github.io）</h3>
+      <ol>
+        <li>在 GitHub 建立倉庫（例如 <code>yourname.github.io</code> 或任意專案倉庫）。</li>
+        <li>把這個 <code>index.html</code> 檔放進倉庫的根目錄，推送。</li>
+        <li>到 Repo → Settings → Pages，Source 選擇 <code>main /root</code>（或 <code>docs/</code> 資料夾）。</li>
+        <li>等綠色勾勾後，開啟顯示的網址，即可在公司電腦上直接使用本頁 IME。</li>
+      </ol>
+    </section>
+
+    <section class="card section">
+      <h3 style="margin-top:0">快捷鍵一覽</h3>
+      <div class="small">
+        <p>切換：<span class="kbd">Ctrl</span> + <span class="kbd">/</span>； 選字：<span class="kbd">1–9</span> 以及碼表的 <code>%selkey</code>； 取第一：<span class="kbd">Space</span>； 退碼：<span class="kbd">Backspace</span>；
+           清空：<span class="kbd">Esc</span>； 換頁：<span class="kbd">[</span> / <span class="kbd">]</span>。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // === Minimal demo Dachen-style table (VERY SMALL). Replace with full newcj JSON/CIN ===
+    const demoTable = {
+      "a": ["日","曰","晶","晉"],
+      "ab": ["明","盟","朋"],
+      "o": ["人","仁","從","今"],
+      "on": ["們","你","他"],
+      "ml": ["中","串"],
+      "m": ["一","丁","七","丈"],
+      "mm": ["二","三","王"],
+      "i": ["戈","成","戊"],
+      "j": ["十","寸"],
+      "k": ["大","太","天"],
+      ";h": ["禾"],
+      "r": ["口","品","唱"],
+      "rd": ["可","右","吉"],
+      "b": ["月","用","服"],
+      "d": ["木","本","林","森"],
+      "dd": ["林","森"],
+      "gh": ["等","節"],
+      "t": ["廿","甘","苔","苗"],
+      "tc": ["華","花"],
+      "q": ["手","打","拉"],
+      "wk": ["國","圖"],
+      "onm": ["你","他","她"],
+      "qk": ["指","拿"],
+      "yk": ["上","丈"],
+      "mlr": ["中國"],
+      "oon": ["從"],
+    };
+
+    // Globals for allowed code keys & selection keys
+    let allowedKeys = new Set('abcdefghijklmnopqrstuvwxyz'.split('').concat([";","'",",",".","/","?","[","]","`"]));
+    let selectionKeys = new Set('123456789'.split(''));
+
+    // Build prefix index for fast lookup of short codes (prefix candidates)
+    function buildPrefixIndex(table) {
+      const index = new Map();
+      for (const [code, chars] of Object.entries(table)) {
+        for (let i = 1; i <= code.length; i++) {
+          const p = code.slice(0, i);
+          if (!index.has(p)) index.set(p, []);
+          const arr = index.get(p);
+          for (const ch of chars) {
+            if (!arr.includes(ch)) arr.push(ch);
+            if (arr.length > 160) break;
+          }
+        }
+      }
+      return index;
+    }
+
+    // CIN parser (supports %keyname, %selkey, %chardef)
+    function parseCin(text) {
+      const map = {};
+      const keys = new Set();
+      let selkeys = new Set();
+
+      const add = (code, ch) => {
+        if (!code || !ch) return;
+        if (!map[code]) map[code] = [];
+        if (!map[code].includes(ch)) map[code].push(ch);
+      };
+
+      const lines = text.replace(/\r\n?/g, '\n').split('\n');
+      let inChar = false;
+      let inKeyname = false;
+
+      for (let raw of lines) {
+        const line = raw.replace(/^\uFEFF/, '').trim();
+        if (!line) continue;
+        if (line.startsWith('#')) continue;
+
+        if (/^%selkey\b/i.test(line)) {
+          const s = line.split(/\s+/)[1] || '';
+          selkeys = new Set(s.split(''));
+          continue;
+        }
+
+        if (/^%keyname\b/i.test(line) && /begin/i.test(line)) { inKeyname = true; continue; }
+        if (inKeyname && (/^%keyname\b/i.test(line) && /end/i.test(line))) { inKeyname = false; continue; }
+        if (inKeyname) {
+          const m = line.match(/^(.)(\s+)/);
+          if (m) { keys.add(m[1].toLowerCase()); }
+          continue;
+        }
+
+        if (/^%chardef\b/i.test(line) && /begin/i.test(line)) { inChar = true; continue; }
+        if (inChar && ((/^%chardef\b/i.test(line) && /end/i.test(line)) || /^%end\b/i.test(line))) { inChar = false; continue; }
+
+        if (inChar) {
+          const parts = line.split(/\s+/).filter(Boolean);
+          if (parts.length >= 2) {
+            const code = parts.shift().toLowerCase();
+            for (const token of parts) {
+              let ch = token;
+              if (/^U\+[0-9a-fA-F]{4,6}$/.test(ch)) ch = String.fromCodePoint(parseInt(ch.slice(2), 16));
+              if (ch) add(code, ch);
+            }
+          }
+          continue;
+        }
+      }
+
+      // Fallback if no %chardef explicit
+      if (Object.keys(map).length === 0) {
+        for (let raw of lines) {
+          const line = raw.trim();
+          if (!line || line.startsWith('#') || line.startsWith('%')) continue;
+          const parts = line.split(/\s+/).filter(Boolean);
+          if (parts.length >= 2) {
+            const code = parts.shift().toLowerCase();
+            for (const token of parts) add(code, token);
+          }
+        }
+      }
+
+      return { table: map, keys, selkeys };
+    }
+
+    // Persistent storage of user-loaded table
+    const STORAGE_KEY = "newcj_table_json_v3";
+    function loadUserTable() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (obj && typeof obj === 'object') return obj;
+      } catch {}
+      return null;
+    }
+    function saveUserTable(obj) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch {} }
+
+    let codeTable = loadUserTable() || demoTable;
+    let prefixIndex = buildPrefixIndex(codeTable);
+
+    // IME State
+    const state = { enabled: false, buffer: "", candidates: [], page: 0, pageSize: 9, maxCodeLen: 4 };
+
+    const editor = document.getElementById('editor');
+    const comp = document.getElementById('comp');
+    const cands = document.getElementById('cands');
+    const pageInfo = document.getElementById('pageInfo');
+    const toggle = document.getElementById('toggleIme');
+    const status = document.getElementById('status');
+    const imeStateText = document.getElementById('imeStateText');
+    const fileInput = document.getElementById('fileInput');
+    const exportBtn = document.getElementById('exportJson');
+
+    function setEnabled(on) {
+      state.enabled = on; toggle.checked = on; status.classList.toggle('enabled', on); imeStateText.textContent = on ? 'IME 已啟用' : 'IME 已停用'; if (!on) clearBuffer(); editor.focus(); }
+
+    toggle.addEventListener('change', e => setEnabled(toggle.checked));
+    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key === '/') { e.preventDefault(); setEnabled(!state.enabled); }});
+
+    function refreshCandidates() { const all = prefixIndex.get(state.buffer) || []; state.candidates = all; state.page = 0; renderCandidates(); }
+
+    function renderCandidates() {
+      cands.innerHTML = '';
+      if (!state.buffer) { pageInfo.textContent = '0/0'; comp.textContent = '（未組字）'; return; }
+      comp.textContent = state.buffer.replace(/./g, ch => ch.length === 1 ? ch.toUpperCase() : ch);
+      const totalPages = Math.max(1, Math.ceil((state.candidates.length) / state.pageSize));
+      pageInfo.textContent = `${Math.min(state.page+1, totalPages)}/${totalPages}`;
+      const start = state.page * state.pageSize; const slice = state.candidates.slice(start, start + state.pageSize);
+      slice.forEach((ch, idx) => { const div = document.createElement('div'); div.className = 'cand'; div.textContent = `${idx+1}. ${ch}`; div.addEventListener('click', () => commitChar(ch)); cands.appendChild(div); });
+      for (let k = slice.length; k < state.pageSize; k++) { const div = document.createElement('div'); div.className = 'cand muted'; div.textContent = '—'; cands.appendChild(div); }
+    }
+
+    function clearBuffer() { state.buffer = ''; state.candidates = []; state.page = 0; renderCandidates(); }
+    function commitChar(ch) { insertAtCursor(editor, ch); clearBuffer(); }
+
+    function insertAtCursor(textarea, text) {
+      const start = textarea.selectionStart; const end = textarea.selectionEnd; const before = textarea.value.slice(0, start); const after  = textarea.value.slice(end);
+      textarea.value = before + text + after; const pos = start + text.length; textarea.selectionStart = textarea.selectionEnd = pos; textarea.dispatchEvent(new Event('input')); textarea.focus(); }
+
+    editor.addEventListener('keydown', (e) => {
+      if (!state.enabled) return;
+      // Accept any single-char that appears in allowedKeys (letters are case-insensitive)
+      if (e.key && e.key.length === 1) {
+        let k = e.key;
+        const lower = k.toLowerCase();
+        if (allowedKeys.has(lower) || allowedKeys.has(k)) {
+          e.preventDefault();
+          if (state.buffer.length < state.maxCodeLen) {
+            state.buffer += lower.match(/[a-z]/) ? lower : k; // keep punctuation as-is
+            refreshCandidates();
+          }
+          return;
+        }
+      }
+
+      // selection keys
+      if (selectionKeys.has(e.key) && state.buffer) {
+        e.preventDefault();
+        const idx = parseInt(e.key, 10) - 1; const start = state.page * state.pageSize; const ch = state.candidates[start + idx]; if (ch) commitChar(ch);
+        return;
+      }
+
+      if (e.key === ' ' && state.buffer) { e.preventDefault(); const ch = state.candidates[state.page * state.pageSize]; if (ch) commitChar(ch); else clearBuffer(); return; }
+      if ((e.key === 'Enter' || e.key === 'Tab') && state.buffer) { e.preventDefault(); const ch = state.candidates[state.page * state.pageSize] || state.buffer; if (typeof ch === 'string' && ch.length === 1) commitChar(ch); else { insertAtCursor(editor, state.buffer); clearBuffer(); } return; }
+      if (e.key === 'Backspace' && state.buffer) { e.preventDefault(); state.buffer = state.buffer.slice(0, -1); if (state.buffer) refreshCandidates(); else clearBuffer(); return; }
+      if (e.key === 'Escape' && state.buffer) { e.preventDefault(); clearBuffer(); return; }
+      if (e.key === '[' && state.buffer) { e.preventDefault(); if (state.page > 0) { state.page--; renderCandidates(); } return; }
+      if (e.key === ']' && state.buffer) { e.preventDefault(); const totalPages = Math.max(1, Math.ceil(state.candidates.length / state.pageSize)); if (state.page < totalPages - 1) { state.page++; renderCandidates(); } return; }
+      if (state.buffer && e.key.length === 1) { e.preventDefault(); return; }
+    });
+
+    // File loader for JSON or CIN tables
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0]; if (!file) return;
+      try {
+        const text = await file.text();
+        let parsed = null;
+        const lower = file.name.toLowerCase();
+        if (lower.endsWith('.cin')) {
+          parsed = parseCin(text);
+          if (parsed.keys && parsed.keys.size) { allowedKeys = new Set([...parsed.keys, ...'abcdefghijklmnopqrstuvwxyz'.split('')]); }
+          if (parsed.selkeys && parsed.selkeys.size) { selectionKeys = new Set([...selectionKeys, ...parsed.selkeys]); }
+        } else {
+          try {
+            const obj = JSON.parse(text); const normalized = {};
+            for (const [k, v] of Object.entries(obj)) { if (Array.isArray(v)) normalized[k.toLowerCase()] = v.filter(Boolean).map(x => String(x)); else if (typeof v === 'string') normalized[k.toLowerCase()] = v.split('').filter(Boolean); }
+            parsed = { table: normalized };
+          } catch { parsed = parseCin(text); if (parsed.keys && parsed.keys.size) { allowedKeys = new Set([...parsed.keys, ...'abcdefghijklmnopqrstuvwxyz'.split('')]); } if (parsed.selkeys && parsed.selkeys.size) { selectionKeys = new Set([...selectionKeys, ...parsed.selkeys]); } }
+        }
+        const table = parsed.table; const count = Object.keys(table).length; if (count < 10) throw new Error('碼表內容過少，可能解析失敗');
+        codeTable = table; prefixIndex = buildPrefixIndex(codeTable); saveUserTable(codeTable); clearBuffer(); alert('已載入碼表（' + count + ' 組碼）。');
+      } catch (err) { console.error(err); alert('載入失敗：請確認檔案為 JSON 或 CIN（含 %keyname / %chardef），且編碼為 UTF‑8。'); }
+      fileInput.value = '';
+    });
+
+    // Export current table as JSON
+    exportBtn.addEventListener('click', () => { const blob = new Blob([JSON.stringify(codeTable)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'newcj.json'; a.click(); URL.revokeObjectURL(url); });
+
+    // Init
+    let codeTableFromStorage = loadUserTable(); if (codeTableFromStorage) { codeTable = codeTableFromStorage; }
+    prefixIndex = buildPrefixIndex(codeTable);
+    setEnabled(false); renderCandidates();
+  </script>
+</body>
+</html>
