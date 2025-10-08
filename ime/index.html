@@ -42,7 +42,7 @@
 </head>
 <body>
   <header>
-    <h1>大新倉頡 Web IME（只限定彭柏勳可用）</h1>
+    <h1>大新倉頡 Web IME（純前端，免安裝）</h1>
   </header>
   <main>
     <section class="card section">
@@ -326,27 +326,29 @@
     editor.addEventListener('keydown', (e) => {
       if (!state.enabled) return;
 
-      // ✅ 允許系統/瀏覽器快捷鍵（不經 IME 攔截）
-      // 支援 Windows 的 Ctrl 與 macOS 的 Cmd
+      // ✅ 放行系統/瀏覽器快捷鍵（Windows 的 Ctrl、macOS 的 Cmd）
       if (e.ctrlKey || e.metaKey) {
         const k = (e.key || '').toLowerCase();
-        // 常見快捷：全選/複製/剪下/貼上/復原/重做/儲存/搜尋/列印
         if (['a','c','x','v','z','y','s','f','p'].includes(k)) {
-          return; // 直接交給瀏覽器處理
+          return; // 交給瀏覽器原生處理
         }
       }
 
-      const isLetter = /^[a-z]$/i.test(e.key);
-      if (isLetter) {
-        e.preventDefault();
-        if (state.buffer.length < state.maxCodeLen) {
-          state.buffer += e.key.toLowerCase();
-          refreshCandidates();
+      // ✅ 依 allowedKeys（含 %keyname 解析後的 ; , . / 等）判斷是否為可用碼鍵
+      if (e.key && e.key.length === 1) {
+        const lower = e.key.toLowerCase();
+        if (allowedKeys.has(lower) || allowedKeys.has(e.key)) {
+          e.preventDefault();
+          if (state.buffer.length < state.maxCodeLen) {
+            // 字母轉小寫；標點維持原樣（例如 ; , . / ` 等）
+            state.buffer += /[a-z]/.test(lower) ? lower : e.key;
+            refreshCandidates();
+          }
+          return;
         }
-        return;
       }
 
-      if (/^[1-9]$/.test(e.key) && state.buffer) {
+      if (selectionKeys.has(e.key) && state.buffer) {
         e.preventDefault();
         const idx = parseInt(e.key, 10) - 1;
         const start = state.page * state.pageSize;
@@ -355,7 +357,7 @@
         return;
       }
 
-      if (e.key === ' ' && state.buffer) { // Space: take first
+      if (e.key === ' ' && state.buffer) { // Space: 取第一候選
         e.preventDefault();
         const ch = state.candidates[state.page * state.pageSize];
         if (ch) commitChar(ch); else clearBuffer();
@@ -382,12 +384,12 @@
         return;
       }
 
-      if (e.key === '[' && state.buffer) {
+      if (e.key === '[' && state.buffer) { // 上一頁
         e.preventDefault();
         if (state.page > 0) { state.page--; renderCandidates(); }
         return;
       }
-      if (e.key === ']' && state.buffer) {
+      if (e.key === ']' && state.buffer) { // 下一頁
         e.preventDefault();
         const totalPages = Math.max(1, Math.ceil(state.candidates.length / state.pageSize));
         if (state.page < totalPages - 1) { state.page++; renderCandidates(); }
@@ -395,6 +397,7 @@
       }
 
       if (state.buffer && e.key.length === 1) {
+        // 有組字緩衝時，避免其它單鍵輸入插入到文字區
         e.preventDefault();
         return;
       }
