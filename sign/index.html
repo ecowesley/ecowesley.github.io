@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>簡易雲端簽名（純前端，GitHub Pages 可用）</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#121822; --muted:#9fb0c3; --accent:#4da3ff; --ok:#20c997; --warn:#f59f00; }
+    html,body{height:100%;}
+    body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, "PingFang TC", "Microsoft JhengHei", Arial, sans-serif; background:var(--bg); color:#e6edf3;}
+    header{position:sticky; top:0; z-index:5; background:linear-gradient(180deg, rgba(11,15,20,.95), rgba(11,15,20,.7)); backdrop-filter: blur(6px); border-bottom:1px solid #1f2a3a;}
+    header .inner{max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; gap:12px; align-items:center;}
+    h1{font-size:18px; margin:0; letter-spacing:0.5px}
+    main{max-width:1100px; margin:16px auto; padding:0 16px 80px;}
+    .grid{display:grid; grid-template-columns: 360px 1fr; gap:16px;}
+    .card{background:var(--card); border:1px solid #1f2a3a; border-radius:16px; padding:14px; box-shadow: 0 6px 18px rgba(0,0,0,.25)}
+    .card h2{font-size:16px; margin:0 0 10px 0}
+    label{font-size:13px; color:var(--muted)}
+    input[type="text"], input[type="email"], select {width:100%; padding:10px 12px; border-radius:12px; border:1px solid #2a3950; background:#0f151e; color:#e6edf3; outline:none}
+    input[type="file"]{width:100%}
+    .row{display:flex; gap:10px; align-items:center}
+    .btn{appearance:none; border:none; padding:10px 14px; border-radius:12px; background:#1b293b; color:#e6edf3; cursor:pointer; font-weight:600;}
+    .btn:hover{background:#22344b}
+    .btn.primary{background:var(--accent); color:#041728}
+    .btn.primary:hover{filter:brightness(1.05)}
+    .btn.ghost{background:transparent; border:1px dashed #2a3950}
+    .pill{display:inline-block; padding:4px 10px; border-radius:999px; background:#182234; color:#bcd; font-size:12px}
+    canvas{max-width:100%; background:#0e1520; border-radius:12px; border:1px solid #1f2a3a}
+    #pdfWrap{position:relative; overflow:auto;}
+    #pdfCanvas{cursor: crosshair}
+    #hint{font-size:12px; color:var(--muted)}
+    .footer{margin-top:10px; font-size:12px; color:var(--muted)}
+    .kbd{display:inline-block; border:1px solid #394b63; padding:0 6px; border-radius:6px; background:#0a111b; font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px}
+    .badge{font-size:12px; color:#9fd;}
+    .hr{height:1px; background:#1f2a3a; margin:10px 0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <h1>簡易雲端簽名（純前端）</h1>
+      <span class="pill">不需伺服器 · 可放 GitHub Pages</span>
+    </div>
+  </header>
+  <main>
+    <div class="grid">
+      <section class="card">
+        <h2>① 上傳 PDF</h2>
+        <input id="pdfFile" type="file" accept="application/pdf" />
+        <div class="footer">檔案僅在您的瀏覽器處理，不會上傳到任何伺服器。</div>
+        <div class="hr"></div>
+        <h2>② 簽名板</h2>
+        <canvas id="sigPad" width="320" height="140"></canvas>
+        <div class="row">
+          <button class="btn" id="clearSig">清除</button>
+          <button class="btn" id="useTextSig">用打字產生簽名</button>
+        </div>
+        <div class="hr"></div>
+        <h2>簽署者資訊（會印到 PDF 角落）</h2>
+        <label>姓名</label>
+        <input id="signerName" type="text" placeholder="王小明" />
+        <div style="height:8px"></div>
+        <label>Email（可留空）</label>
+        <input id="signerEmail" type="email" placeholder="name@example.com" />
+        <div style="height:8px"></div>
+        <label>簽署原因/備註（可留空）</label>
+        <input id="signReason" type="text" placeholder="例如：同意此合約條款" />
+        <div class="hr"></div>
+        <h2>③ 下載</h2>
+        <button class="btn primary" id="downloadBtn" disabled>套用簽名並下載</button>
+        <div class="footer">提示：點右側 PDF 頁面任何位置即可放置簽名。可重複點不同頁面多次簽。</div>
+      </section>
+      <section class="card">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:8px">
+          <h2 style="margin:0">預覽與放置</h2>
+          <div class="row" style="gap:8px">
+            <label>頁次</label>
+            <select id="pageSelect"></select>
+            <button class="btn" id="resetPlacements">清除此頁簽名</button>
+          </div>
+        </div>
+        <div id="pdfWrap">
+          <canvas id="pdfCanvas"></canvas>
+        </div>
+        <div id="hint">狀態：<span id="status">尚未載入 PDF</span></div>
+      </section>
+    </div>
+    <p class="footer">※ 本工具屬「視覺蓋章」：在 PDF 上貼上簽名圖片與文字，方便多方確認；<span class="badge">非</span> PKI/數位簽章，不含第三方稽核/身分驗證與不可否認性。若您需要合規稽核與法務強度，請改用專業電子簽章服務。</p>
+  </main>
+
+  <!-- 依賴套件：pdf.js（預覽） / pdf-lib（寫檔） / signature_pad（簽名繪製） -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script>
+    // 設定 pdf.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+  <script>
+  (function(){
+    const pdfFile = document.getElementById('pdfFile');
+    const pdfCanvas = document.getElementById('pdfCanvas');
+    const pdfCtx = pdfCanvas.getContext('2d');
+    const pageSelect = document.getElementById('pageSelect');
+    const statusEl = document.getElementById('status');
+    const resetPlacementsBtn = document.getElementById('resetPlacements');
+
+    const sigCanvas = document.getElementById('sigPad');
+    const sigPad = new SignaturePad(sigCanvas, {minWidth: 0.7, maxWidth: 2.2, penColor: '#e6edf3', backgroundColor: 'transparent'});
+    const clearSigBtn = document.getElementById('clearSig');
+    const useTextSigBtn = document.getElementById('useTextSig');
+
+    const signerName = document.getElementById('signerName');
+    const signerEmail = document.getElementById('signerEmail');
+    const signReason = document.getElementById('signReason');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    let pdfDocProxy = null;          // pdf.js 文件代理（用於預覽）
+    let pdfArrayBuffer = null;       // 原始 PDF 的 ArrayBuffer（用於寫入）
+    let placements = {};             // { pageIndex: [ {x,y,w,h, sigDataUrl} ] }
+
+    function setStatus(msg){ statusEl.textContent = msg; }
+
+    // 讀取 PDF 檔
+    pdfFile.addEventListener('change', async (e) => {
+      const f = e.target.files[0];
+      if(!f){ return; }
+      pdfArrayBuffer = await f.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({data: pdfArrayBuffer});
+      pdfDocProxy = await loadingTask.promise;
+
+      // 填充分頁下拉
+      pageSelect.innerHTML = '';
+      for(let i=1;i<=pdfDocProxy.numPages;i++){
+        const opt = document.createElement('option');
+        opt.value = String(i);
+        opt.textContent = `${i} / ${pdfDocProxy.numPages}`;
+        pageSelect.appendChild(opt);
+      }
+      placements = {}; // 重置所有頁面放置紀錄
+      await renderPage(1);
+      downloadBtn.disabled = false;
+      setStatus('PDF 已載入，點擊預覽畫面任一處可放置簽名');
+    });
+
+    // 頁次切換
+    pageSelect.addEventListener('change', async () => {
+      const pageNum = parseInt(pageSelect.value, 10);
+      await renderPage(pageNum);
+    });
+
+    // 清除此頁的簽名
+    resetPlacementsBtn.addEventListener('click', async () => {
+      const pageIndex = parseInt(pageSelect.value, 10) - 1;
+      if(placements[pageIndex]) delete placements[pageIndex];
+      await renderPage(pageIndex+1);
+    });
+
+    // 繪製 PDF 指定頁至預覽 canvas
+    async function renderPage(pageNum){
+      const page = await pdfDocProxy.getPage(pageNum);
+      const viewport = page.getViewport({scale: 1});
+      const maxW = document.getElementById('pdfWrap').clientWidth - 4; // 邊界
+      const scale = Math.min(1.6, Math.max(0.5, maxW / viewport.width));
+      const vp = page.getViewport({scale});
+      pdfCanvas.width = Math.floor(vp.width);
+      pdfCanvas.height = Math.floor(vp.height);
+      await page.render({canvasContext: pdfCtx, viewport: vp}).promise;
+
+      // 將既有的放置（此頁）描繪在預覽上
+      const pageIndex = pageNum - 1;
+      if(placements[pageIndex]){
+        for(const p of placements[pageIndex]){
+          drawPlacementPreview(p);
+        }
+      }
+    }
+
+    // 預覽上點擊以放置簽名
+    pdfCanvas.addEventListener('click', async (ev) => {
+      if(!pdfDocProxy) return;
+      if(sigPad.isEmpty()){
+        alert('請先在左側簽名板簽名（或按「用打字產生簽名」）。');
+        return;
+      }
+      const rect = pdfCanvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+
+      // 預設簽名寬度為預覽寬度的 35%（可調），高度依比例
+      const sigImg = new Image();
+      const sigDataUrl = sigPad.toDataURL('image/png');
+      await new Promise(r => { sigImg.onload = r; sigImg.src = sigDataUrl; });
+
+      const targetWidthPx = Math.min(pdfCanvas.width * 0.35, sigImg.width);
+      const scale = targetWidthPx / sigImg.width;
+      const targetHeightPx = sigImg.height * scale;
+
+      const pageIndex = parseInt(pageSelect.value, 10) - 1;
+      placements[pageIndex] = placements[pageIndex] || [];
+      const placement = {x, y, w: targetWidthPx, h: targetHeightPx, sigDataUrl};
+      placements[pageIndex].push(placement);
+
+      drawPlacementPreview(placement);
+    });
+
+    function drawPlacementPreview(p){
+      // 畫半透明框代表放置位置
+      pdfCtx.save();
+      pdfCtx.globalAlpha = 0.2;
+      pdfCtx.fillStyle = '#4da3ff';
+      pdfCtx.fillRect(p.x, p.y - p.h, p.w, p.h);
+      pdfCtx.restore();
+
+      // 畫邊框
+      pdfCtx.strokeStyle = '#4da3ff';
+      pdfCtx.lineWidth = 2;
+      pdfCtx.strokeRect(p.x, p.y - p.h, p.w, p.h);
+
+      // 提示角標
+      pdfCtx.fillStyle = '#4da3ff';
+      pdfCtx.font = '12px ui-monospace, monospace';
+      pdfCtx.fillText('簽名', p.x + 6, p.y - p.h + 16);
+    }
+
+    // 清除簽名板
+    clearSigBtn.addEventListener('click', () => sigPad.clear());
+
+    // 文字轉手寫風格（簡易）
+    useTextSigBtn.addEventListener('click', () => {
+      const name = signerName.value.trim();
+      if(!name) return alert('請先在「姓名」欄輸入要生成的簽名文字');
+      const ctx = sigCanvas.getContext('2d');
+      ctx.clearRect(0,0,sigCanvas.width, sigCanvas.height);
+      // 以變化字距/旋轉模擬手寫（非真正手寫字體）
+      ctx.save();
+      ctx.translate(12, sigCanvas.height/2);
+      ctx.rotate((Math.random()*4-2) * Math.PI/180);
+      ctx.fillStyle = '#e6edf3';
+      ctx.font = '36px "Times New Roman", "DFKai-SB", STKaiti, serif';
+      ctx.fillText(name, 0, 12);
+      ctx.restore();
+    });
+
+    // 下載：把所有 placements 寫入 PDF 並加上角落簽署文字/審計頁
+    downloadBtn.addEventListener('click', async () => {
+      if(!pdfArrayBuffer) return;
+      const pdfDoc = await PDFLib.PDFDocument.load(pdfArrayBuffer);
+
+      // 逐頁處理放置
+      for(const [pageIndexStr, items] of Object.entries(placements)){
+        const pageIndex = parseInt(pageIndexStr,10);
+        if(!items || !items.length) continue;
+        const page = pdfDoc.getPage(pageIndex);
+        const { width: pw, height: ph } = page.getSize();
+
+        for(const p of items){
+          const sigPng = await pdfDoc.embedPng(p.sigDataUrl);
+          // 預覽座標 -> PDF 座標
+          const scaleX = pw / pdfCanvas.width;
+          const scaleY = ph / pdfCanvas.height;
+          const drawW = p.w * scaleX;
+          const drawH = p.h * scaleY;
+          const pdfX = p.x * scaleX;
+          const pdfY = ph - (p.y * scaleY); // 頂->底
+
+          page.drawImage(sigPng, {x: pdfX, y: pdfY - drawH, width: drawW, height: drawH});
+
+          // 角落小字（簽署者資訊）
+          const name = signerName.value.trim();
+          const email = signerEmail.value.trim();
+          const reason = signReason.value.trim();
+          const stamp = new Date().toISOString();
+          const info = [
+            name ? `Signed by: ${name}` : null,
+            email ? `Email: ${email}` : null,
+            reason ? `Reason: ${reason}` : null,
+            `Signed at: ${stamp}`
+          ].filter(Boolean).join('  •  ');
+          page.drawText(info, {x: Math.max(8, pdfX), y: Math.max(8, pdfY - drawH - 14), size: 8, color: PDFLib.rgb(0.62,0.78,0.94)});
+        }
+      }
+
+      // 追加簡易審計頁（非合規稽核，僅供參考）
+      const auditPage = pdfDoc.addPage();
+      const { width: aw, height: ah } = auditPage.getSize();
+      const t = (s, x, y, size=12) => auditPage.drawText(s, {x, y, size});
+      t('Simple Visual Signature Summary (Non-PKI)', 36, ah-60, 16);
+      const now = new Date();
+      const name = signerName.value.trim() || '-';
+      const email = signerEmail.value.trim() || '-';
+      const reason = signReason.value.trim() || '-';
+      t(`Generated at: ${now.toISOString()}`, 36, ah-92);
+      t(`Signer: ${name}`, 36, ah-112);
+      t(`Email: ${email}`, 36, ah-132);
+      t(`Reason: ${reason}`, 36, ah-152);
+      t('NOTE: This page is an informal summary for convenience.', 36, ah-192);
+      t('It is NOT a cryptographic signature nor a third-party audit trail.', 36, ah-212);
+
+      const bytes = await pdfDoc.save({updateFieldAppearances: false});
+      const blob = new Blob([bytes], {type: 'application/pdf'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `signed_${Date.now()}.pdf`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  })();
+  </script>
+</body>
+</html>
