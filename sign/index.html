@@ -9,7 +9,7 @@
     html,body{height:100%;}
     body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, "PingFang TC", "Microsoft JhengHei", Arial, sans-serif; background:var(--bg); color:#e6edf3;}
     header{position:sticky; top:0; z-index:5; background:linear-gradient(180deg, rgba(11,15,20,.95), rgba(11,15,20,.7)); backdrop-filter: blur(6px); border-bottom:1px solid #1f2a3a;}
-    header .inner{max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; gap:12px; align-items:center;}
+    header .inner{max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; gap:12px; align-items:center}
     h1{font-size:18px; margin:0; letter-spacing:0.5px}
     main{max-width:1100px; margin:16px auto; padding:0 16px 80px;}
     .grid{display:grid; grid-template-columns: 360px 1fr; gap:16px;}
@@ -33,6 +33,10 @@
     .kbd{display:inline-block; border:1px solid #394b63; padding:0 6px; border-radius:6px; background:#0a111b; font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12px}
     .badge{font-size:12px; color:#9fd;}
     .hr{height:1px; background:#1f2a3a; margin:10px 0}
+    .hint-bullets{font-size:12px; color:#9fb0c3; line-height:1.5}
+    .hint-bullets li{margin:4px 0}
+    .tiny{font-size:12px;}
+    .tag{font-size:11px; padding:2px 6px; border-radius:999px; background:#182234; border:1px solid #203049}
   </style>
 </head>
 <body>
@@ -55,6 +59,16 @@
           <button class="btn" id="clearSig">清除</button>
           <button class="btn" id="useTextSig">用打字產生簽名</button>
         </div>
+        <div style="height:8px"></div>
+        <label>簽名對象</label>
+        <select id="roleSelect">
+          <option value="maker">製表人</option>
+          <option value="supervisor">督導</option>
+          <option value="director">主任</option>
+        </select>
+        <div style="height:8px"></div>
+        <label>旋轉角度（度）</label>
+        <input id="angleInput" type="range" min="-20" max="20" step="1" value="0" />
         <div class="hr"></div>
         <h2>簽署者資訊（會印到 PDF 角落）</h2>
         <label>姓名</label>
@@ -73,16 +87,27 @@
       <section class="card">
         <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:8px">
           <h2 style="margin:0">預覽與放置</h2>
-          <div class="row" style="gap:8px">
+          <div class="row" style="gap:8px; flex-wrap:wrap">
             <label>頁次</label>
             <select id="pageSelect"></select>
             <button class="btn" id="resetPlacements">清除此頁簽名</button>
           </div>
         </div>
+        <div class="row" style="flex-wrap:wrap; gap:8px; margin:8px 0 12px">
+          <span class="tiny">快捷放置：</span>
+          <button class="btn ghost tiny" id="placeMakerLeft">製表人 左下</button>
+          <button class="btn ghost tiny" id="placeSupMid">督導 下方中間</button>
+          <button class="btn ghost tiny" id="placeDirRight">主任 右下</button>
+          <button class="btn ghost tiny" id="placeAll">一鍵放三欄位（本頁底部）</button>
+        </div>
         <div id="pdfWrap">
           <canvas id="pdfCanvas"></canvas>
         </div>
         <div id="hint">狀態：<span id="status">尚未載入 PDF</span></div>
+        <ul class="hint-bullets">
+          <li>先選「簽名對象」，再在畫面上點位置，或用上方快捷鍵。</li>
+          <li>需要固定到最後一頁？先切到最後一頁再按「一鍵放三欄位」。</li>
+        </ul>
       </section>
     </div>
     <p class="footer">※ 本工具屬「視覺蓋章」：在 PDF 上貼上簽名圖片與文字，方便多方確認；<span class="badge">非</span> PKI/數位簽章，不含第三方稽核/身分驗證與不可否認性。若您需要合規稽核與法務強度，請改用專業電子簽章服務。</p>
@@ -114,11 +139,26 @@
     const signerName = document.getElementById('signerName');
     const signerEmail = document.getElementById('signerEmail');
     const signReason = document.getElementById('signReason');
+    const roleSelect = document.getElementById('roleSelect');
+    const angleInput = document.getElementById('angleInput');
     const downloadBtn = document.getElementById('downloadBtn');
+
+    // URL 參數可預選並鎖定角色，例如 ?role=supervisor
+    const roleParam = new URLSearchParams(location.search).get('role');
+    if (roleParam) {
+      roleSelect.value = roleParam;
+      roleSelect.disabled = true;
+    }
+
+    const roleMeta = {
+      maker:      {label:'製表人', color:'#4da3ff'},
+      supervisor: {label:'督導',   color:'#20c997'},
+      director:   {label:'主任',   color:'#f59f00'}
+    };
 
     let pdfDocProxy = null;          // pdf.js 文件代理（用於預覽）
     let pdfArrayBuffer = null;       // 原始 PDF 的 ArrayBuffer（用於寫入）
-    let placements = {};             // { pageIndex: [ {x,y,w,h, sigDataUrl} ] }
+    let placements = {};             // { pageIndex: [ {x,y,w,h, sigDataUrl, role, angleDeg} ] }
 
     function setStatus(msg){ statusEl.textContent = msg; }
 
@@ -177,18 +217,33 @@
       }
     }
 
-    // 預覽上點擊以放置簽名
-    pdfCanvas.addEventListener('click', async (ev) => {
-      if(!pdfDocProxy) return;
+    function ensureSig(){
       if(sigPad.isEmpty()){
         alert('請先在左側簽名板簽名（或按「用打字產生簽名」）。');
-        return;
+        return false;
       }
+      return true;
+    }
+
+    // 預覽上點擊以放置簽名（使用目前選定角色 & 角度）
+    pdfCanvas.addEventListener('click', async (ev) => {
+      if(!pdfDocProxy) return;
+      if(!ensureSig()) return;
       const rect = pdfCanvas.getBoundingClientRect();
       const x = ev.clientX - rect.left;
       const y = ev.clientY - rect.top;
+      const placement = await buildPlacementAt(x, y, roleSelect.value, parseInt(angleInput.value, 10));
+      addPlacement(placement);
+      drawPlacementPreview(placement);
+    });
 
-      // 預設簽名寬度為預覽寬度的 35%（可調），高度依比例
+    function addPlacement(p){
+      const pageIndex = parseInt(pageSelect.value, 10) - 1;
+      placements[pageIndex] = placements[pageIndex] || [];
+      placements[pageIndex].push(p);
+    }
+
+    async function buildPlacementAt(x, y, role, angleDeg){
       const sigImg = new Image();
       const sigDataUrl = sigPad.toDataURL('image/png');
       await new Promise(r => { sigImg.onload = r; sigImg.src = sigDataUrl; });
@@ -197,32 +252,58 @@
       const scale = targetWidthPx / sigImg.width;
       const targetHeightPx = sigImg.height * scale;
 
-      const pageIndex = parseInt(pageSelect.value, 10) - 1;
-      placements[pageIndex] = placements[pageIndex] || [];
-      const placement = {x, y, w: targetWidthPx, h: targetHeightPx, sigDataUrl};
-      placements[pageIndex].push(placement);
-
-      drawPlacementPreview(placement);
-    });
+      return {x, y, w: targetWidthPx, h: targetHeightPx, sigDataUrl, role, angleDeg};
+    }
 
     function drawPlacementPreview(p){
+      const color = roleMeta[p.role]?.color || '#4da3ff';
       // 畫半透明框代表放置位置
       pdfCtx.save();
       pdfCtx.globalAlpha = 0.2;
-      pdfCtx.fillStyle = '#4da3ff';
+      pdfCtx.fillStyle = color;
       pdfCtx.fillRect(p.x, p.y - p.h, p.w, p.h);
       pdfCtx.restore();
 
-      // 畫邊框
-      pdfCtx.strokeStyle = '#4da3ff';
+      // 邊框
+      pdfCtx.strokeStyle = color;
       pdfCtx.lineWidth = 2;
       pdfCtx.strokeRect(p.x, p.y - p.h, p.w, p.h);
 
-      // 提示角標
-      pdfCtx.fillStyle = '#4da3ff';
+      // 角色標籤 + 角度
+      pdfCtx.fillStyle = color;
       pdfCtx.font = '12px ui-monospace, monospace';
-      pdfCtx.fillText('簽名', p.x + 6, p.y - p.h + 16);
+      const lab = `${roleMeta[p.role]?.label || '簽名'}  (${p.angleDeg||0}°)`;
+      pdfCtx.fillText(lab, p.x + 6, p.y - p.h + 16);
     }
+
+    // 快捷放置：底部三欄位（以目前頁）
+    function bottomPositions(){
+      const margin = 36; // px on preview canvas
+      const bottomY = pdfCanvas.height - margin;
+      const tempW = Math.floor(pdfCanvas.width * 0.28);
+      const xLeft  = margin;
+      const xMid   = Math.floor((pdfCanvas.width - tempW)/2);
+      const xRight = pdfCanvas.width - margin - tempW;
+      return {bottomY, tempW, xLeft, xMid, xRight};
+    }
+
+    async function quickPlace(role, x){
+      if(!ensureSig()) return;
+      const {bottomY, tempW} = bottomPositions();
+      const p = await buildPlacementAt(x, bottomY, role, parseInt(angleInput.value,10));
+      // 調整寬度到預設 tempW
+      const scale = tempW / p.w; p.w = tempW; p.h = Math.round(p.h * scale);
+      addPlacement(p); drawPlacementPreview(p);
+    }
+
+    document.getElementById('placeMakerLeft').addEventListener('click', () => quickPlace('maker', bottomPositions().xLeft));
+    document.getElementById('placeSupMid').addEventListener('click',   () => quickPlace('supervisor', bottomPositions().xMid));
+    document.getElementById('placeDirRight').addEventListener('click', () => quickPlace('director', bottomPositions().xRight));
+    document.getElementById('placeAll').addEventListener('click', async () => {
+      await quickPlace('maker', bottomPositions().xLeft);
+      await quickPlace('supervisor', bottomPositions().xMid);
+      await quickPlace('director', bottomPositions().xRight);
+    });
 
     // 清除簽名板
     clearSigBtn.addEventListener('click', () => sigPad.clear());
@@ -233,7 +314,6 @@
       if(!name) return alert('請先在「姓名」欄輸入要生成的簽名文字');
       const ctx = sigCanvas.getContext('2d');
       ctx.clearRect(0,0,sigCanvas.width, sigCanvas.height);
-      // 以變化字距/旋轉模擬手寫（非真正手寫字體）
       ctx.save();
       ctx.translate(12, sigCanvas.height/2);
       ctx.rotate((Math.random()*4-2) * Math.PI/180);
@@ -243,9 +323,9 @@
       ctx.restore();
     });
 
-    // 下載：把所有 placements 寫入 PDF 並加上角落簽署文字/審計頁
+    // 下載：把所有 placements 寫入 PDF 並加上角落簽署文字/簡易摘要
     downloadBtn.addEventListener('click', async () => {
-      if(!pdfArrayBuffer) return;
+      if(!pdfArrayBuffer) return alert('請先上傳 PDF');
       const pdfDoc = await PDFLib.PDFDocument.load(pdfArrayBuffer);
 
       // 逐頁處理放置
@@ -265,24 +345,26 @@
           const pdfX = p.x * scaleX;
           const pdfY = ph - (p.y * scaleY); // 頂->底
 
-          page.drawImage(sigPng, {x: pdfX, y: pdfY - drawH, width: drawW, height: drawH});
+          page.drawImage(sigPng, {x: pdfX, y: pdfY - drawH, width: drawW, height: drawH, rotate: PDFLib.degrees(p.angleDeg||0)});
 
-          // 角落小字（簽署者資訊）
+          // 角落小字（簽署者資訊 + 角色）
           const name = signerName.value.trim();
           const email = signerEmail.value.trim();
           const reason = signReason.value.trim();
           const stamp = new Date().toISOString();
+          const roleLab = roleMeta[p.role]?.label || '簽名';
           const info = [
-            name ? `Signed by: ${name}` : null,
+            `${roleLab}`,
+            name ? `By: ${name}` : null,
             email ? `Email: ${email}` : null,
             reason ? `Reason: ${reason}` : null,
-            `Signed at: ${stamp}`
+            `At: ${stamp}`
           ].filter(Boolean).join('  •  ');
           page.drawText(info, {x: Math.max(8, pdfX), y: Math.max(8, pdfY - drawH - 14), size: 8, color: PDFLib.rgb(0.62,0.78,0.94)});
         }
       }
 
-      // 追加簡易審計頁（非合規稽核，僅供參考）
+      // 追加簡易摘要頁（非合規稽核，僅供參考）
       const auditPage = pdfDoc.addPage();
       const { width: aw, height: ah } = auditPage.getSize();
       const t = (s, x, y, size=12) => auditPage.drawText(s, {x, y, size});
@@ -300,11 +382,14 @@
 
       const bytes = await pdfDoc.save({updateFieldAppearances: false});
       const blob = new Blob([bytes], {type: 'application/pdf'});
+      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
+      a.href = url;
       a.download = `signed_${Date.now()}.pdf`;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(a.href);
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
   })();
   </script>
