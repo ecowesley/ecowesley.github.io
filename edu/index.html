@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>護理科教育組 - 教學平台</title>
+    <style>
+        /* 基礎設定 */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", "Microsoft JhengHei", sans-serif; }
+        body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+        /* 1. 最頂層品牌列 */
+        .brand-header { background-color: white; padding: 15px 30px; display: flex; border-bottom: 1px solid #ddd; }
+        .brand-header a { text-decoration: none; color: #282A35; font-size: 24px; font-weight: bold; cursor: pointer; }
+
+        /* 2. 第二層：導覽列 */
+        .top-nav { background-color: #282A35; display: flex; padding: 0 10px; overflow-x: auto; white-space: nowrap; }
+        .top-nav a { color: white; padding: 12px 18px; text-decoration: none; font-size: 15px; cursor: pointer; }
+        .top-nav a:hover { background-color: #000; }
+        .top-nav a.active-nav { background-color: #04AA6D; }
+
+        /* 3. 主要內容容器 */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+
+        /* 4. 左側側邊欄 */
+        .sidebar { width: 220px; background-color: #f1f1f1; overflow-y: auto; border-right: 1px solid #ddd; display: none; }
+        .sidebar.active-sidebar { display: block; }
+        .sidebar h3 { padding: 20px 15px 10px 15px; font-size: 16px; color: #666; }
+        .sidebar a { display: block; padding: 10px 20px; text-decoration: none; color: black; font-size: 15px; cursor: pointer; }
+        .sidebar a:hover { background-color: #ccc; }
+        .sidebar a.active-page { background-color: #04AA6D !important; color: white !important; }
+
+        /* 5. 主要內容區 */
+        .content { flex: 1; padding: 40px; overflow-y: auto; background-color: #fff; }
+        .content h1 { font-size: 32px; margin-bottom: 10px; }
+        
+        /* 6. 連結卡片樣式 (新加入) */
+        .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { border: 1px solid #ddd; border-radius: 8px; padding: 20px; transition: 0.3s; background: #f9f9f9; text-decoration: none; color: inherit; }
+        .card:hover { border-color: #04AA6D; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        .card h4 { color: #04AA6D; margin-bottom: 10px; }
+        .card p { font-size: 14px; color: #666; line-height: 1.4; }
+
+        @media screen and (max-width: 768px) { .sidebar { width: 160px; } }
+    </style>
+</head>
+<body>
+
+    <header class="brand-header">
+        <a onclick="goHome()">護理科教育組</a>
+    </header>
+
+    <nav class="top-nav">
+        <a onclick="showSection('training')" id="nav-training">職前訓練</a>
+        <a onclick="showSection('clinical')" id="nav-clinical">在職教育</a>
+        <a onclick="showSection('record')" id="nav-record">能力進階</a>
+        <a href="#">還沒規劃4</a>
+    </nav>
+
+    <div class="main-container">
+        <aside class="sidebar" id="side-training">
+            <h3>職前訓練</h3>
+            <a onclick="loadPage('online-course', this)">職前訓練線上課程</a>
+            <a onclick="loadPage('placeholder', this)">還沒規劃2</a>
+        </aside>
+
+        <aside class="sidebar" id="side-clinical">
+            <h3>在職教育</h3>
+            <a onclick="loadPage('clinical-1', this)">在職教育建構中1</a>
+        </aside>
+
+        <main class="content" id="main-content">
+            <div id="dynamic-area">
+                <h1>歡迎使用教學平台</h1>
+                <p>請從上方選擇類別，再從左側選擇具體課程內容。</p>
+                <hr style="margin: 20px 0;">
+                <div style="background-color: #e7f3fe; border-left: 6px solid #2196F3; padding: 15px;">
+                    <strong>公告：</strong> 2024 年度職前訓練教材已更新。
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 切換上方大分類
+        function showSection(sectionId) {
+            const sidebars = document.querySelectorAll('.sidebar');
+            sidebars.forEach(side => side.classList.remove('active-sidebar'));
+            const navLinks = document.querySelectorAll('.top-nav a');
+            navLinks.forEach(link => link.classList.remove('active-nav'));
+
+            document.getElementById('side-' + sectionId).classList.add('active-sidebar');
+            document.getElementById('nav-' + sectionId).classList.add('active-nav');
+            
+            // 切換大分類時，右側先顯示該類別提示
+            document.getElementById('dynamic-area').innerHTML = `<h1>${document.getElementById('nav-'+sectionId).innerText}</h1><p>請點選左側選單開始學習。</p>`;
+        }
+
+        // 關鍵功能：載入具體頁面內容
+        function loadPage(pageId, element) {
+            // 處理左側選單的高亮狀態
+            const links = document.querySelectorAll('.sidebar a');
+            links.forEach(l => l.classList.remove('active-page'));
+            element.classList.add('active-page');
+
+            const contentArea = document.getElementById('dynamic-area');
+
+            // 根據點擊的 ID 顯示不同內容
+            if (pageId === 'online-course') {
+                contentArea.innerHTML = `
+                    <h1>職前訓練線上課程</h1>
+                    <p>以下為本年度職前訓練必修課程連結：</p>
+                    <div class="resource-grid">
+                        <a href="https://drive.google.com/file/d/19FXRTb_qXDJe8kaTPiCZcvnziThWsCUW/view?usp=drive_link" target="_blank" class="card">
+                            <h4>01. 醫院、護理科簡介及相關法規</h4>
+                            <p>認識醫院組織與護理科制度，了解新人到職應遵循之院內規章與相關法規重點。</p>
+                        </a>
+                        <a href="#" class="card">
+                            <h4>02. NPGY、在職教育暨能力進階介紹說明</h4>
+                            <p>了解NPGY訓練架構、在職教育安排與能力進階制度，掌握學習與評核流程。</p>
+                        </a>
+                        <a href="#" class="card">
+                            <h4>03. 職場安全（含醫療暴力）</h4>
+                            <p>學習職場安全與暴力預防原則，熟悉通報流程、危機應對與自我保護策略。</p>
+                        </a>
+                        <a href="#" class="card">
+                            <h4>04. 消防安全</h4>
+                            <p>學習消防通報、避難疏散與設備使用要點，熟悉火災應變流程與分工。</p>
+                        </a>
+                        <a href="#" class="card">
+                            <h4>05. 醫院資訊與護理資訊</h4>
+                            <p>了解院內資訊系統與護理資訊作業流程，掌握基本查詢、紀錄與資安注意事項。</p>
+                        </a>
+                        <a href="#" class="card">
+                            <h4>06. 急救藥物</h4>
+                            <p>認識常用急救藥物之適應症與給藥原則，學習監測重點與用藥安全注意事項。</p>
+                        </a>                        
+                        <a href="#" class="card">
+                            <h4>07. 安寧緩和</h4>
+                            <p>了解安寧緩和照護理念與照護重點，學習溝通原則、症狀處置與家屬支持方式。</p>
+                        </a>                        
+                        <a href="#" class="card">
+                            <h4>08. 出院準備服務與長照2.0</h4>
+                            <p>了解出院準備流程與轉介機制，認識長照2.0資源以提升照護銜接。</p>
+                        </a>
+                        <a href="#" class="card">     
+                            <h4>09. 服務禮儀－職場溝通技巧</h4>
+                            <p>學習臨床服務禮儀與溝通技巧，提升團隊協作、同理回應與衝突處理能力。</p>
+                        </a>
+                        <a href="#" class="card">
+                            <h4>10. 檢體採集應注意事項</h4>
+                            <p>學習檢體採集前核對與採集技巧，掌握容器選擇、標示與送檢時效等要點。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>11. 病人安全與異常事件通報</h4>
+                            <p>了解病人安全核心概念，學習異常事件辨識、通報流程與紀錄原則。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>12. 針扎事件防範</h4>
+                            <p>學習標準防護與安全針具使用原則，熟悉針扎後處置、通報與追蹤流程。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>13. 靜脈注射</h4>
+                            <p>學習靜脈注射評估與無菌操作，掌握留置針照護、併發症預防與處置要點。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>14. 導尿</h4>
+                            <p>學習導尿適應症與無菌技術，掌握導尿管照護、感染預防與紀錄重點。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>15. 管路安全（含胸管胸瓶連接）</h4>
+                            <p>了解常見管路之固定與查核要點，學習胸管胸瓶連接與異常處置原則。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>16. 氧氣及相關設備使用介紹（含呼吸器警報問題處理）</h4>
+                            <p>學習氧療設備操作與安全注意事項，掌握呼吸器警報判讀與初步處理。</p>
+                        </a>
+                        <a href="#" class="card">                        
+                            <h4>17. DEMO TITLE</h4>
+                            <p>demo detail</p>
+                        </a>                        
+                        
+
+                    </div>
+                `;
+            } else {
+                contentArea.innerHTML = `<h1>內容建構中</h1><p>此頁面 (${pageId}) 尚未完成，敬請期待。</p>`;
+            }
+        }
+
+        function goHome() {
+            const sidebars = document.querySelectorAll('.sidebar');
+            sidebars.forEach(side => side.classList.remove('active-sidebar'));
+            const navLinks = document.querySelectorAll('.top-nav a');
+            navLinks.forEach(link => link.classList.remove('active-nav'));
+
+            document.getElementById('dynamic-area').innerHTML = `
+                <h1>歡迎使用教學平台</h1>
+                <p>請從上方選擇類別，再從左側選擇具體課程內容。</p>
+                <hr style="margin: 20px 0;">
+                <div style="background-color: #e7f3fe; border-left: 6px solid #2196F3; padding: 15px;">
+                    <strong>公告：</strong> 2024 年度職前訓練教材已更新。
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
