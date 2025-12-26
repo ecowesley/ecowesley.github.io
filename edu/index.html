@@ -2,24 +2,21 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>護理科教育組 - 教學平台</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-
+    <header class="brand-header"><a onclick="goHome()">護理科教育組</a></header>
+    <nav class="top-nav" id="nav-placeholder"></nav>
     <div class="main-container">
-        <main class="content">
-            <h1>歡迎使用教學平台</h1>
-            <p>請從上方選擇類別，再從左側選擇具體課程內容。</p>
-            <hr style="margin: 20px 0;">
-            <div style="background-color: #e7f3fe; border-left: 6px solid #2196F3; padding: 15px;">
-                <strong>公告：</strong> 2025 年度職前訓練教材已更新。
+        <aside class="sidebar" id="sidebar-placeholder"></aside>
+        <main class="content" id="main-content">
+            <div id="dynamic-area">
+                <h1>歡迎使用教學平台</h1>
+                <p>請點擊上方導覽列開始。</p>
             </div>
         </main>
     </div>
-
     <script src="main.js"></script>
 </body>
 </html>

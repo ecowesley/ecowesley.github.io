@@ -1,0 +1,68 @@
+[
+  {
+    "id": "intro",
+    "title": "職前訓練線上課程首頁",
+    "type": "home",
+    "desc": "歡迎來到護理科教育組職前訓練平台。本課程旨在協助新進同仁熟悉臨床必備知識與操作規範，請由下方按鈕或左側選單開始學習。"
+  },
+  {
+    "id": "01",
+    "title": "01. ALS 進階生命救命術",
+    "link": "https://drive.google.com/file/d/1gKIlSpZuKuesR5vb1cA-3QybtfERyCwL/view?usp=sharing",
+    "desc": "學習成人急救流程與團隊合作要點，熟悉心律判讀、電擊／CPR 操作與急救藥物使用原則。"
+  },
+  {
+    "id": "02",
+    "title": "02. 護理科法規",
+    "link": "https://drive.google.com/file/d/19FXRTb_qXDJe8kaTPiCZcvnziThWsCUW/view?usp=sharing",
+    "desc": "認識醫院組織與護理科制度，了解新人到職應遵循之院內規章與相關法規重點。"
+  },
+  {
+    "id": "03",
+    "title": "03. 靜脈注射",
+    "link": "https://drive.google.com/file/d/1Mcynzh4NHyIPa7UpTlK5kRMa5F1qUdCc/view?usp=sharing",
+    "desc": "學習靜脈注射評估與無菌操作，掌握留置針照護、併發症預防與處置要點。"
+  },
+  {
+    "id": "04",
+    "title": "04. 氧氣及相關設備使用介紹",
+    "link": "https://drive.google.com/file/d/1vzSCmmQh1XhDFU_SmPIA0ST6QyPbOEy5/view?usp=sharing",
+    "desc": "學習氧療設備操作與安全注意事項，掌握呼吸器警報判讀與臨床初步處理。"
+  },
+  {
+    "id": "05",
+    "title": "05. 消防安全",
+    "link": "https://drive.google.com/file/d/1piEWUvQfB9iccQxSzBCnkwM6rEGfsJ8P/view?usp=sharing",
+    "desc": "學習消防通報、避難疏散與設備使用要點，熟悉火災應變流程與分工。"
+  },
+  {
+    "id": "06",
+    "title": "06. 職業安全衛生與災害應變",
+    "link": "https://drive.google.com/file/d/1FtxomHRudOUi_rGOO-eCqyhd8qXsBXQy/view?usp=sharing",
+    "desc": "學習職場安全與暴力預防原則，熟悉通報流程、危機應對與自我保護策略。"
+  },
+  {
+    "id": "07",
+    "title": "07. 病人安全通報及異常事件",
+    "link": "https://drive.google.com/file/d/1TvDu6s7Y-A5nsJPYUxCI0fz7T5ULKvbz/view?usp=sharing",
+    "desc": "了解病人安全核心概念，學習異常事件辨識、通報流程與紀錄原則。"
+  },
+  {
+    "id": "08",
+    "title": "08. 導尿",
+    "link": "https://drive.google.com/file/d/1HAoUqsWCr1rHQq6cnt3H8Hkvt3sf0zhR/view?usp=sharing",
+    "desc": "學習導尿適應症與無菌技術，掌握導尿管照護、感染預防與紀錄重點。"
+  },
+  {
+    "id": "09",
+    "title": "09. 護理紀錄與過程",
+    "link": "https://drive.google.com/file/d/11W12v3vFDKOLSHp_ypQL-B-jwJI25Nuo/view?usp=sharing",
+    "desc": "學習護理過程與臨床思考架構，熟悉護理紀錄書寫原則，掌握交班關鍵要點。"
+  },
+  {
+    "id": "10",
+    "title": "10. 護理常規電腦頁面操作步驟",
+    "link": "https://drive.google.com/file/d/1kzCA8WV2v2n_E94URLVnAmG6pypfG_W4/view?usp=sharing",
+    "desc": "指導如何由內網進入知識管理系統，查詢護理科 SOP 與工作指導書。"
+  }
+]
