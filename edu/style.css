@@ -1,0 +1,36 @@
+/* 基礎設定 */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", "Microsoft JhengHei", sans-serif; }
+body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+/* 1. 最頂層品牌列 */
+.brand-header { background-color: white; padding: 15px 30px; display: flex; border-bottom: 1px solid #ddd; }
+.brand-header a { text-decoration: none; color: #282A35; font-size: 24px; font-weight: bold; cursor: pointer; }
+
+/* 2. 第二層：導覽列 */
+.top-nav { background-color: #282A35; display: flex; padding: 0 10px; overflow-x: auto; white-space: nowrap; }
+.top-nav a { color: white; padding: 12px 18px; text-decoration: none; font-size: 15px; cursor: pointer; }
+.top-nav a:hover { background-color: #000; }
+.top-nav a.active-nav { background-color: #04AA6D; }
+
+/* 3. 主要內容容器 */
+.main-container { display: flex; flex: 1; overflow: hidden; }
+
+/* 4. 左側側邊欄 */
+.sidebar { width: 220px; background-color: #f1f1f1; overflow-y: auto; border-right: 1px solid #ddd; }
+.sidebar h3 { padding: 20px 15px 10px 15px; font-size: 16px; color: #666; }
+.sidebar a { display: block; padding: 10px 20px; text-decoration: none; color: black; font-size: 15px; cursor: pointer; }
+.sidebar a:hover { background-color: #ccc; }
+.sidebar a.active-page { background-color: #04AA6D !important; color: white !important; }
+
+/* 5. 主要內容區 */
+.content { flex: 1; padding: 40px; overflow-y: auto; background-color: #fff; }
+.content h1 { font-size: 32px; margin-bottom: 10px; }
+
+/* 6. 連結卡片樣式 */
+.resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+.card { border: 1px solid #ddd; border-radius: 8px; padding: 20px; transition: 0.3s; background: #f9f9f9; text-decoration: none; color: inherit; }
+.card:hover { border-color: #04AA6D; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transform: translateY(-3px); }
+.card h4 { color: #04AA6D; margin-bottom: 10px; }
+.card p { font-size: 14px; color: #666; line-height: 1.4; }
+
+@media screen and (max-width: 768px) { .sidebar { width: 160px; } }
