@@ -31,5 +31,25 @@
       { "name": "N2 重症護理個案報告範例", "link": "https://drive.google.com/..." },
       { "name": "N2 筆試題庫彙整", "link": "https://drive.google.com/..." }
     ]
+  },
+  {
+    "id": "N3",
+    "title": "N3 晉升評核相關文件",
+    "type": "file_list",
+    "desc": "請下載以下 N3 評核相關資料：",
+    "files": [
+      { "name": "N3 重症護理個案報告範例", "link": "https://drive.google.com/..." },
+      { "name": "N3 筆試題庫彙整", "link": "https://drive.google.com/..." }
+    ]
+  },
+  {
+    "id": "N4",
+    "title": "N4 晉升評核相關文件",
+    "type": "file_list",
+    "desc": "請下載以下 N4 評核相關資料：",
+    "files": [
+      { "name": "N4 重症護理個案報告範例", "link": "https://drive.google.com/..." },
+      { "name": "N4 筆試題庫彙整", "link": "https://drive.google.com/..." }
+    ]
   }
 ]
