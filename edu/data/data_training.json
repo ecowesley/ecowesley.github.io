@@ -1,0 +1,112 @@
+[
+  {
+    "id": "intro",
+    "title": "職前訓練線上課程首頁",
+    "type": "home",
+    "desc": "歡迎來到護理科教育組職前訓練平台。本課程旨在協助新進同仁熟悉臨床必備知識與操作規範，請由下方按鈕或左側選單開始學習。"
+  },
+  {
+    "id": "01",
+    "title": "01. 醫院護理科簡介及相關法規",
+    "link": "https://drive.google.com/file/d/19FXRTb_qXDJe8kaTPiCZcvnziThWsCUW/view?usp=drive_link",
+    "desc": "認識醫院組織與護理科制度，了解新人到職應遵循之院內規章與相關法規重點。"
+  },
+  {
+    "id": "02",
+    "title": "02. NPGY、在職教育暨能力進階介紹說明",
+    "link": "",
+    "desc": "介紹新進護理人員培訓、多元在職教育資源及專業能力進階考核制度。"
+  },
+  {
+    "id": "03",
+    "title": "03. 職場安全(含醫療暴力)",
+    "link": "https://drive.google.com/file/d/1FtxomHRudOUi_rGOO-eCqyhd8qXsBXQy/view?usp=drive_link",
+    "desc": "學習職場安全與暴力預防原則，熟悉通報流程、危機應對與自我保護策略。"
+  },
+  {
+    "id": "04",
+    "title": "04. 消防安全",
+    "link": "https://drive.google.com/file/d/1piEWUvQfB9iccQxSzBCnkwM6rEGfsJ8P/view?usp=drive_link",
+    "desc": "學習消防通報、避難疏散與設備使用要點，熟悉火災應變流程與分工。"
+  },
+  {
+    "id": "05",
+    "title": "05. 護理過程與紀錄",
+    "link": "https://drive.google.com/file/d/11W12v3vFDKOLSHp_ypQL-B-jwJI25Nuo/view?usp=drive_link",
+    "desc": "學習護理過程與臨床思考架構，熟悉護理紀錄書寫原則，掌握交班關鍵要點。"
+  },
+  {
+    "id": "06",
+    "title": "06. 病人安全照護-病人辨識、用藥安全、交班、轉運送、輸血安全、預防跌倒、壓傷之預防",
+    "link": "https://drive.google.com/file/d/13z9NqhhvIbAs-Rcj8F6-WtkppUPSXz6h/view?usp=drive_link",
+    "desc": "病人安全照護： 落實辨識、給藥、交班、轉運、輸血及防跌防壓，全面掌握各項安全目標，守護病人照護品質。"
+  },
+  {
+    "id": "07",
+    "title": "07. 檢體運送安全:常見檢體採集/檢查注意事項",
+    "link": "",
+    "desc": ""
+  },
+  {
+    "id": "08",
+    "title": "08. 急救藥物簡介",
+    "link": "",
+    "desc": ""
+  },
+  {
+    "id": "09",
+    "title": "09. 安寧緩和照護",
+    "link": "https://drive.google.com/file/d/14bFt-ymNx9yKyVDzwKe_geqniPeVdKJk/view?usp=drive_link",
+    "desc": "引導新進認識安寧療護，透過影片傳遞尊嚴照護與積極面對死亡的價值。"
+  },
+  {
+    "id": "10",
+    "title": "10. 出院準備服務與長照2.0",
+    "link": "https://drive.google.com/file/d/1RHeWmQA9bymRci9WxdiGxSnRaTy50oao/view?usp=drive_link",
+    "desc": "介紹長照服務對象、四包錢補助及評估流程，協助減輕照顧壓力。"
+  },
+  {
+    "id": "11",
+    "title": "11. 病人安全與異常事件通報",
+    "link": "https://drive.google.com/file/d/1TvDu6s7Y-A5nsJPYUxCI0fz7T5ULKvbz/view?usp=drive_link",
+    "desc": "了解病人安全核心概念，學習異常事件辨識、通報流程與紀錄原則。"
+  },
+  {
+    "id": "12",
+    "title": "12. 靜脈注射",
+    "link": "https://drive.google.com/file/d/1mjV6hG_1MBaKDfpyiAAt9BPfyLHRfsQR/view?usp=drive_link",
+    "desc": "學習靜脈注射評估與無菌操作，掌握留置針照護、併發症預防與處置要點。"
+  },
+  {
+    "id": "13",
+    "title": "13. 導尿",
+    "link": "https://drive.google.com/file/d/1HAoUqsWCr1rHQq6cnt3H8Hkvt3sf0zhR/view?usp=drive_link",
+    "desc": "學習導尿適應症與無菌技術，掌握導尿管照護、感染預防與紀錄重點。"
+  },
+  {
+    "id": "14",
+    "title": "14. 管路安全（含胸管胸瓶連接）",
+    "link": "",
+    "desc": "學習管路安全相關指引，胸腔引流系統原理、管路照護要點、併發症觀察與安全護理措施。"
+  },
+  {
+    "id": "15",
+    "title": "15. 氧氣及相關設備使用介紹",
+    "link": "https://drive.google.com/file/d/1vzSCmmQh1XhDFU_SmPIA0ST6QyPbOEy5/view?usp=drive_link",
+    "desc": "學習氧療設備操作與安全注意事項，掌握呼吸器警報判讀與臨床初步處理。"
+  },
+  {
+    "id": "16",
+    "title": "16. 外傷急救照護",
+    "link": "https://drive.google.com/file/d/1gKIlSpZuKuesR5vb1cA-3QybtfERyCwL/view?usp=drive_link",
+    "desc": "學習成人急救流程與團隊合作要點，熟悉心律判讀、電擊／CPR 操作與急救藥物使用原則。"
+  },
+  {
+    "id": "17",
+    "title": "17. 感染控制(至感控室學習)",
+    "link": "",
+    "desc": ""
+  }
+  
+  
+]

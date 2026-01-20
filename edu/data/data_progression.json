@@ -1,0 +1,35 @@
+[
+  {
+    "id": "intro",
+    "title": "能力進階制度說明",
+    "type": "file_list",
+    "desc": "歡迎查看護理人員專業能力進階制度。本頁面提供全院共通之晉升作業要點與規範，請下載下方文件詳閱。",
+    "files": [
+      { 
+        "name": "護理人員專業能力進階制度實施要點 (PDF)", 
+        "link": "https://drive.google.com/file/d/你的檔案ID/view" 
+      }
+    ]
+  },
+  {
+    "id": "N1",
+    "title": "N1 晉升評核相關文件",
+    "type": "file_list",
+    "desc": "適用於到職滿一年之護理人員，請下載以下文件使用：",
+    "files": [
+      { "name": "N1 個案報告撰寫指南 (PDF)", "link": "https://drive.google.com/..." },
+      { "name": "N1 臨床能力評核表 (Word)", "link": "https://drive.google.com/..." },
+      { "name": "N1 晉升申請書 (Word)", "link": "https://drive.google.com/..." }
+    ]
+  },
+  {
+    "id": "N2",
+    "title": "N2 晉升評核相關文件",
+    "type": "file_list",
+    "desc": "請下載以下 N2 評核相關資料：",
+    "files": [
+      { "name": "N2 重症護理個案報告範例", "link": "https://drive.google.com/..." },
+      { "name": "N2 筆試題庫彙整", "link": "https://drive.google.com/..." }
+    ]
+  }
+]

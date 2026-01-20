@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>口服給藥照護-護理照護訓練EPAs</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .feedback-options {
+      display: block;
+    }
+    .feedback-button {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    .left-align {
+      text-align: left;
+    }
+    textarea {
+      width: 100%;
+      min-height: 50px;
+      height: auto;
+      resize: none;
+      box-sizing: border-box;
+      margin: 2px 0;
+      overflow: hidden;
+    } 
+    .form-group {
+      margin-bottom: 5px;
+    }
+
+    @media print {
+      .feedback-options,
+      .button-container {
+        display: none;
+      }
+      textarea {
+        height: auto;
+        min-height: 50px;
+        overflow: hidden;
+        page-break-inside: avoid;
+      }
+      input[type="date"],
+      input[type="text"],
+      input[type="checkbox"],
+      textarea {
+        display: block;
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        width: 100%;
+        text-align: left;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    }
+    input[type="date"] {
+      width: 150px;
+    }
+    input[type="text"] {
+      width: 100px;
+    }
+
+    @media screen and (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border: none;
+      }
+      th {
+        background-color: transparent;
+      }
+      tr {
+        border: 1px solid black;
+        margin-bottom: 10px;
+      }
+      td {
+        border-bottom: 1px solid black;
+      }
+      td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 150px;
+      }
+      .button-container {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>口服給藥照護-護理照護訓練EPAs</h2>
+
+<div class="button-container">
+  <button onclick="updateTitleAndPrint()">列印/另存PDF</button>
+</div>
+
+<table>
+  <tr>
+  <td colspan="7" style="text-align: left;">
+    日期: <input type="date" id="date" style="display: inline-block; width: 150px;"> 
+    學員: <input type="text" id="student" style="display: inline-block; width: 150px;"> 
+    教師: <input type="text" id="teacher" style="display: inline-block; width: 150px;">
+  </td>
+</tr>
+  <tr>
+    <td colspan="7" class="left-align"><b>主題:</b> 口服給藥照護</td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align">
+      <b>任務描述:</b> 
+      護理師執行常規給藥、臨時給藥及管制用藥，如下:
+      <ol>
+        <li>進行醫囑確認</li>
+        <li>給藥前評估(生命徵象、藥物過敏史、疼痛評估、檢驗報告…)</li>
+        <li>進行病人確認</li>
+        <li>說明給藥作用、副作用及注意事項</li>
+        <li>執行三讀五對</li>
+        <li>雙重核對藥物(限管制藥物)</li>
+        <li>給藥後30-60分鐘後追蹤用藥反應(限臨時醫囑給藥)</li>
+        <li>完成給藥資訊化作業</li>
+      </ol>
+      限制: 急救時給藥、化療給藥
+    </td>
+  </tr>
+  <tr>
+    <th data-label="信賴等級(Level)評估">信賴等級(Level)評估</th>
+    <th data-label="I.學習者在旁觀察">I.學習者在旁觀察</th>
+    <th data-label="II.教師直接觀察">II.教師直接觀察</th>
+    <th data-label="III.教師間接觀察">III.教師間接觀察</th>
+    <th data-label="IV.可獨立執行">IV.可獨立執行</th>
+    <th data-label="V.可對他人進行教學">V.可對他人進行教學</th>
+  </tr>
+  <tr>
+    <td data-label="整體評估">整體評估</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+</table>
+
+<!-- 回饋評語部分開始 -->
+<div class="form-group">
+  <label>回饋評語：</label>
+</div>
+
+<div class="form-group">
+  <label>（值得嘉許）</label>
+  <div style="display: flex;">
+    <textarea id="praise"></textarea>
+    <div class="feedback-options" style="width: 50%; padding-left: 10px;">
+      <h4>一、值得嘉許：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '我觀察到你能夠非常準確地進行病人確認，這是非常重要的。')">我觀察到你能夠非常準確地進行病人確認，這是非常重要的。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '給藥時有落實三讀五對，這是非常重要的，確保了病人的安全。')">給藥時有落實三讀五對，這是非常重要的，確保了病人的安全。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '在與病人溝通時很有耐心，能清楚向病人解釋給藥的作用和可能的副作用，並關心病人的感受。')">在與病人溝通時很有耐心，能清楚向病人解釋給藥的作用和可能的副作用，並關心病人的感受。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '我觀察到你在講解藥物使用注意事項時，語氣溫和，語調不疾不徐。')">我觀察到你在講解藥物使用注意事項時，語氣溫和，語調不疾不徐。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '給藥前能特別注意到病人的心率和血壓，這是非常好的做法，因為某些藥物可能會影響。')">給藥前能特別注意到病人的心率和血壓，這是非常好的做法，因為某些藥物可能會影響。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '給藥前能確實掌握病人的相關資訊，如過敏史、檢驗報告等，展現出你的細心。')">給藥前能確實掌握病人的相關資訊，如過敏史、檢驗報告等，展現出你的細心。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '觀察有落實雙重核對管制藥物，展現出你對病人安全的重視。')">觀察有落實雙重核對管制藥物，展現出你對病人安全的重視。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你在給藥後會主動追蹤病人的用藥反應，並詳細記錄，展現出你對病人負責任的態度。')">你在給藥後會主動追蹤病人的用藥反應，並詳細記錄，展現出你對病人負責任的態度。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你能夠熟練地完成給藥資訊化作業，展現出你對科技的應用能力。')">你能夠熟練地完成給藥資訊化作業，展現出你對科技的應用能力。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '對於不熟悉的藥物能善用資訊查詢，不斷精進自己的專業知識。')">對於不熟悉的藥物能善用資訊查詢，不斷精進自己的專業知識。</button>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>（可再精進）</label>
+  <div style="display: flex;">
+    <textarea id="improve"></textarea>
+    <div class="feedback-options" style="width: 50%; padding-left: 10px;">
+      <h4>二、可再精進：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '給藥前評估部分，可以再關心病人是否有任何不適(例如噁心、頭暈等)會更好。')">給藥前評估部分，可以再關心病人是否有任何不適(例如噁心、頭暈等)會更好。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '可以嘗試用更簡潔易懂的語言向病人說明藥物作用和副作用，並鼓勵病人提出問題。')">可以嘗試用更簡潔易懂的語言向病人說明藥物作用和副作用，並鼓勵病人提出問題。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議詳細記錄給藥後反應，以便後續評估用藥效果。')">建議詳細記錄給藥後反應，以便後續評估用藥效果。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '可以試著調整給藥流程，盡量在預計時間內完成給藥，避免延誤。')">可以試著調整給藥流程，盡量在預計時間內完成給藥，避免延誤。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '可以試著多思考藥物的作用機轉和可能的副作用，並將其應用於臨床照護中。')">可以試著多思考藥物的作用機轉和可能的副作用，並將其應用於臨床照護中。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議臨時醫囑給藥後，要追蹤並記錄病人用藥反應。')">建議臨時醫囑給藥後，要追蹤並記錄病人用藥反應。</button>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>（共識行動）</label>
+  <div style="display: flex;">
+    <textarea id="consensus"></textarea>
+    <div class="feedback-options" style="width: 50%; padding-left: 10px;">
+      <h4>三、共識行動：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們可以再一起導讀相關工作指導書，以提升自我能力。')">我們可以再一起導讀相關工作指導書，以提升自我能力。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們可以一起設定一些目標，例如學習新的給藥技巧或加強病人溝通技巧，幫助你持續進步。')">我們可以一起設定一些目標，例如學習新的給藥技巧或加強病人溝通技巧，幫助你持續進步。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '繼續保持積極的學習態度，我相信你會持續進步。')">繼續保持積極的學習態度，我相信你會持續進步。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。')">如果有任何問題或需要協助的地方，請隨時提出，我會盡力提供支援和指導。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。')">我相信透過不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。</button>
+    </div>
+  </div>
+</div>
+<!-- 回饋評語部分結束 -->
+
+<script>
+  function addFeedbackToField(fieldId, text) {
+    var field = document.getElementById(fieldId);
+    if (field) {
+      field.value += (field.value ? '\n' : '') + text;
+    }
+  }
+
+  function updateTitleAndPrint() {
+    var date = document.getElementById('date').value;
+    var student = document.getElementById('student').value;
+    var topic = "口服給藥照護";
+    document.title = "口服給藥照護-護理照護訓練EPAs-" + student + "-" + date;
+    window.print();
+  }
+</script>
+
+</body>
+</html>
