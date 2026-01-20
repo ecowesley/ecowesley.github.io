@@ -1329,7 +1329,7 @@
         </table>
     </div>
        <script>
-// 1. 定義學習風格映射 (1-70題)
+// 定義學習風格映射
 const styleMap = {
     1: 'solitary', 2: 'logical', 3: 'aural', 4: 'logical', 5: 'solitary',
     6: 'social', 7: 'verbal', 8: 'visual', 9: 'logical', 10: 'social',
@@ -1347,133 +1347,119 @@ const styleMap = {
     66: 'aural', 67: 'solitary', 68: 'physical', 69: 'visual', 70: 'logical'
 };
 
-// 2. 頁籤切換函數 (改用更穩定的邏輯)
+// 頁籤切換函數
 function showTab(tabId) {
-    // 切換內容區塊顯示
-    const contents = document.querySelectorAll('.content');
-    contents.forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    const targetContent = document.getElementById(tabId);
-    if (targetContent) {
-        targetContent.classList.add('active');
-    }
-
-    // 更新標籤按鈕狀態
     const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.classList.remove('active');
-        // 檢查按鈕的 onclick 內容是否包含目標 tabId
-        if (tab.getAttribute('onclick').includes(tabId)) {
-            tab.classList.add('active');
-        }
-    });
+    const contents = document.querySelectorAll('.content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    contents.forEach(content => content.classList.remove('active'));
+    document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
     
-    // 如果切換到雷達圖頁面，則觸發更新
     if (tabId === 'tab3') {
         updateRadarChart();
     }
 }
-
-// 3. 更新分數
+// 更新分數函數
 function updateScore(questionNumber, score) {
-    const scoreInput = document.getElementById('q' + questionNumber + '-score');
+    const scoreInput = document.querySelector(`#tab4 #q${questionNumber}-score`);
     if (scoreInput) {
         scoreInput.value = score;
-        calculateTotals();
     }
+    calculateTotals();
 }
-
-// 4. 計算總分
+// 計算總分函數（加在這裡）
 function calculateTotals() {
     const styles = ['visual', 'aural', 'verbal', 'physical', 'logical', 'social', 'solitary'];
     let overallTotal = 0;
 
     styles.forEach(style => {
-        const inputs = document.querySelectorAll('#tab4 input.black');
+        const inputs = document.querySelectorAll(`#tab4 input[id^="q"][id$="-score"].black`);
         const total = Array.from(inputs).reduce((sum, input) => {
-            const qNum = input.id.replace('q', '').replace('-score', '');
-            if (styleMap[qNum] === style) {
-                return sum + (parseInt(input.value) || 0);
-            }
-            return sum;
+            const questionNumber = input.id.match(/q(\d+)-score/)[1];
+            const questionStyle = styleMap[questionNumber];
+            return questionStyle === style ? sum + (parseInt(input.value) || 0) : sum;
         }, 0);
 
-        const totalField = document.getElementById(style + '-total');
-        if (totalField) totalField.value = total;
+        document.getElementById(`${style}-total`).value = total;
         overallTotal += total;
     });
 
-    const overallField = document.getElementById('overall-total');
-    if (overallField) overallField.value = overallTotal;
+    document.getElementById('overall-total').value = overallTotal;
+    updateRadarChart(); // 在這裡加入更新雷達圖的調用
 }
-
-// 5. 更新雷達圖
-let myRadarChart = null; // 全域變數追蹤圖表實例
-
 function updateRadarChart() {
-    const canvas = document.getElementById('radarChart');
-    if (!canvas) return;
+    const ctx = document.getElementById('radarChart');
     
-    // 確保 Chart.js 已載入
-    if (typeof Chart === 'undefined') {
-        alert('圖標組件尚未載入，請確認網路連線。');
-        return;
+    const visual = parseInt(document.getElementById('visual-total').value) || 0;
+    const aural = parseInt(document.getElementById('aural-total').value) || 0;
+    const verbal = parseInt(document.getElementById('verbal-total').value) || 0;
+    const physical = parseInt(document.getElementById('physical-total').value) || 0;
+    const logical = parseInt(document.getElementById('logical-total').value) || 0;
+    const social = parseInt(document.getElementById('social-total').value) || 0;
+    const solitary = parseInt(document.getElementById('solitary-total').value) || 0;
+
+    if (window.myRadarChart) {
+        window.myRadarChart.destroy();
     }
 
-    const ctx = canvas.getContext('2d');
-    
-    const dataValues = [
-        parseInt(document.getElementById('visual-total').value) || 0,
-        parseInt(document.getElementById('aural-total').value) || 0,
-        parseInt(document.getElementById('verbal-total').value) || 0,
-        parseInt(document.getElementById('physical-total').value) || 0,
-        parseInt(document.getElementById('logical-total').value) || 0,
-        parseInt(document.getElementById('social-total').value) || 0,
-        parseInt(document.getElementById('solitary-total').value) || 0
-    ];
-
-    if (myRadarChart) {
-        myRadarChart.destroy();
-    }
-
-    myRadarChart = new Chart(ctx, {
+    window.myRadarChart = new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: ['視覺', '聽覺', '語言', '動覺', '邏輯', '社交', '內省'],
+            labels: [
+                '視覺型 (Visual)',
+                '聽覺型 (Aural)',
+                '語言型 (Verbal)',
+                '身體動覺型 (Physical)',
+                '邏輯型 (Logical)',
+                '社交型 (Social)',
+                '內省型 (Solitary)'
+            ],
             datasets: [{
-                label: '學習風格得分分布',
-                data: dataValues,
-                backgroundColor: 'rgba(4, 170, 109, 0.2)', // 使用 W3S 綠色
-                borderColor: '#04AA6D',
-                pointBackgroundColor: '#04AA6D'
+                label: '學習風格分數',
+                data: [visual, aural, verbal, physical, logical, social, solitary],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgb(54, 162, 235)',
+                pointBackgroundColor: 'rgb(54, 162, 235)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(54, 162, 235)'
             }]
         },
         options: {
             scales: {
-                r: { suggestedMin: 0, suggestedMax: 20 }
+                r: {
+                    angleLines: {
+                        display: true
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 20,
+                    ticks: {
+                        stepSize: 5
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
             }
         }
     });
 }
-
-// 6. 列印功能
 function printRadarChart() {
-    const canvas = document.getElementById('radarChart');
-    if (!canvas) return;
-    const dataUrl = canvas.toDataURL();
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write('<html><head><title>Memletic 學習風格結果</title></head><body>');
-    printWindow.document.write('<h1 style="text-align:center">Memletic 學習風格雷達圖</h1>');
-    printWindow.document.write('<div style="text-align:center"><img src="' + dataUrl + '" style="width:500px;" /></div>');
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(() => {
-        printWindow.print();
-        printWindow.close();
-    }, 500);
+  const printWindow = window.open('', '', 'width=600,height=600');
+  printWindow.document.write('<html><head><title>學習風格雷達圖</title>');
+  printWindow.document.write('<style>body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }</style>');
+  printWindow.document.write('</head><body>');
+  printWindow.document.write('<img src="' + document.getElementById('radarChart').toDataURL() + '" width="400" height="400"/>');
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(function() {
+    printWindow.print();
+    printWindow.close();
+  }, 500);
 }
 
 
