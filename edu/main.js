@@ -16,26 +16,27 @@ async function init() {
 async function showSection(sectionId) {
     currentSectionId = sectionId;
 
-    // UI 高亮切換：移除所有導覽按鈕的選中狀態，並高亮目前點擊的這一個
     document.querySelectorAll('.top-nav a').forEach(l => l.classList.remove('active-nav'));
     document.getElementById('nav-' + sectionId)?.classList.add('active-nav');
 
     try {
-        const dataResp = await fetch(`data/data_${sectionId}.json`); // 路徑更新
+        const dataResp = await fetch(`data/data_${sectionId}.json`);
         currentLessons = await dataResp.json();
         
-        // --- 側邊欄顯示邏輯控制 ---
-        // 如果是 pgy 類別，完全隱藏側邊欄；其餘類別皆顯示側邊欄
+        // 【修正點】在這裡必須先定義 sidePlaceholder，否則下方會報錯
+        const sidePlaceholder = document.getElementById('sidebar-placeholder');
+        
         if (sectionId === 'pgy') {
             sidePlaceholder.classList.remove('active-sidebar');
         } else {
             renderSidebar(sectionId);
         }
         
-        // 預設載入該類別的第一筆資料 (通常 ID 設為 intro)
         loadLesson('intro');
     } catch (err) {
-        document.getElementById('dynamic-area').innerHTML = `<h1>檔案讀取中</h1><p>尚未找到 data_${sectionId}.json。</p>`;
+        // 這裡如果是因為 sidePlaceholder 未定義也會報錯
+        console.error("錯誤細節:", err);
+        document.getElementById('dynamic-area').innerHTML = `<h1>讀取失敗</h1><p>請檢查 data/data_${sectionId}.json 是否存在，或程式碼是否有誤。</p>`;
     }
 }
 
