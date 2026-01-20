@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臨床演練評量</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            vertical-align: top;
+        }
+        .input-inline {
+            display: inline-block;
+            width: calc(50% - 130px);
+        }
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .rating-table th, .rating-table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: center;
+        }
+        .rating-table th[colspan="11"] {
+            text-align: center;
+        }
+        .rating-table th[colspan="11"]::after {
+            content: "未符要求 ← 評分 → 優秀";
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 60px;
+        }
+        .signature-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .signature-group label {
+            width: auto;
+        }
+        .signature-group input[type="number"] {
+            width: 50px;
+        }
+        .signature-group div {
+            display: flex;
+            align-items: center;
+        }
+        .signature-group div input {
+            margin-left: 5px;
+        }
+        .print-button {
+            display: block;
+            margin: 20px 0;
+        }
+        .feedback-options {
+            display: block;
+            margin-top: 10px;
+        }
+        .feedback-button {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        @media print {
+            .print-button,
+            .feedback-options {
+                display: none;
+            }
+        }
+    </style>
+    <script>
+        function addFeedbackToField(fieldId, text) {
+            var field = document.getElementById(fieldId);
+            if (field) {
+                field.value += (field.value ? '\n' : '') + text;
+            }
+        }
+
+        function printPage() {
+            // 生成日期
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            var yyyy = today.getFullYear();
+            var formattedDate = yyyy + '-' + mm + '-' + dd;
+            var student = document.getElementById('student').value;
+
+            // 設置檔案名
+            document.title = "臨床演練評量-" + student + "-" + formattedDate;
+
+            // 觸發列印
+            window.print();
+        }
+    </script>
+</head>
+<body>
+    <h1>臨床演練評量</h1>
+    <form>
+        <div class="form-group">
+            <label>教師：</label>
+            姓名 <input type="text">
+            <input type="checkbox"> RN
+            <input type="checkbox"> HN
+            <input type="checkbox"> Fellow
+            <input type="checkbox"> CR
+         </div>
+        <div class="form-group">
+            <label>學員：</label>
+            姓名 <input type="text" id="student">
+            <input type="checkbox"> NPGY
+            <input type="checkbox"> PGY
+            <input type="checkbox"> R
+        </div>
+        <div class="form-group">
+            <label>時間：</label>
+            <input type="date">
+            <input type="checkbox"> 上午
+            <input type="checkbox"> 下午
+            <input type="checkbox"> 晚上
+        </div>
+        <div class="form-group">
+            <label>地點：</label>
+            <input type="checkbox"> 門診
+            <input type="checkbox"> 急診
+            <input type="checkbox"> 病房
+            <input type="checkbox"> 加護病房
+            <input type="checkbox"> 其他 <input type="text">
+        </div>
+        <div class="form-group">
+            <label>病人：</label>
+            <input type="checkbox"> 男
+            <input type="checkbox"> 女
+            年齡：<input type="number" style="width: 50px;">
+            <input type="checkbox"> 新病人
+            <input type="checkbox"> 舊病人
+        </div>
+        <div class="form-group" style="justify-content: space-between;">
+            <label>診斷：</label>
+            <input type="text" style="flex: 1; margin-right: 10px;">
+            <label>處置操作：</label>
+            <input type="text" style="flex: 1;">
+        </div>
+        <div class="form-group">
+            <p>評量項目：</p>
+            <table class="rating-table">
+                <tr>
+                    <th rowspan="2">項目</th>
+                    <th colspan="9" style="position: relative;">未符要求 ← 評分 → 優秀</th>
+                    <th rowspan="2">未觀察</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                </tr>
+                <tr>
+                    <td>1. 醫療面談</td>
+                    <td><input type="radio" name="interview" value="1"></td>
+                    <td><input type="radio" name="interview" value="2"></td>
+                    <td><input type="radio" name="interview" value="3"></td>
+                    <td><input type="radio" name="interview" value="4"></td>
+                    <td><input type="radio" name="interview" value="5"></td>
+                    <td><input type="radio" name="interview" value="6"></td>
+                    <td><input type="radio" name="interview" value="7"></td>
+                    <td><input type="radio" name="interview" value="8"></td>
+                    <td><input type="radio" name="interview" value="9"></td>
+                    <td><input type="radio" name="interview" value="NA"></td>
+                </tr>
+                <tr>
+                    <td>2. 身體檢查</td>
+                    <td><input type="radio" name="physical_exam" value="1"></td>
+                    <td><input type="radio" name="physical_exam" value="2"></td>
+                    <td><input type="radio" name="physical_exam" value="3"></td>
+                    <td><input type="radio" name="physical_exam" value="4"></td>
+                    <td><input type="radio" name="physical_exam" value="5"></td>
+                    <td><input type="radio" name="physical_exam" value="6"></td>
+                    <td><input type="radio" name="physical_exam" value="7"></td>
+                    <td><input type="radio" name="physical_exam" value="8"></td>
+                    <td><input type="radio" name="physical_exam" value="9"></td>
+                    <td><input type="radio" name="physical_exam" value="NA"></td>
+                </tr>
+                <tr>
+                    <td>3. 操作技態</td>
+                    <td><input type="radio" name="technical_skills" value="1"></td>
+                    <td><input type="radio" name="technical_skills" value="2"></td>
+                    <td><input type="radio" name="technical_skills" value="3"></td>
+                    <td><input type="radio" name="technical_skills" value="4"></td>
+                    <td><input type="radio" name="technical_skills" value="5"></td>
+                    <td><input type="radio" name="technical_skills" value="6"></td>
+                    <td><input type="radio" name="technical_skills" value="7"></td>
+                    <td><input type="radio" name="technical_skills" value="8"></td>
+                    <td><input type="radio" name="technical_skills" value="9"></td>
+                    <td><input type="radio" name="technical_skills" value="NA"></td>
+                </tr>
+                <tr>
+                    <td>4. 諮商衛教</td>
+                    <td><input type="radio" name="counseling" value="1"></td>
+                    <td><input type="radio" name="counseling" value="2"></td>
+                    <td><input type="radio" name="counseling" value="3"></td>
+                    <td><input type="radio" name="counseling" value="4"></td>
+                    <td><input type="radio" name="counseling" value="5"></td>
+                    <td><input type="radio" name="counseling" value="6"></td>
+                    <td><input type="radio" name="counseling" value="7"></td>
+                    <td><input type="radio" name="counseling" value="8"></td>
+                    <td><input type="radio" name="counseling" value="9"></td>
+                    <td><input type="radio" name="counseling" value="NA"></td>
+                </tr>
+                <tr>
+                    <td>5. 臨床判斷</td>
+                    <td><input type="radio" name="clinical_judgment" value="1"></td>
+                    <td><input type="radio" name="clinical_judgment" value="2"></td>
+                    <td><input type="radio" name="clinical_judgment" value="3"></td>
+                    <td><input type="radio" name="clinical_judgment" value="4"></td>
+                    <td><input type="radio" name="clinical_judgment" value="5"></td>
+                    <td><input type="radio" name="clinical_judgment" value="6"></td>
+                    <td><input type="radio" name="clinical_judgment" value="7"></td>
+                    <td><input type="radio" name="clinical_judgment" value="8"></td>
+                    <td><input type="radio" name="clinical_judgment" value="9"></td>
+                    <td><input type="radio" name="clinical_judgment" value="NA"></td>
+                </tr>
+                <tr>
+                    <td>6. 組織效能</td>
+                    <td><input type="radio" name="organizational_efficiency" value="1"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="2"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="3"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="4"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="5"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="6"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="7"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="8"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="9"></td>
+                    <td><input type="radio" name="organizational_efficiency" value="NA"></td>
+                </tr>
+                <tr>
+                    <td>7. 人道專業</td>
+                    <td><input type="radio" name="professionalism" value="1"></td>
+                    <td><input type="radio" name="professionalism" value="2"></td>
+                    <td><input type="radio" name="professionalism" value="3"></td>
+                    <td><input type="radio" name="professionalism" value="4"></td>
+                    <td><input type="radio" name="professionalism" value="5"></td>
+                    <td><input type="radio" name="professionalism" value="6"></td>
+                    <td><input type="radio" name="professionalism" value="7"></td>
+                    <td><input type="radio" name="professionalism" value="8"></td>
+                    <td><input type="radio" name="professionalism" value="9"></td>
+                    <td><input type="radio" name="professionalism" value="NA"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <label>回饋評語：</label>
+            <!-- 留空白區域 -->
+        </div>
+
+        <div class="form-group">
+            <label>（值得嘉許）</label>
+            <textarea id="praise"></textarea>
+            <div class="feedback-options">
+                <h4>一、值得嘉許：(擇一)</h4>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '在衛教的開始，您能及時確認病人確認身分並自我介紹，這樣的做法可讓人感到安心，值得讚揚。')">在衛教的開始，您能及時確認病人確認身分並自我介紹，這樣的做法可讓人感到安心，值得讚揚。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '您運用了良好的溝通方式，清楚地解釋照護須知，消除了他們的憂慮。')">您運用了良好的溝通方式，清楚地解釋照護須知，消除了他們的憂慮。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '您展現了出色的提問技巧，有效收集了病人的資訊，並能察覺非語言表達，敏銳地感受到他們的不適。')">您展現了出色的提問技巧，有效收集了病人的資訊，並能察覺非語言表達，敏銳地感受到他們的不適。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '您能以自信和親切的態度問候病人，運用了同理心和關懷，成功建立了良好的治療性人際關係。')">您能以自信和親切的態度問候病人，運用了同理心和關懷，成功建立了良好的治療性人際關係。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '您衛教時間掌握得宜，請繼續保持這樣的水準！')">您衛教時間掌握得宜，請繼續保持這樣的水準！</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '面對病人的詢問，您能夠輕鬆應對，這顯示出您非常了解該項照護活動。')">面對病人的詢問，您能夠輕鬆應對，這顯示出您非常了解該項照護活動。</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>（可再精進）</label>
+            <textarea id="improve"></textarea>
+            <div class="feedback-options">
+                <h4>二、可再精進：</h4>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '在衛教前若能向病人自我介紹會更好。')">在衛教前若能向病人自我介紹會更好。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議衛教時拉上圍簾以維護病人隱私。')">建議衛教時拉上圍簾以維護病人隱私。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '在評估收集資訊時，可採開放式提問，如在飲食上您常吃的是…。')">在評估收集資訊時，可採開放式提問，如在飲食上您常吃的是…。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議嘗試使用病人及其照顧者能夠理解的語言及確認對方是否理解。')">建議嘗試使用病人及其照顧者能夠理解的語言及確認對方是否理解。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '衛教時可多加關注病人的非語言溝通，尤其是身體語言和面部表情，以更好地了解他們的需求。')">衛教時可多加關注病人的非語言溝通，尤其是身體語言和面部表情，以更好地了解他們的需求。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '衛教時您表現出些許缺乏自信，建議您多加練習。')">衛教時您表現出些許缺乏自信，建議您多加練習。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議善用衛教工具，如影音或其他圖示以輔助說明。')">建議善用衛教工具，如影音或其他圖示以輔助說明。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議多理解為何要執行該照護措施活動，就更能正確回應病人問題。')">建議多理解為何要執行該照護措施活動，就更能正確回應病人問題。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '您可以試著示範一遍技術，讓他們更容易理解如何執行。')">您可以試著示範一遍技術，讓他們更容易理解如何執行。</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>（共識行動）</label>
+            <textarea id="consensus"></textarea>
+            <div class="feedback-options">
+                <h4>三、共識行動：</h4>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們可以再一起導讀或查詢相關照護書籍，以提升衛教能力。')">我們可以再一起導讀或查詢相關照護書籍，以提升衛教能力。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們的目標是提高患者的自我照顧能力，讓我們一起努力達成這個目標。')">我們的目標是提高患者的自我照顧能力，讓我們一起努力達成這個目標。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '下次我們可以嘗試進行一些改變，我相信這將會有更好的效果。')">下次我們可以嘗試進行一些改變，我相信這將會有更好的效果。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '請繼續保持積極學習的態度，讓我們在護理專業上不斷精進。')">請繼續保持積極學習的態度，讓我們在護理專業上不斷精進。</button>
+                <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們再約定一個時間再次執行衛教，如有需要也可以隨時找我一起練習，我們一起加油！')">我們再約定一個時間再次執行衛教，如有需要也可以隨時找我一起練習，我們一起加油！</button>
+            </div>
+        </div>
+
+        <div class="signature-group">
+    <div>
+        <label>直接觀察時間：</label>
+        <input type="number" style="width: 50px;"> 分鐘
+    </div>
+    <div>
+        <label>回饋時間：</label>
+        <input type="number" style="width: 50px;"> 分鐘
+    </div>
+</div>
+<div class="signature-group">
+    <label>學員簽章：</label>
+    <div>本次評量是第幾次：<input type="number">次</div>
+</div>
+<div class="signature-group">
+    <label>教師簽章：</label>
+    <div>本次評量是第幾次：<input type="number">次</div>
+</div>
+<p>【一張請送醫教單位，一張請由學員保存】</p>
+<button class="print-button" onclick="printPage()">列印/另存PDF</button>
+</form>
+</body>
+</html>
+

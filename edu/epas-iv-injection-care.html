@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>靜脈注射照護-護理照護訓練EPAs</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .feedback-options {
+      display: block;
+    }
+    .feedback-button {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    .left-align {
+      text-align: left;
+    }
+    textarea {
+      width: 100%;
+      min-height: 50px;
+      height: auto;
+      resize: none;
+      box-sizing: border-box;
+      margin: 2px 0;
+      overflow: hidden;
+    } 
+    .form-group {
+      margin-bottom: 5px;
+    }
+
+    @media print {
+      .feedback-options,
+      .button-container {
+        display: none;
+      }
+      textarea {
+        height: auto;
+        min-height: 50px;
+        overflow: hidden;
+        page-break-inside: avoid;
+      }
+      input[type="date"],
+      input[type="text"],
+      input[type="checkbox"],
+      textarea {
+        display: block;
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        width: 100%;
+        text-align: left;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    }
+    input[type="date"] {
+      width: 150px;
+    }
+    input[type="text"] {
+      width: 100px;
+    }
+
+    @media screen and (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border: none;
+      }
+      th {
+        background-color: transparent;
+      }
+      tr {
+        border: 1px solid black;
+        margin-bottom: 10px;
+      }
+      td {
+        border-bottom: 1px solid black;
+      }
+      td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 150px;
+      }
+      .button-container {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>靜脈注射照護-護理照護訓練EPAs</h2>
+
+<div class="button-container">
+  <button onclick="updateTitleAndPrint()">列印/另存PDF</button>
+</div>
+
+<table>
+  <tr>
+  <td colspan="7" style="text-align: left;">
+    日期: <input type="date" id="date" style="display: inline-block; width: 150px;"> 
+    學員: <input type="text" id="student" style="display: inline-block; width: 150px;"> 
+    教師: <input type="text" id="teacher" style="display: inline-block; width: 150px;">
+  </td>
+</tr>
+  <tr>
+    <td colspan="7" class="left-align"><b>主題:</b> 靜脈注射照護</td>
+  </tr>
+  <tr>
+    <td colspan="7" class="left-align">
+      <b>任務描述:</b> 
+      護理師執行常規給藥、臨時給藥及管制用藥，如下:
+      <ol>
+        <li>進行醫囑確認-靜脈輸液</li>
+        <li>靜脈注射用物準備</li>
+        <li>進行病人確認、說明目的及取得同意</li>
+        <li>選擇合適的靜脈注射部位</li>
+        <li>依無菌原則執行皮膚消毒</li>
+        <li>建立靜脈輸液管路及調整流速</li>
+        <li>運用固定板固定 (限兒科)</li>
+        <li>進行衛教指導</li>
+      </ol>
+      限制: 急救時建立靜脈輸液管路
+    </td>
+  </tr>
+  <tr>
+    <th data-label="信賴等級(Level)評估">信賴等級(Level)評估</th>
+    <th data-label="I.學習者在旁觀察">I.學習者在旁觀察</th>
+    <th data-label="II.教師直接觀察">II.教師直接觀察</th>
+    <th data-label="III.教師間接觀察">III.教師間接觀察</th>
+    <th data-label="IV.可獨立執行">IV.可獨立執行</th>
+    <th data-label="V.可對他人進行教學">V.可對他人進行教學</th>
+  </tr>
+  <tr>
+    <td data-label="整體評估">整體評估</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+</table>
+
+<!-- 回饋評語部分開始 -->
+<div class="form-group">
+  <label>回饋評語：</label>
+</div>
+
+<div class="form-group">
+  <label>（值得嘉許）</label>
+  <div style="display: flex;">
+    <textarea id="praise"></textarea>
+    <div class="feedback-options" style="width: 50%; padding-left: 10px;">
+      <h4>一、值得嘉許：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '我注意到你在進行靜脈注射前，仔細確認醫囑並準備好所有用物，展現出你的細心和專業。')">我注意到你在進行靜脈注射前，仔細確認醫囑並準備好所有用物，展現出你的細心和專業。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你在與病人溝通時能清楚說明注射目的並耐心解答疑問，取得有效的知情同意。')">你在與病人溝通時能清楚說明注射目的並耐心解答疑問，取得有效的知情同意。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你選擇靜脈注射部位的技巧純熟並能落實無菌原則。')">你選擇靜脈注射部位的技巧純熟並能落實無菌原則。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '建立靜脈輸液管路後，能根據病人狀況調整流速，展現出你對病人安全的重視。')">建立靜脈輸液管路後，能根據病人狀況調整流速，展現出你對病人安全的重視。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你能正確使用固定靜脈輸液管路，避免針頭滑脫，確保病人安全。')">你能正確使用固定靜脈輸液管路，避免針頭滑脫，確保病人安全。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你提供的衛教指導清晰易懂，幫助病人瞭解靜脈輸液注意事項。')">你提供的衛教指導清晰易懂，幫助病人瞭解靜脈輸液注意事項。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('praise', '你在整個靜脈注射過程中，始終保持親切的態度，讓病人感到安心和舒適。')">你在整個靜脈注射過程中，始終保持親切的態度，讓病人感到安心和舒適。</button>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>（可再精進）</label>
+  <div style="display: flex;">
+    <textarea id="improve"></textarea>
+    <div class="feedback-options" style="width: 50%; padding-left: 10px;">
+      <h4>二、可再精進：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '建議可以瞭解常使用靜脈的解剖位置，更容易找到合適的靜脈。')">建議可以瞭解常使用靜脈的解剖位置，更容易找到合適的靜脈。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '可以根據病人狀況和藥物特性做輸液速度調整會更好。')">可以根據病人狀況和藥物特性做輸液速度調整會更好。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '下針前可以嘗試請病人深呼吸會更好。')">下針前可以嘗試請病人深呼吸會更好。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '注射前可以再跟病人說明他的血管狀況是不易施打，給予心理準備會更好。')">注射前可以再跟病人說明他的血管狀況是不易施打，給予心理準備會更好。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('improve', '試著減輕病人在注射過程中的不適感，例如穿刺時針頭盡量不要反覆調整角度等。')">試著減輕病人在注射過程中的不適感，例如穿刺時針頭盡量不要反覆調整角度等。</button>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>（共識行動）</label>
+  <div style="display: flex;">
+    <textarea id="consensus"></textarea>
+    <div class="feedback-options" style="width: 50%; padding-left: 10px;">
+      <h4>三、共識行動：(擇一)</h4>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '有空時多利用模擬手臂多練習技術，提升操作技術熟練度。')">有空時多利用模擬手臂多練習技術，提升操作技術熟練度。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們一起再次查閱的靜脈注射相關文件，提升自己的知識和技能。')">我們一起再次查閱的靜脈注射相關文件，提升自己的知識和技能。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '我們可以一起設定一些目標，例如學習新的靜脈注射技術或加強應變能力，幫助你持續進步。')">我們可以一起設定一些目標，例如學習新的靜脈注射技術或加強應變能力，幫助你持續進步。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '相信不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。')">相信不斷地學習和精進，你將成為一位備受病人信賴的專業護理師。</button>
+      <button class="feedback-button" type="button" onclick="addFeedbackToField('consensus', '技能不斷的精進，相信更有助於您建立護病關係。')">技能不斷的精進，相信更有助於您建立護病關係。</button>
+    </div>
+  </div>
+</div>
+<!-- 回饋評語部分結束 -->
+
+<script>
+  function addFeedbackToField(fieldId, text) {
+    var field = document.getElementById(fieldId);
+    if (field) {
+      field.value += (field.value ? '\n' : '') + text;
+    }
+  }
+
+  function updateTitleAndPrint() {
+    var date = document.getElementById('date').value;
+    var student = document.getElementById('student').value;
+    var topic = "靜脈注射照護";
+    document.title = "靜脈注射照護-護理照護訓練EPAs-" + student + "-" + date;
+    window.print();
+  }
+</script>
+
+</body>
+</html>
