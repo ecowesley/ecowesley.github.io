@@ -1,0 +1,30 @@
+[
+  {
+    "id": "intro",
+    "title": "PGY 訓練相關資源",
+    "type": "grid",
+    "desc": "本頁面彙整 PGY 護理師訓練所需之手冊、表單與考核資料，點擊卡片即可開啟檔案。",
+    "cards": [
+      {
+        "name": "Memletic styles學前評估",
+        "detail": "運用 Memletic 多維評估，解析新進 PGY 學習風格，啟發潛能，落實適性學習。",
+        "link": "memletic-styles.html"
+      },
+      {
+        "name": "臨床導師輔導紀錄表",
+        "detail": "用於紀錄每月與導師之面談內容與學習進度建議。",
+        "link": "https://drive.google.com/file/d/你的檔案ID/view"
+      },
+      {
+        "name": "DOPS 技術考核表單",
+        "detail": "臨床常用護理技術操作評核標準，請下載後列印使用。",
+        "link": "https://drive.google.com/file/d/你的檔案ID/view"
+      },
+      {
+        "name": "學習護照(電子檔)",
+        "detail": "請妥善保存，紀錄所有參與之課程紀錄與學分。",
+        "link": "https://drive.google.com/file/d/你的檔案ID/view"
+      }
+    ]
+  }
+]
