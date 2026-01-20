@@ -1,60 +1,56 @@
 [
   {
     "id": "intro",
-    "title": "PGY 訓練相關資源",
+    "title": "PGY 訓練資源總覽",
+    "type": "home",
+    "desc": "本區塊彙整新進護理人員 (PGY) 臨床訓練所需之各項評量工具與資源。請點擊左側選單選擇類別。"
+  },
+  {
+    "id": "memletic",
+    "title": "Memletic styles學前評估",
     "type": "grid",
-    "desc": "本頁面彙整 PGY 護理師訓練所需之手冊、表單與考核資料，點擊卡片即可開啟檔案。",
+    "desc": "運用 Memletic 多維評估，解析新進 PGY 學習風格，啟發潛能，落實適性學習。",
     "cards": [
       {
         "name": "Memletic styles學前評估",
-        "detail": "運用 Memletic 多維評估，解析新進 PGY 學習風格，啟發潛能，落實適性學習。",
+        "detail": "解析學習風格，啟發潛能。",
         "link": "pgy/memletic-styles.html"
-      },
-      {
-        "name": "臨床演練評量Mini-Cex",
-        "detail": "用於評估醫師臨床表現，強化即時回饋與能力精進。。",
-        "link": "pgy/mini-cex.html"
-      },
-      {
-        "name": "口服給藥照護-護理照護訓練EPAs",
-        "detail": "落實口服給藥評估與核對，透過 EPA 分級訓練，強化護理人員臨床判斷力與給藥準確度。",
-        "link": "pgy/epas-oral-medication-care.html"
-      },
-      {
-        "name": "輸血照護-護理照護訓練EPAs",
-        "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。",
-        "link": "pgy/epas-transfusion-care.html"
-      },
-      {
-        "name": "靜脈注射照護-護理照護訓練EPAs",
-        "detail": "掌握無菌穿刺與導管維護，精進靜脈照護 EPA，確保輸液路徑安全。",
-        "link": "pgy/epas-iv-injection-care.html"
-      },
-      {
-        "name": "單位內交班-護理照護訓練EPAs",
-        "detail": "運用 ISBAR 結構化溝通，強化單位內 EPA，落實照護資訊準確傳遞。",
-        "link": "pgy/epas-intra-unit-handover.html"
-      },
-      {
-        "name": "單位間交班-護理照護訓練EPAs",
-        "detail": "聚焦跨單位轉運安全，提升交班 EPA 能力，確保病人照護無縫銜接。",
-        "link": "pgy/epas-interdepartmental-handover.html"
-      },
-      {
-        "name": "規劃中",
-        "detail": "規劃中",
-        "link": "https://drive.google.com/file/d/你的檔案ID/view"
-      },
-      {
-        "name": "規劃中",
-        "detail": "規劃中",
-        "link": "https://drive.google.com/file/d/你的檔案ID/view"
-      },
-      {
-        "name": "規劃中",
-        "detail": "規劃中",
-        "link": "https://drive.google.com/file/d/你的檔案ID/view"
       }
+    ]
+  },
+  {
+    "id": "mini-cex",
+    "title": "臨床演練評量 Mini-Cex",
+    "type": "grid",
+    "desc": "用於評估醫師臨床表現，強化即時回饋與能力精進。",
+    "cards": [
+      {
+        "name": "Mini-Cex 評量表",
+        "detail": "點擊開啟 Mini-Cex 數位評核系統。",
+        "link": "pgy/mini-cex.html"
+      }
+    ]
+  },
+  {
+    "id": "epas",
+    "title": "EPAs 護理照護訓練",
+    "type": "grid",
+    "desc": "核心可信賴專業活動 (EPAs) 評核與訓練。",
+    "cards": [
+      { "name": "口服給藥照護 EPA", "detail": "落實口服給藥評估與核對，透過 EPA 分級訓練，強化護理人員臨床判斷力與給藥準確度。", "link": "pgy/epas-oral-medication-care.html" },
+      { "name": "輸血照護 EPA", "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。", "link": "pgy/epas-transfusion-care.html" },
+      { "name": "靜脈注射照護 EPA", "detail": "掌握無菌穿刺與導管維護，精進靜脈照護 EPA，確保輸液路徑安全。", "link": "pgy/epas-iv-injection-care.html" },
+      { "name": "單位內交班-護理照護訓練EPA", "detail": "運用 ISBAR 結構化溝通，強化單位內 EPA，落實照護資訊準確傳遞。", "link": "pgy/epas-intra-unit-handover.html" },
+      { "name": "單位間交班-護理照護訓練EPA", "detail": "聚焦跨單位轉運安全，提升交班 EPA 能力，確保病人照護無縫銜接。", "link": "pgy/epas-interdepartmental-handover.html" }
+    ]
+  },
+  {
+    "id": "dops",
+    "title": "DOPS 技術考核",
+    "type": "grid",
+    "desc": "臨床操作技能直接觀察評估。",
+    "cards": [
+      { "name": "DOPS 技術考核表單", "detail": "下載後列印使用。", "link": "https://drive.google.com/..." }
     ]
   }
 ]

@@ -15,7 +15,7 @@ async function init() {
 // 2. 切換大類別：JSON 改從 data 目錄抓取
 async function showSection(sectionId) {
     currentSectionId = sectionId;
-
+    // UI 高亮導覽列
     document.querySelectorAll('.top-nav a').forEach(l => l.classList.remove('active-nav'));
     document.getElementById('nav-' + sectionId)?.classList.add('active-nav');
 
@@ -23,20 +23,13 @@ async function showSection(sectionId) {
         const dataResp = await fetch(`data/data_${sectionId}.json`);
         currentLessons = await dataResp.json();
         
-        // 【修正點】在這裡必須先定義 sidePlaceholder，否則下方會報錯
-        const sidePlaceholder = document.getElementById('sidebar-placeholder');
-        
-        if (sectionId === 'pgy') {
-            sidePlaceholder.classList.remove('active-sidebar');
-        } else {
-            renderSidebar(sectionId);
-        }
+        // 無論是哪個 section，通通顯示側邊欄
+        renderSidebar(sectionId);
         
         loadLesson('intro');
     } catch (err) {
-        // 這裡如果是因為 sidePlaceholder 未定義也會報錯
-        console.error("錯誤細節:", err);
-        document.getElementById('dynamic-area').innerHTML = `<h1>讀取失敗</h1><p>請檢查 data/data_${sectionId}.json 是否存在，或程式碼是否有誤。</p>`;
+        console.error("讀取失敗:", err);
+        document.getElementById('dynamic-area').innerHTML = `<h1>檔案讀取中</h1><p>尚未找到 data_${sectionId}.json。</p>`;
     }
 }
 
@@ -49,7 +42,8 @@ function renderSidebar(sectionId) {
     const titles = { 
         'training': '職前訓練課程', 
         'nursing_education': '在職教育課程', 
-        'progression': '能力進階課程' 
+        'progression': '能力進階課程',
+        'pgy': 'PGY 訓練資源' // 確保這行存在
     };
     
     let sidebarHtml = `<h3>${titles[sectionId] || '課程選單'}</h3>`;
@@ -113,21 +107,24 @@ function loadLesson(lessonId) {
     }
 
     // --- 上一課/下一課 按鈕顯示邏輯 ---
-    const sideActive = document.getElementById('sidebar-placeholder').classList.contains('active-sidebar');
-    // 這裡維持你的要求：能力進階 (progression) 不顯示導航按鈕
-    if (sideActive && currentSectionId !== 'progression') {
-        const prev = currentLessons[index - 1];
-        const next = currentLessons[index + 1];
-        const navButtons = `
-            <div class="nav-btn-container">
-                ${prev ? `<button class="w3-btn" onclick="loadLesson('${prev.id}')">❮ 上一課</button>` : '<div></div>'}
-                ${next ? `<button class="w3-btn" onclick="loadLesson('${next.id}')">下一課 ❯</button>` : '<div></div>'}
-            </div>`;
-        contentHtml = navButtons + contentHtml + navButtons;
-    }
+    // 1. 確保側邊欄是開啟狀態
+const sideActive = document.getElementById('sidebar-placeholder').classList.contains('active-sidebar');
 
-    document.getElementById('dynamic-area').innerHTML = contentHtml;
-    document.getElementById('main-content').scrollTop = 0;
+// 2. 判斷邏輯：側邊欄開啟，且「不是」能力進階，也「不是」PGY 訓練時，才顯示按鈕
+if (sideActive && currentSectionId !== 'progression' && currentSectionId !== 'pgy') {
+    const prev = currentLessons[index - 1];
+    const next = currentLessons[index + 1];
+    const navButtons = `
+        <div class="nav-btn-container">
+            ${prev ? `<button class="w3-btn" onclick="loadLesson('${prev.id}')">❮ 上一課</button>` : '<div></div>'}
+            ${next ? `<button class="w3-btn" onclick="loadLesson('${next.id}')">下一課 ❯</button>` : '<div></div>'}
+        </div>`;
+    contentHtml = navButtons + contentHtml + navButtons;
+}
+
+// 最後渲染到畫面
+document.getElementById('dynamic-area').innerHTML = contentHtml;
+document.getElementById('main-content').scrollTop = 0;
 }
 
 // 回首頁功能：重新載入頁面
