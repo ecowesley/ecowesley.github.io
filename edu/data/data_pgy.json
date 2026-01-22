@@ -37,11 +37,12 @@
     "type": "grid",
     "desc": "核心可信賴專業活動 (EPAs) 評核與訓練。",
     "cards": [
-      { "name": "口服給藥照護 EPA", "detail": "落實口服給藥評估與核對，透過 EPA 分級訓練，強化護理人員臨床判斷力與給藥準確度。", "link": "pgy/epas-oral-medication-care.html" },
-      { "name": "輸血照護 EPA", "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。", "link": "pgy/epas-transfusion-care.html" },
-      { "name": "靜脈注射照護 EPA", "detail": "掌握無菌穿刺與導管維護，精進靜脈照護 EPA，確保輸液路徑安全。", "link": "pgy/epas-iv-injection-care.html" },
-      { "name": "單位內交班-護理照護訓練EPA", "detail": "運用 ISBAR 結構化溝通，強化單位內 EPA，落實照護資訊準確傳遞。", "link": "pgy/epas-intra-unit-handover.html" },
-      { "name": "單位間交班-護理照護訓練EPA", "detail": "聚焦跨單位轉運安全，提升交班 EPA 能力，確保病人照護無縫銜接。", "link": "pgy/epas-interdepartmental-handover.html" }
+      { "name": "EPAs-病人給藥", "detail": "落實給藥三讀五對與病人辨識，執行藥前評估並說明副作用，確保臨床用藥流程安全 。", "link": "pgy/EPAs-Medication_Administratio.html" },
+      { "name": "EPAs-單位內護理交班", "detail": "運用 ISBAR 原則進行班次間病況交接，確保核心照護重點明確傳遞，提升團隊工作效率 。", "link": "pgy/EPAs-Intra_unit_Handover.html" },
+      { "name": "EPAs-單位間護理交班", "detail": "針對病房轉運需求執行精確資訊傳達，確保跨單位照護過程不中斷並守護病人安全 。", "link": "pgy/EPAs-Inter_unit_Handove.html" },
+      { "name": "EPAs-跨專業交班", "detail": "整合跨領域照護資訊並執行有效交接，確保病人在不同專業團隊間獲得連續且協調的照護 。", "link": "pgy/EPAs-Interprofessional_Handove.html" },
+      { "name": "EPAs-留置管路照護", "detail": "熟練評估與執行各類管路護理，辨識異常並指導自我照顧技巧，預防感染與滑脫風險 。", "link": "pgy/EPAs-Catheter_Care.html" },
+      { "name": "輸血照護 EPA", "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。", "link": "pgy/epas-transfusion-care.html" }
     ]
   },
   {
