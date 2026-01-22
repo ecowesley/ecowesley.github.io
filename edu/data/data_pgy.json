@@ -22,7 +22,7 @@
     "id": "mini-cex",
     "title": "臨床演練評量 Mini-Cex",
     "type": "grid",
-    "desc": "用於評估醫師臨床表現，強化即時回饋與能力精進。",
+    "desc": "用於評估臨床表現，建議「衛教」情境強化即時回饋與能力精進。",
     "cards": [
       {
         "name": "Mini-Cex 評量表",
