@@ -130,5 +130,38 @@ document.getElementById('main-content').scrollTop = 0;
 // 回首頁功能：重新載入頁面
 function goHome() { location.reload(); }
 
+// 1. 引入 Supabase (如果還沒引入)
+// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+const supabaseUrl = '你的_SUPABASE_URL';
+const supabaseKey = '你的_ANON_KEY';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+async function handleVisitorCounter() {
+    try {
+        // 第一步：呼叫後端函式，把數字 +1
+        await supabase.rpc('increment_visit_count');
+
+        // 第二步：抓取最新的數字
+        const { data, error } = await supabase
+            .from('site_stats')
+            .select('count')
+            .eq('counter_name', 'total_visits')
+            .single();
+
+        if (error) throw error;
+
+        // 第三步：更新到網頁畫面上
+        document.getElementById('visitor-count').innerText = data.count;
+        
+    } catch (err) {
+        console.error('計數器故障:', err);
+        document.getElementById('visitor-count').innerText = '---';
+    }
+}
+
+// 網頁載入後執行
+document.addEventListener('DOMContentLoaded', handleVisitorCounter);
+
 // 啟動初始化
 init();
