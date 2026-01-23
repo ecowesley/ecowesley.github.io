@@ -130,5 +130,39 @@ document.getElementById('main-content').scrollTop = 0;
 // 回首頁功能：重新載入頁面
 function goHome() { location.reload(); }
 
-// 啟動初始化
+// 1. 引入 Supabase (如果還沒引入)
+// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+// --- Supabase 設定區 ---
+const supabaseUrl = 'https://ngqxcentxqpsxewdripa.supabase.co';
+// ⚠️ 提醒：這裡要貼上後台看到的、超長的那串 Anon Key 喔！
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ncXhjZW50eHFwc3hld2RyaXBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkxNjI1MTMsImV4cCI6MjA4NDczODUxM30.X1B17XvSF6x1uv688qWMHZvsL4DOIGx2nS5YQw6tHDY'; 
+
+// 這裡改名避開衝突
+const db = supabase.createClient(supabaseUrl, supabaseKey);
+
+async function handleVisitorCounter() {
+    try {
+        // 使用 db 變數來操作
+        await db.rpc('increment_visit_count');
+
+        const { data, error } = await db
+            .from('site_stats')
+            .select('count')
+            .eq('counter_name', 'total_visits')
+            .single();
+
+        if (error) throw error;
+        document.getElementById('visitor-count').innerText = data.count;
+        
+    } catch (err) {
+        console.error('計數器故障:', err);
+        document.getElementById('visitor-count').innerText = '---';
+    }
+}
+
+// 啟動計數器
+document.addEventListener('DOMContentLoaded', handleVisitorCounter);
+
+// 啟動導覽列初始化
 init();

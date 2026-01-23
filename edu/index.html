@@ -2,15 +2,19 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>護理科教育組 - 教學平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>護理科教育組 - 教學平台(測試功能用的網頁)</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="brand-header"><a onclick="goHome()">護理教育訓練</a></header>
+    <header class="brand-header"><a onclick="goHome()">護理教育訓練(測試功能用的網頁)</a></header>
+    
     <nav class="top-nav" id="nav-placeholder"></nav>
+    
     <div class="main-container">
         <aside class="sidebar" id="sidebar-placeholder"></aside>
+        
         <main class="content" id="main-content">
             <div id="dynamic-area">
                 <h1>歡迎使用教學平台</h1>
@@ -18,7 +22,13 @@
             </div>
         </main>
     </div>
+
+    <div style="text-align: center; margin: 20px 0; font-size: 0.9em; color: #666;">
+        📊 累積訪客人數：<span id="visitor-count">載入中...</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script src="main.js"></script>
-</div>
 </body>
 </html>
