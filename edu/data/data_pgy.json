@@ -42,7 +42,7 @@
       { "name": "EPAs-單位間護理交班", "detail": "針對病房轉運需求執行精確資訊傳達，確保跨單位照護過程不中斷並守護病人安全 。", "link": "pgy/EPAs-Inter_unit_Handove.html" },
       { "name": "EPAs-跨專業交班", "detail": "整合跨領域照護資訊並執行有效交接，確保病人在不同專業團隊間獲得連續且協調的照護 。", "link": "pgy/EPAs-Interprofessional_Handove.html" },
       { "name": "EPAs-留置管路照護", "detail": "熟練評估與執行各類管路護理，辨識異常並指導自我照顧技巧，預防感染與滑脫風險 。", "link": "pgy/EPAs-Catheter_Care.html" },
-      { "name": "輸血照護 EPA", "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。", "link": "pgy/epas-transfusion-care.html" }
+      { "name": "EPAs-輸血護理", "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。", "link": "pgy/EPAs-Blood_Transfusion_Care.html" }
     ]
   },
   {
