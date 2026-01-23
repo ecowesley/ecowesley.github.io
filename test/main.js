@@ -130,5 +130,39 @@ document.getElementById('main-content').scrollTop = 0;
 // 回首頁功能：重新載入頁面
 function goHome() { location.reload(); }
 
+// 1. 引入 Supabase (如果還沒引入)
+// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+const supabaseUrl = 'https://ngqxcentxqpsxewdripa.supabase.co';
+const supabaseKey = 'sb_publishable_UBHphlgjSfWFRpJK64XiRg_A9cev1Ai';
+// 將變數名稱改為 supabaseClient 或是 db
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+async function handleVisitorCounter() {
+    try {
+        // 這裡也要跟著改名
+        await supabaseClient.rpc('increment_visit_count');
+
+        // 第二步：抓取最新的數字
+        const { data, error } = await supabaseClient
+            .from('site_stats')
+            .select('count')
+            .eq('counter_name', 'total_visits')
+            .single();
+
+        if (error) throw error;
+
+        // 第三步：更新到網頁畫面上
+        document.getElementById('visitor-count').innerText = data.count;
+        
+    } catch (err) {
+        console.error('計數器故障:', err);
+        document.getElementById('visitor-count').innerText = '---';
+    }
+}
+
+// 網頁載入後執行
+document.addEventListener('DOMContentLoaded', handleVisitorCounter);
+
 // 啟動初始化
 init();
