@@ -1,0 +1,93 @@
+[
+  {
+    "id": "intro",
+    "title": "PGY 訓練資源總覽",
+    "type": "home",
+    "desc": "本區塊彙整新進護理人員 (PGY) 臨床訓練所需之各項評量工具與資源。請點擊左側選單選擇類別。"
+  },
+  {
+    "id": "memletic",
+    "title": "Memletic styles學前評估",
+    "type": "grid",
+    "desc": "運用 Memletic 多維評估，解析新進 PGY 學習風格，啟發潛能，落實適性學習。",
+    "cards": [
+      {
+        "name": "Memletic styles學前評估",
+        "detail": "解析學習風格，啟發潛能。",
+        "link": "pgy/memletic-styles.html"
+      }
+    ]
+  },
+  {
+    "id": "mini-cex",
+    "title": "臨床演練評量 Mini-Cex",
+    "type": "grid",
+    "desc": "用於評估臨床表現，建議「衛教」情境強化即時回饋與能力精進。",
+    "cards": [
+      {
+        "name": "Mini-Cex 評量表",
+        "detail": "點擊開啟 Mini-Cex 數位評核系統。",
+        "link": "pgy/mini-cex.html"
+      }
+    ]
+  },
+  {
+    "id": "epas",
+    "title": "EPAs 護理照護訓練",
+    "type": "grid",
+    "desc": "核心可信賴專業活動 (EPAs) 評核與訓練。",
+    "cards": [
+      { "name": "EPAs-病人給藥", "detail": "落實給藥三讀五對與病人辨識，執行藥前評估並說明副作用，確保臨床用藥流程安全 。", "link": "pgy/EPAs-Medication_Administratio.html" },
+      { "name": "EPAs-單位內護理交班", "detail": "運用 ISBAR 原則進行班次間病況交接，確保核心照護重點明確傳遞，提升團隊工作效率 。", "link": "pgy/EPAs-Intra_unit_Handover.html" },
+      { "name": "EPAs-單位間護理交班", "detail": "針對病房轉運需求執行精確資訊傳達，確保跨單位照護過程不中斷並守護病人安全 。", "link": "pgy/EPAs-Inter_unit_Handove.html" },
+      { "name": "EPAs-跨專業交班", "detail": "整合跨領域照護資訊並執行有效交接，確保病人在不同專業團隊間獲得連續且協調的照護 。", "link": "pgy/EPAs-Interprofessional_Handove.html" },
+      { "name": "EPAs-留置管路照護", "detail": "熟練評估與執行各類管路護理，辨識異常並指導自我照顧技巧，預防感染與滑脫風險 。", "link": "pgy/EPAs-Catheter_Care.html" },
+      { "name": "EPAs-輸血護理", "detail": "落實輸血核對與反應監測，強化 EPA 實務訓練，守護病人用血安全。", "link": "pgy/EPAs-Blood_Transfusion_Care.html" }
+    ]
+  },
+  {
+    "id": "dops_basic",
+    "title": "DOPS 基礎常規技術",
+    "type": "grid",
+    "desc": "基礎常規技術之臨床操作技能直接觀察評估 (DOPS)。",
+    "cards": [
+      { "name": "單位內交班", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1q9d6VbWqLIOO9QP5hkmdTrOqF3jgKGNc" },
+      { "name": "單位間交班", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=18tvTmnbjffYLV5iuYU-F0jItHi_2Qtp2" },
+      { "name": "口服給藥技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1XeKjLlWXKoSQWRrRlD260J5Jai_epEOM" },
+      { "name": "靜脈注射技術 (IV)", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1TfQmCOeA4D6iflcs-dKhmnQsukAHDTxC" },
+      { "name": "導尿", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1BAypEZOTSDqmKdCbYMWvn4C2GfLS7Wn-" },
+      { "name": "鼻胃管灌食技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=194vrgD__43uqPr0WtKx9ATAcevIGG04D" },
+      { "name": "噴霧吸入治療技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1Q4ItwurRn6KtJT3k5ZXZ9h3RBmPbTxGC" },
+      { "name": "灌腸術-大量灌腸技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=12oj4hnQUqyBJ8Mv02KvnLzxlM2BKzsON" }
+    ]
+  },
+  {
+    "id": "dops_advanced",
+    "title": "DOPS 進階臨床技術",
+    "type": "grid",
+    "desc": "進階臨床技術之臨床操作技能直接觀察評估 (DOPS)。",
+    "cards": [
+      { "name": "抽痰技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1zjsbeLhmm9_Kucv09O7WZugPX9-Ncoa_" },
+      { "name": "氣管造口護理技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1VHmcWblvA97Gt8RWeGG8UQCvuH2G7eVv" },
+      { "name": "輸血技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1k-BvOzXryXusoX3ezz6qqzR5LuMbk_lq" },
+      { "name": "高警訊幫浦給藥法(首次)", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1Q_Mau5fW1weDOagq33ubgsTiwi905gmn" },
+      { "name": "Port-A 注射技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=10vd71r1Z89m2mz0w7EcC_kVGm2euunET" },
+      { "name": "急救護理用品技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1YbjPIzURRGIsPwJKQdO0cIr50kCFrXX4" }
+    ]
+  },
+  {
+    "id": "dops_specialty",
+    "title": "DOPS 專科技術",
+    "type": "grid",
+    "desc": "加護病房、產嬰等專科之臨床操作技能直接觀察評估 (DOPS)。",
+    "cards": [
+      { "name": "加護病房導尿技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1P3KKgAzuAlwcVmDkxw0MnDU-6rU-rROE" },
+      { "name": "協助中心靜脈導管插入及測壓 (CVP)", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1f9c5uYSxLBP9J2Dp3HUUr2Llt4D2Uug2" },
+      { "name": "產嬰-腹部四段式觸診技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1f9c5uYSxLBP9J2Dp3HUUr2Llt4D2Uug2" },
+      { "name": "產嬰-間接胎心測量技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=10SDEAJYsgMI_eQ0VqxdyqpazdcHdDZqz" },
+      { "name": "產嬰-會陰沖洗技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1FEtck7rGcJlcV08cZ-kCGqveoBu9HyzJ" },
+      { "name": "產嬰-新生兒即刻護理技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1CHS13OI9gDE9-2H1tYfO11ub_HRCTMZH" },
+      { "name": "產嬰-陰道指診技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1TKFNMJTo5FcxcYhOlq2PsqK_r6dxaAQW" }
+    ]
+  }
+]
