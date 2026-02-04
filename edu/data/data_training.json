@@ -3,7 +3,9 @@
     "id": "intro",
     "title": "職前訓練線上課程首頁",
     "type": "home",
-    "desc": "歡迎來到護理科教育組職前訓練平台。本課程旨在協助新進同仁熟悉臨床必備知識與操作規範，請由下方按鈕或左側選單開始學習。"
+    "desc": "歡迎來到護理科教育組職前訓練平台。本課程旨在協助新進同仁熟悉臨床必備知識與操作規範，請由下方按鈕或左側選單開始學習。",
+    "name": "PDF 下載：職前訓練總表 ",
+    "link": "https://drive.google.com/uc?export=download&id=18dxaJAEXiND7t3-D5DgLlnczYpsW9dZT"
   },
   {
     "id": "01",
@@ -146,8 +148,18 @@
   {
     "id": "16",
     "title": "16. 外傷急救照護",
-    "link": "https://drive.google.com/file/d/1gKIlSpZuKuesR5vb1cA-3QybtfERyCwL/view?usp=drive_link",
-    "desc": "學習成人急救流程與團隊合作要點，熟悉心律判讀、電擊／CPR 操作與急救藥物使用原則。"
+    "type": "file_list",
+    "desc": "學習成人急救流程與團隊合作要點，熟悉心律判讀、電擊／CPR 操作與急救藥物使用原則。",
+    "files": [
+      { 
+        "name": "🎬 線上觀看：急救照護教學影片", 
+        "link": "https://drive.google.com/file/d/1gKIlSpZuKuesR5vb1cA-3QybtfERyCwL/view" 
+      },
+      { 
+        "name": "📊 下載：急救照護訓練操作評量表", 
+        "link": "https://docs.google.com/spreadsheets/d/1M8wfFH_lmlNJFWqgtGh8dwsi0T5zYt8q/export?format=xlsx" 
+      }
+    ]
   },
   {
     "id": "17",
