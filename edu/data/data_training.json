@@ -58,12 +58,12 @@
     "desc": "本課程包含教學影片與採檢注意事項 PDF 講義，請點擊下方按鈕查看或下載。",
     "files": [
       { 
-        "name": "教學影片：檢體運送安全常見檢體採集檢查注意事項 ", 
-        "link": "https://drive.google.com/open?id=1I2b7PMgJzJsbBlU7rE0QXagbEoS3Y7eu&usp=drive_fs" 
+        "name": "教學影片：檢體運送安全規範", 
+        "link": "https://drive.google.com/uc?export=download&id=1I2b7PMgJzJsbBlU7rE0QXagbEoS3Y7eu" 
       },
       { 
-        "name": "PDF 講義：檢查區檢查須知注意事項表", 
-        "link": "https://drive.google.com/open?id=1Fn9yLprC-S_rgLH6_UJq_mlLzg4bKczK&usp=drive_fs" 
+        "name": "PDF 講義：檢查須知注意事項表", 
+        "link": "https://drive.google.com/uc?export=download&id=1Fn9yLprC-S_rgLH6_UJq_mlLzg4bKczK" 
       }
     ]
   },
@@ -148,6 +148,38 @@
     "title": "16. 外傷急救照護",
     "link": "https://drive.google.com/file/d/1gKIlSpZuKuesR5vb1cA-3QybtfERyCwL/view?usp=drive_link",
     "desc": "學習成人急救流程與團隊合作要點，熟悉心律判讀、電擊／CPR 操作與急救藥物使用原則。"
+  },
+  {
+    "id": "17",
+    "title": "17. 跨領域學習",
+    "type": "file_list",
+    "desc": "本課程暫為跨領域學習，包含復健科、營養科與藥劑科請點擊下方按鈕查看或下載。",
+    "files": [
+    { 
+      "name": "PDF 講義：17-1.物理治療業務簡介 ", 
+      "link": "https://drive.google.com/uc?export=download&id=1ZxlzjSCoxnnJ1DF2UNTGjtz6wDpBRbbv" 
+    },
+    { 
+      "name": "PDF 講義：17-2.職能治療業務簡介 ", 
+      "link": "https://drive.google.com/uc?export=download&id=18ttQAQ6tqy6mAkIvD-BdPNYp4Y5fWLa3" 
+    },
+    { 
+      "name": "PDF 講義：17-3.語言治療業務簡介 ", 
+      "link": "https://drive.google.com/uc?export=download&id=1SaycaT3af95Yn4bgzOTD-Y40-DZ078eF" 
+    },
+    { 
+      "name": "PDF 講義：17-4.職能治療室環境設備簡介 ", 
+      "link": "https://drive.google.com/uc?export=download&id=1vmov5lCdVtHjm4HX_gfOrHRHG_8DXRMk" 
+    },
+    { 
+      "name": "PDF 講義：17-5.藥劑科簡報 ", 
+      "link": "https://drive.google.com/uc?export=download&id=1lLqAzrHH1QfO8IuAEtG7kD2nS33VNNgS" 
+    },
+    { 
+      "name": "PDF 講義：17-6.護理新進人員-營養 ", 
+      "link": "https://drive.google.com/uc?export=download&id=1ohUDSi30U6Mu4HCeb-21F9KvocvqQwcE" 
+    }
+  ]
   }
   
   
