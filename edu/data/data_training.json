@@ -14,8 +14,18 @@
   {
     "id": "02",
     "title": "02. NPGY、在職教育暨能力進階介紹說明",
-    "link": "",
-    "desc": "介紹新進護理人員培訓、多元在職教育資源及專業能力進階考核制度。"
+    "type": "file_list",
+    "desc": "本課程暫為NPGY、在職教育暨能力進階介紹說明講義，請點擊下方按鈕查看或下載。",
+    "files": [
+      { 
+        "name": "ppt：能力進階.在職教育.NPGY ", 
+        "link": "https://docs.google.com/presentation/d/1WhqfBTLYQCqhfaji1hcpIb7Ub7eX6EVu?rtpof=true&usp=drive_fs" 
+      },
+      { 
+        "name": "測驗", 
+        "link": "https://forms.gle/YQDJA6eBWJ8x6XsE8" 
+      }
+    ]
   },
   {
     "id": "03",
@@ -60,8 +70,18 @@
   {
     "id": "08",
     "title": "08. 急救藥物簡介",
-    "link": "",
-    "desc": ""
+    "type": "file_list",
+    "desc": "本課程暫為急救藥物簡介PDF 講義，請點擊下方按鈕查看或下載。",
+    "files": [
+      { 
+        "name": "PDF 講義：急救藥物簡介 ", 
+        "link": "https://drive.google.com/file/d/1edfwW2ra0f0A2KBI54SWBhpgJSRCVWkw/view?usp=drive_link" 
+      },
+      { 
+        "name": "測驗 ", 
+        "link": "https://forms.gle/feUBaLWWWT6HCPC48" 
+      }
+    ]
   },
   {
     "id": "09",
@@ -72,7 +92,7 @@
   {
     "id": "10",
     "title": "10. 出院準備服務與長照2.0",
-    "link": "https://drive.google.com/file/d/1RHeWmQA9bymRci9WxdiGxSnRaTy50oao/view?usp=drive_link",
+    "link": "https://drive.google.com/open?id=1RHeWmQA9bymRci9WxdiGxSnRaTy50oao&usp=drive_fs",
     "desc": "介紹長照服務對象、四包錢補助及評估流程，協助減輕照顧壓力。"
   },
   {
@@ -96,8 +116,26 @@
   {
     "id": "14",
     "title": "14. 管路安全（含胸管胸瓶連接）",
-    "link": "",
-    "desc": "學習管路安全相關指引，胸腔引流系統原理、管路照護要點、併發症觀察與安全護理措施。"
+    "type": "file_list",
+    "desc": "本課程暫為管路安全（含胸管胸瓶連接PDF 講義，請點擊下方按鈕查看或下載。",
+    "files": [
+      { 
+        "name": "PDF 講義：14-1管路安全 ", 
+        "link": "https://drive.google.com/file/d/15ioSIFVQUo_h6HtRk_6hrLdnpUYePsYG/view?usp=drive_link" 
+      },
+      { 
+        "name": "Word 講義：14-2 高警訊PUMP給藥 ", 
+        "link": "https://docs.google.com/document/d/1_hwMaE8Ns6-dLnFmZn4YGK1BZsmsiRNv/edit?usp=drive_link&ouid=115649024812827813247&rtpof=true&sd=true" 
+      },
+      { 
+        "name": "教學影片：14-3 胸腔引流病人照護 ", 
+        "link": "https://drive.google.com/file/d/1AyKuSlaPqYmHIOJM82l-tJFTszGFWhl4/view?usp=drive_link" 
+      },
+      { 
+        "name": "測驗 ", 
+        "link": "https://forms.gle/B3E4PGaTcW9SqBek7" 
+      }
+    ]
   },
   {
     "id": "15",
