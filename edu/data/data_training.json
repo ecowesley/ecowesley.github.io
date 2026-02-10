@@ -82,18 +82,8 @@
   {
     "id": "08",
     "title": "08. 急救藥物簡介",
-    "type": "file_list",
-    "desc": "本課程提供急救藥物簡介講義與測驗。",
-    "files": [
-      { 
-        "name": "📥 下載 PDF：急救藥物簡介", 
-        "link": "https://drive.google.com/uc?export=download&id=1edfwW2ra0f0A2KBI54SWBhpgJSRCVWkw" 
-      },
-      { 
-        "name": "📝 線上測驗", 
-        "link": "https://forms.gle/feUBaLWWWT6HCPC48" 
-      }
-    ]
+    "link": "https://drive.google.com/open?id=1q2YAe_um8gsUfHgwT77Gx7BmCbORe7x4&usp=drive_fs",
+    "desc": "急救藥物臨床應用基礎。"
   },
   {
     "id": "09",
