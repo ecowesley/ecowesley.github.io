@@ -43,7 +43,8 @@ function renderSidebar(sectionId) {
         'training': '職前訓練課程', 
         'nursing_education': '在職教育課程', 
         'progression': '能力進階課程',
-        'pgy': 'PGY 訓練資源' // 確保這行存在
+        'pgy': 'PGY 訓練資源',
+        'preceptor': '臨床教師專區'
     };
     
     let sidebarHtml = `<h3>${titles[sectionId] || '課程選單'}</h3>`;

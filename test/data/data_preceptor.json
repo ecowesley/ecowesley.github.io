@@ -1,0 +1,31 @@
+[
+  {
+    "id": "intro",
+    "title": "臨床教師專區首頁",
+    "type": "home",
+    "desc": "歡迎各位臨床老師。本區提供帶教技巧、評量指引及相關表單下載，感謝您為護理教育的付出。"
+  },
+  {
+    "id": "feedback",
+    "title": "回饋範例與指引",
+    "type": "grid",
+    "desc": "提供有效回饋的範例與指引，協助臨床教師提升帶教品質。",
+    "cards": [
+      { 
+        "name": "範例-Memletic styles學前評估回饋", 
+        "detail": "針對七大學習風格提供具體回饋文字，引導老師如何與不同特質（如視覺、社交型）的學員進行教學溝通。", 
+        "link": "https://drive.google.com/open?id=1HSgJx4Lh021CGzW7jovrvP_2uCmGWaAF&usp=drive_fs" 
+      },
+      { 
+        "name": "範例-MINI-CEX評估注意事項", 
+        "detail": "整理臨床演練評量（Mini-CEX）的觀察要點，包含如何給予建設性回饋及避免常見評分偏誤。", 
+        "link": "https://drive.google.com/open?id=1SP-8L_JKlH5dPHgC2wGoD3G6lY_NEBQ_&usp=drive_fs" 
+      },
+      { 
+        "name": "範例-DOPS雙向回饋單", 
+        "detail": "示範如何針對操作技能（DOPS）進行雙向回饋，強調「先正向肯定、再建議改進」的互動模式。", 
+        "link": "https://drive.google.com/open?id=1uf4i3DK6gREjzmwPKZC8nbqmtyX1ndB4&usp=drive_fs" 
+      }
+    ]
+  }
+]
