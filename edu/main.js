@@ -111,8 +111,11 @@ function loadLesson(lessonId) {
     // 1. 確保側邊欄是開啟狀態
 const sideActive = document.getElementById('sidebar-placeholder').classList.contains('active-sidebar');
 
-// 2. 判斷邏輯：側邊欄開啟，且「不是」能力進階，也「不是」PGY 訓練時，才顯示按鈕
-if (sideActive && currentSectionId !== 'progression' && currentSectionId !== 'pgy') {
+// 2. 判斷邏輯：側邊欄開啟，且「不是」能力進階，也「不是」PGY 訓練時，也「不是」臨床教師區時，才顯示按鈕
+if (sideActive && 
+    currentSectionId !== 'progression' && 
+    currentSectionId !== 'pgy' && 
+    currentSectionId !== 'preceptor') {
     const prev = currentLessons[index - 1];
     const next = currentLessons[index + 1];
     const navButtons = `
