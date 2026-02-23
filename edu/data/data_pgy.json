@@ -49,7 +49,7 @@
     "id": "dops_basic",
     "title": "DOPS 基礎常規技術",
     "type": "grid",
-    "desc": "基礎常規技術之臨床操作技能直接觀察評估 (DOPS)。",
+    "desc": "基礎常規技術之臨床操作技能直接觀察評估 (DOPS)。<br><br>📌 <b>必備表單：</b><a href='https://docs.google.com/document/d/1dfifDwT6Hxz5WedLczQL8wypugjzEJBs/export?format=docx' style='color: #04AA6D; font-weight: bold; text-decoration: none;'>[點此下載] DOPS 雙向回饋單(空白)</a><br>💡 <b>教學指引：</b>撰寫範例請至 <a href='#' onclick=\"showSection('preceptor'); setTimeout(() => loadLesson('feedback'), 150);\" style='color: #212529; text-decoration: underline;'>臨床教師區-回饋指引</a> 查看。",
     "cards": [
       { "name": "單位內交班", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1q9d6VbWqLIOO9QP5hkmdTrOqF3jgKGNc" },
       { "name": "單位間交班", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=18tvTmnbjffYLV5iuYU-F0jItHi_2Qtp2" },
@@ -65,7 +65,7 @@
     "id": "dops_advanced",
     "title": "DOPS 進階臨床技術",
     "type": "grid",
-    "desc": "進階臨床技術之臨床操作技能直接觀察評估 (DOPS)。",
+    "desc": "進階臨床技術之臨床操作技能直接觀察評估 (DOPS)。<br><br>📌 <b>必備表單：</b><a href='https://docs.google.com/document/d/1dfifDwT6Hxz5WedLczQL8wypugjzEJBs/export?format=docx' style='color: #04AA6D; font-weight: bold; text-decoration: none;'>[點此下載] DOPS 雙向回饋單(空白)</a><br>💡 <b>教學指引：</b>撰寫範例請至 <a href='#' onclick=\"showSection('preceptor'); setTimeout(() => loadLesson('feedback'), 150);\" style='color: #212529; text-decoration: underline;'>臨床教師區-回饋指引</a> 查看。",
     "cards": [
       { "name": "抽痰技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1zjsbeLhmm9_Kucv09O7WZugPX9-Ncoa_" },
       { "name": "氣管造口護理技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1VHmcWblvA97Gt8RWeGG8UQCvuH2G7eVv" },
@@ -79,7 +79,7 @@
     "id": "dops_specialty",
     "title": "DOPS 專科技術",
     "type": "grid",
-    "desc": "加護病房、產嬰等專科之臨床操作技能直接觀察評估 (DOPS)。",
+    "desc": "加護病房、產嬰等專科之臨床操作技能直接觀察評估 (DOPS)。<br><br>📌 <b>必備表單：</b><a href='https://docs.google.com/document/d/1dfifDwT6Hxz5WedLczQL8wypugjzEJBs/export?format=docx' style='color: #04AA6D; font-weight: bold; text-decoration: none;'>[點此下載] DOPS 雙向回饋單(空白)</a><br>💡 <b>教學指引：</b>撰寫範例請至 <a href='#' onclick=\"showSection('preceptor'); setTimeout(() => loadLesson('feedback'), 150);\" style='color: #212529; text-decoration: underline;'>臨床教師區-回饋指引</a> 查看。",
     "cards": [
       { "name": "加護病房導尿技術", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1P3KKgAzuAlwcVmDkxw0MnDU-6rU-rROE" },
       { "name": "協助中心靜脈導管插入及測壓 (CVP)", "detail": "點擊下載/查看評量表單", "link": "https://drive.google.com/uc?export=download&id=1f9c5uYSxLBP9J2Dp3HUUr2Llt4D2Uug2" },
