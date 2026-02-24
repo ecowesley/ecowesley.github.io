@@ -48,18 +48,39 @@
 
         /* 列印格式優化 */
         @media print {
+            /* 1. 隱藏不必要的元素 */
             .no-print, .tab-container, .btn-print, .print-exclude { display: none !important; }
             body { padding: 0; }
             .content { display: block !important; border: none; }
-            #tab1 { display: none !important; } /* 只印評量表 */
-            
-            /* 只顯示被勾選的質性回饋 */
+            #tab1 { display: none !important; }
+
+            /* 2. 還原最原始的顯示方式，不使用 flex */
             .feedback-item { display: none; }
-            .feedback-item:has(input:checked) { display: block !important; }
+            .feedback-item:has(input:checked) { 
+                display: block !important; 
+                margin-bottom: 5px; 
+                line-height: 1.6;
+            }
             
-            input[type="radio"], input[type="checkbox"] { accent-color: black; }
-            .route-options { border: 1px solid #ccc; background-color: white; }
+            /* 3. 「其他」輸入框的列印修正 (關鍵) */
+            .other-text-input {
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                /* 強制字體、大小、粗細完全繼承自父層，解決「粗體」與「較大」問題 */
+                font: inherit !important;
+                font-weight: normal !important;
+                font-size: 16px !important;
+                /* 解決對齊問題：使用 baseline 讓字坐在同一條基準線上 */
+                vertical-align: baseline !important;
+                background: transparent !important;
+                height: auto !important;
+            }
+
+            /* 隱藏提示字 */
+            .other-text-input::placeholder { color: transparent !important; }
         }
+
     </style>
 </head>
 <body>
@@ -289,7 +310,7 @@
         </table>
 
         <h3>5. 學員質性回饋</h3>
-        <textarea style="width: 100%; height: 200px; padding: 10px; font-size: 16px;" placeholder="請填寫您的學習心得..."></textarea>
+        <textarea style="width: 98%; height: 200px; padding: 10px; font-size: 16px;" placeholder="請填寫您的學習心得："></textarea>
 
         <h3>6. 護理臨床教師質性回饋</h3>
         
@@ -299,56 +320,97 @@
             <span class="print-exclude"><b>(1) 確認醫囑</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能及時注意到有新的醫囑開立，並正確確認醫囑。</label>
             <label class="feedback-item"><input type="checkbox"> 你在確認醫囑時能說出用藥原因，顯示對病情非常了解。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         
         <div id="good-feedback-2" class="feedback-group">
             <span class="print-exclude"><b>(2) 執行病人辨識及給藥三讀五對</b></span>
             <label class="feedback-item"><input type="checkbox"> 能以兩種以上之方法辨識病人，例如：稱呼全名、核對手圈或床頭卡。</label>
             <label class="feedback-item"><input type="checkbox"> 在執行三讀五對時流程清楚且不慌亂。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="good-feedback-3" class="feedback-group">
-            <span class="print-exclude"><b>(3) 給藥前評估（如意識、生命徵象、吞嚥能力等）</b></span>
+            <span class="print-exclude"><b>(3) 給藥前評估</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能主動評估病人的意識狀態與吞嚥情形，顯示你對病人安全的重視。</label>
             <label class="feedback-item"><input type="checkbox"> 給予降血壓藥物前，除了量測血壓，還能主動詢問病人有無頭暈等不適，顯示出做到給藥前評估。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         
         <div id="good-feedback-4" class="feedback-group">
             <span class="print-exclude"><b>(4) 說明給藥目的、副作用、注意事項</b></span>
             <label class="feedback-item"><input type="checkbox"> 能使用病人可以理解的簡單語言說明給藥目的、副作用、注意事項。</label>
             <label class="feedback-item"><input type="checkbox"> 能提醒病人/家屬當出現不適時，需立即告知護理師的警訊，可讓病人感到安心。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="good-feedback-5" class="feedback-group">
             <span class="print-exclude"><b>(5) 紀錄及追蹤</b></span>
-            <label class="feedback-item"><input type="checkbox"> 你能主動追蹤病人的特殊用藥(如血糖藥、降壓藥等)反應並即時回報，使照護連續性良好。</label>
+            <label class="feedback-item"><input type="checkbox"> 你能主動追蹤病人的特殊用藥反應並即時回報，使照護連續性良好。</label>
             <label class="feedback-item"><input type="checkbox"> 給藥紀錄完整、明確，無遺漏。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="improvement-title" style="display:none; font-weight:bold; color:red; margin-top:10px;">可再精進：</div>
         
         <div id="bad-feedback-1" class="feedback-group">
             <span class="print-exclude"><b>(1) 確認醫囑</b></span>
-             </div>
-         <div id="bad-feedback-2" class="feedback-group">
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
+
+        <div id="bad-feedback-2" class="feedback-group">
             <span class="print-exclude"><b>(2) 執行病人辨識及給藥三讀五對</b></span>
-            </div>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
 
         <div id="bad-feedback-3" class="feedback-group">
-            <span class="print-exclude"><b>(3) 給藥前評估（如意識、生命徵象、吞嚥能力等）</b></span>
+            <span class="print-exclude"><b>(3) 給藥前評估</b></span>
             <label class="feedback-item"><input type="checkbox"> 給藥前評估部分，可以再關心病人是否有任何不適(例如噁心、頭暈等)會更好。</label>
-        </div>
-        
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>       
+
         <div id="bad-feedback-4" class="feedback-group">
             <span class="print-exclude"><b>(4) 說明給藥目的、副作用、注意事項</b></span>
             <label class="feedback-item"><input type="checkbox"> 可以嘗試用更簡潔易懂的語言向病人說明藥物作用和副作用，並鼓勵病人提出問題。</label>
             <label class="feedback-item"><input type="checkbox"> 可以試著多思考藥物的作用機轉和可能的副作用，並將其應用於臨床照護中。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="bad-feedback-5" class="feedback-group">
             <span class="print-exclude"><b>(5) 紀錄及追蹤</b></span>
             <label class="feedback-item"><input type="checkbox"> 建議詳細記錄給藥後反應，以便後續評估用藥效果。</label>
             <label class="feedback-item"><input type="checkbox"> 建議臨時醫囑給藥後，要追蹤並記錄病人用藥反應。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <br>

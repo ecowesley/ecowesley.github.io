@@ -1,0 +1,178 @@
+[
+  {
+    "id": "intro",
+    "title": "職前訓練線上課程首頁",
+    "type": "home",
+    "desc": "歡迎來到護理科教育組職前訓練平台。本課程旨在協助新進同仁熟悉臨床必備知識與操作規範，請由左側選單開始學習。"
+  },
+  {
+    "id": "00",
+    "title": "00. 職前訓練總表下載",
+    "type": "file_list",
+    "desc": "請點擊下方按鈕下載並列印「職前訓練總表」，以利追蹤您的學習進度並完成核章作業。",
+    "files": [
+      { 
+        "name": "📥 下載：職前訓練總表 (PDF)", 
+        "link": "https://drive.google.com/uc?export=download&id=18dxaJAEXiND7t3-D5DgLlnczYpsW9dZT" 
+      }
+    ]
+  },
+  {
+    "id": "01",
+    "title": "01. 醫院護理科簡介及相關法規",
+    "link": "https://drive.google.com/file/d/19FXRTb_qXDJe8kaTPiCZcvnziThWsCUW/view",
+    "desc": "認識醫院組織與護理科制度，了解新人到職應遵循之院內規章與相關法規重點。"
+  },
+  {
+    "id": "02",
+    "title": "02. NPGY、在職教育暨能力進階介紹說明",
+    "type": "file_list",
+    "desc": "本課程暫為NPGY、在職教育暨能力進階介紹說明講義，請點擊下方按鈕查看或下載。",
+    "files": [
+      { 
+        "name": "PPT 講義：能力進階.在職教育.NPGY ", 
+        "link": "https://docs.google.com/presentation/d/1WhqfBTLYQCqhfaji1hcpIb7Ub7eX6EVu/export/pptx" 
+      },
+      { 
+        "name": "📝 線上測驗", 
+        "link": "https://forms.gle/YQDJA6eBWJ8x6XsE8" 
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "title": "03. 職場安全(含醫療暴力)",
+    "link": "https://drive.google.com/file/d/1FtxomHRudOUi_rGOO-eCqyhd8qXsBXQy/view",
+    "desc": "學習職場安全與暴力預防原則，熟悉通報流程、危機應對與自我保護策略。"
+  },
+  {
+    "id": "04",
+    "title": "04. 消防安全",
+    "link": "https://drive.google.com/file/d/1piEWUvQfB9iccQxSzBCnkwM6rEGfsJ8P/view",
+    "desc": "學習消防通報、避難疏散與設備使用要點，熟悉火災應變流程與分工。"
+  },
+  {
+    "id": "05",
+    "title": "05. 護理過程與紀錄",
+    "link": "https://drive.google.com/file/d/11W12v3vFDKOLSHp_ypQL-B-jwJI25Nuo/view",
+    "desc": "學習護理過程與臨床思考架構，熟悉護理紀錄書寫原則，掌握交班關鍵要點。"
+  },
+  {
+    "id": "06",
+    "title": "06. 病人安全照護",
+    "link": "https://drive.google.com/file/d/13z9NqhhvIbAs-Rcj8F6-WtkppUPSXz6h/view",
+    "desc": "病人安全照護：落實辨識、給藥、交班、轉運、輸血及防跌防壓。"
+  },
+  {
+    "id": "07",
+    "title": "07. 檢體運送安全",
+    "type": "file_list",
+    "desc": "本課程包含教學影片與採檢注意事項 PDF 講義。",
+    "files": [
+      { 
+        "name": "🎬 線上觀看：檢體運送安全規範", 
+        "link": "https://drive.google.com/file/d/1I2b7PMgJzJsbBlU7rE0QXagbEoS3Y7eu/view" 
+      },
+      { 
+        "name": "📥 下載：檢查須知注意事項表", 
+        "link": "https://drive.google.com/uc?export=download&id=1Fn9yLprC-S_rgLH6_UJq_mlLzg4bKczK" 
+      }
+    ]
+  },
+  {
+    "id": "08",
+    "title": "08. 急救藥物簡介",
+    "link": "https://drive.google.com/open?id=1y_REM1C4gVY_oysqJAb_oqGPXJcP2-Nd&usp=drive_fs",
+    "desc": "急救藥物臨床應用基礎。"
+  },
+  {
+    "id": "09",
+    "title": "09. 安寧緩和照護",
+    "link": "https://drive.google.com/open?id=1qHgqJJpRpXddH5eV-KbVUwvcKE1MZ1xU&usp=drive_fs",
+    "desc": "引導新進認識安寧療護，透過影片傳遞尊嚴照護價值。"
+  },
+  {
+    "id": "10",
+    "title": "10. 出院準備服務與長照2.0",
+    "link": "https://drive.google.com/open?id=1MdGPOuHCMXzYWDnC4dJjkdW7LdgCNzc4&usp=drive_fs",
+    "desc": "介紹長照服務對象、四包錢補助及評估流程。"
+  },
+  {
+    "id": "11",
+    "title": "11. 病人安全與異常事件通報",
+    "link": "https://drive.google.com/file/d/1TvDu6s7Y-A5nsJPYUxCI0fz7T5ULKvbz/view",
+    "desc": "了解病人安全核心概念，學習異常事件通報流程。"
+  },
+  {
+    "id": "12",
+    "title": "12. 靜脈注射",
+    "link": "https://drive.google.com/file/d/1mjV6hG_1MBaKDfpyiAAt9BPfyLHRfsQR/view",
+    "desc": "學習靜脈注射評估與無菌操作要點。"
+  },
+  {
+    "id": "13",
+    "title": "13. 導尿",
+    "link": "https://drive.google.com/file/d/1HAoUqsWCr1rHQq6cnt3H8Hkvt3sf0zhR/view",
+    "desc": "學習導尿適應症與無菌技術規範。"
+  },
+  {
+    "id": "14",
+    "title": "14. 管路安全",
+    "type": "file_list",
+    "desc": "本課程包含管路安全講義、給藥說明與教學影片。",
+    "files": [
+      { 
+        "name": "📥 下載 PDF：14-1 管路安全", 
+        "link": "https://drive.google.com/uc?export=download&id=15ioSIFVQUo_h6HtRk_6hrLdnpUYePsYG" 
+      },
+      { 
+        "name": "📥 下載 Word：14-2 高警訊 PUMP 給藥", 
+        "link": "https://docs.google.com/document/d/1_hwMaE8Ns6-dLnFmZn4YGK1BZsmsiRNv/export?format=docx" 
+      },
+      { 
+        "name": "🎬 線上觀看：14-3 胸腔引流病人照護", 
+        "link": "https://drive.google.com/file/d/1AyKuSlaPqYmHIOJM82l-tJFTszGFWhl4/view" 
+      },
+      { 
+        "name": "📝 線上測驗", 
+        "link": "https://forms.gle/B3E4PGaTcW9SqBek7" 
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "title": "15. 氧氣及相關設備使用介紹",
+    "link": "https://drive.google.com/file/d/1vzSCmmQh1XhDFU_SmPIA0ST6QyPbOEy5/view",
+    "desc": "學習氧療設備操作與安全注意事項。"
+  },
+  {
+    "id": "16",
+    "title": "16. 外傷急救照護",
+    "type": "file_list",
+    "desc": "學習成人急救流程與團隊合作要點，熟悉心律判讀、電擊／CPR 操作。",
+    "files": [
+      { 
+        "name": "🎬 線上觀看：急救照護教學影片", 
+        "link": "https://drive.google.com/file/d/1gKIlSpZuKuesR5vb1cA-3QybtfERyCwL/view" 
+      },
+      { 
+        "name": "📊 下載：急救照護訓練操作評量表", 
+        "link": "https://docs.google.com/spreadsheets/d/1M8wfFH_lmlNJFWqgtGh8dwsi0T5zYt8q/export?format=xlsx" 
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "title": "17. 跨領域學習",
+    "type": "file_list",
+    "desc": "本課程包含復健科、營養科與藥劑科講義。",
+    "files": [
+      { "name": "📥 下載：17-1. 物理治療業務簡介", "link": "https://drive.google.com/uc?export=download&id=1ZxlzjSCoxnnJ1DF2UNTGjtz6wDpBRbbv" },
+      { "name": "📥 下載：17-2. 職能治療業務簡介", "link": "https://drive.google.com/uc?export=download&id=18ttQAQ6tqy6mAkIvD-BdPNYp4Y5fWLa3" },
+      { "name": "📥 下載：17-3. 語言治療業務簡介", "link": "https://drive.google.com/uc?export=download&id=1SaycaT3af95Yn4bgzOTD-Y40-DZ078eF" },
+      { "name": "📥 下載：17-4. 職能環境設備簡介", "link": "https://drive.google.com/uc?export=download&id=1vmov5lCdVtHjm4HX_gfOrHRHG_8DXRMk" },
+      { "name": "📥 下載：17-5. 藥劑科簡報", "link": "https://drive.google.com/uc?export=download&id=1lLqAzrHH1QfO8IuAEtG7kD2nS33VNNgS" },
+      { "name": "📥 下載：17-6. 護理新進人員-營養", "link": "https://drive.google.com/uc?export=download&id=1ohUDSi30U6Mu4HCeb-21F9KvocvqQwcE" }
+    ]
+  }
+]

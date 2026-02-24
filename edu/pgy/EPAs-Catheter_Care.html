@@ -46,16 +46,39 @@
         .catheter-options { margin-bottom: 15px; padding: 10px; background-color: #eef; border-radius: 5px; }
         .catheter-options label { margin-right: 15px; cursor: pointer; }
 
-        /* 列印格式優化 */
+        /* 列印格式優化 (套用正確版邏輯) */
         @media print {
+            /* 1. 隱藏不必要的元素 */
             .no-print, .tab-container, .btn-print, .print-exclude { display: none !important; }
             body { padding: 0; }
             .content { display: block !important; border: none; }
             #tab1 { display: none !important; } /* 只印評量表 */
             
-            /* 只顯示被勾選的質性回饋 */
+            /* 2. 還原最原始的顯示方式 */
             .feedback-item { display: none; }
-            .feedback-item:has(input:checked) { display: block !important; }
+            .feedback-item:has(input:checked) { 
+                display: block !important; 
+                margin-bottom: 5px; 
+                line-height: 1.6;
+            }
+            
+            /* 3. 「其他」輸入框的列印修正 (關鍵) */
+            .other-text-input {
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                /* 強制字體、大小、粗細完全繼承自父層，解決「粗體」與「較大」問題 */
+                font: inherit !important;
+                font-weight: normal !important;
+                font-size: 16px !important;
+                /* 解決對齊問題：使用 baseline 讓字坐在同一條基準線上 */
+                vertical-align: baseline !important;
+                background: transparent !important;
+                height: auto !important;
+            }
+
+            /* 隱藏提示字 */
+            .other-text-input::placeholder { color: transparent !important; }
             
             input[type="radio"], input[type="checkbox"] { accent-color: black; }
             .catheter-options { border: 1px solid #ccc; background-color: white; }
@@ -256,10 +279,10 @@
             </tr>
             <tr>
                 <td>(1) 確認醫囑</td>
-                <td style="text-align: center;"><input type="radio" checked name="r1" value="na"></td>
-                <td style="text-align: center;"><input type="radio" name="r1" value="bad"></td>
-                <td style="text-align: center;"><input type="radio" name="r1" value="good"></td>
-                <td style="text-align: center;"><input type="radio" name="r1" value="good"></td>
+                <td style="text-align: center;"><input type="radio" checked name="r1" value="na" onclick="toggleFeedback(1, 'na')"></td>
+                <td style="text-align: center;"><input type="radio" name="r1" value="bad" onclick="toggleFeedback(1, 'bad')"></td>
+                <td style="text-align: center;"><input type="radio" name="r1" value="good" onclick="toggleFeedback(1, 'good')"></td>
+                <td style="text-align: center;"><input type="radio" name="r1" value="good" onclick="toggleFeedback(1, 'good')"></td>
             </tr>
             <tr>
                 <td>(2) 執行病人辨識</td>
@@ -298,70 +321,143 @@
             </tr>
             <tr>
                 <td>(7) 完成護理紀錄</td>
-                <td style="text-align: center;"><input type="radio" checked name="r7" value="na"></td>
-                <td style="text-align: center;"><input type="radio" name="r7" value="bad"></td>
-                <td style="text-align: center;"><input type="radio" name="r7" value="good"></td>
-                <td style="text-align: center;"><input type="radio" name="r7" value="good"></td>
+                <td style="text-align: center;"><input type="radio" checked name="r7" value="na" onclick="toggleFeedback(7, 'na')"></td>
+                <td style="text-align: center;"><input type="radio" name="r7" value="bad" onclick="toggleFeedback(7, 'bad')"></td>
+                <td style="text-align: center;"><input type="radio" name="r7" value="good" onclick="toggleFeedback(7, 'good')"></td>
+                <td style="text-align: center;"><input type="radio" name="r7" value="good" onclick="toggleFeedback(7, 'good')"></td>
             </tr>
         </table>
 
-        <h3>3. 學員質性回饋</h3>
-        <textarea style="width: 100%; height: 200px; padding: 10px; font-size: 16px;" placeholder="請填寫您的學習心得..."></textarea>
+        <h3>5. 學員質性回饋</h3>
+        <textarea style="width: 98%; height: 200px; padding: 10px; font-size: 16px;" placeholder="請填寫您的學習心得..."></textarea>
 
-        <h3>4. 護理臨床教師質性回饋</h3>
+        <h3>6. 護理臨床教師質性回饋</h3>
         
         <div id="commendable-title" style="display:none; font-weight:bold; color:green; margin-top:10px;">值得嘉許：</div>
         
+        <div id="good-feedback-1" class="feedback-group">
+            <span class="print-exclude"><b>(1) 確認醫囑</b></span>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
+
         <div id="good-feedback-2" class="feedback-group">
             <span class="print-exclude"><b>(2) 執行病人辨識</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能確實執行兩項病人辨識，顯示你對病人安全的重視。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         
         <div id="good-feedback-3" class="feedback-group">
             <span class="print-exclude"><b>(3) 評估管路置放部位及功能</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能主動比對鼻胃管外露刻度、固定位置與前一班紀錄，確保鼻胃管未滑脫。</label>
             <label class="feedback-item"><input type="checkbox"> 你在評估時同時觀察鼻腔皮膚、固定膠布鬆緊度、病人不適反應，展現全面性的評估能力。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="good-feedback-4" class="feedback-group">
             <span class="print-exclude"><b>(4) 執行管路護理</b></span>
             <label class="feedback-item"><input type="checkbox"> 在鼻胃管護理過程中，你會輕聲向病人說明每一步驟，減少不適，展現你的同理與專業態度。</label>
             <label class="feedback-item"><input type="checkbox"> 更換鼻部固定時，你能避免拉扯管路並同時保護皮膚，操作動作溫柔。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         
         <div id="good-feedback-5" class="feedback-group">
             <span class="print-exclude"><b>(5) 辨識管路異常狀況及處置</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能辨識可能的鼻胃管滑脫徵象，如刻度改變、病人咳嗽、引起噁心，並能及時請求協助。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="good-feedback-6" class="feedback-group">
             <span class="print-exclude"><b>(6) 指導病人及照護者管路自我照顧</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能以淺顯方式教導病人避免拉扯、轉身時注意管路，講解清楚具體。</label>
             <label class="feedback-item"><input type="checkbox"> 衛教時你會確認病人與家屬是否理解，並再次簡述重點，展現良好的衛教技巧。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
+
+        <div id="good-feedback-7" class="feedback-group">
+            <span class="print-exclude"><b>(7) 完成護理紀錄</b></span>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="improvement-title" style="display:none; font-weight:bold; color:red; margin-top:10px;">可再精進：</div>
         
+        <div id="bad-feedback-1" class="feedback-group">
+            <span class="print-exclude"><b>(1) 確認醫囑</b></span>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
+
         <div id="bad-feedback-2" class="feedback-group">
             <span class="print-exclude"><b>(2) 執行病人辨識</b></span>
-             </div>
-         <div id="bad-feedback-3" class="feedback-group">
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
+
+        <div id="bad-feedback-3" class="feedback-group">
             <span class="print-exclude"><b>(3) 評估管路置放部位及功能</b></span>
-            </div>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
 
         <div id="bad-feedback-4" class="feedback-group">
             <span class="print-exclude"><b>(4) 執行管路護理</b></span>
             <label class="feedback-item"><input type="checkbox"> 建議再多注意鼻腔皮膚壓傷或紅腫狀況，早期發現可避免後續皮膚破損。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         
         <div id="bad-feedback-5" class="feedback-group">
             <span class="print-exclude"><b>(5) 辨識管路異常狀況及處置</b></span>
-            </div>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
 
         <div id="bad-feedback-6" class="feedback-group">
             <span class="print-exclude"><b>(6) 指導病人及照護者管路自我照顧</b></span>
             <label class="feedback-item"><input type="checkbox"> 在指導時可增加示範，如如何避免拉扯、睡姿調整等，讓病人更容易理解且能自行操作。</label>
             <label class="feedback-item"><input type="checkbox"> 衛教內容建議補充「何時需立即告知護理人員」之情境，例如噁心、咳嗽、管路滑出等。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
+        </div>
+
+        <div id="bad-feedback-7" class="feedback-group">
+            <span class="print-exclude"><b>(7) 完成護理紀錄</b></span>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <br>
@@ -387,10 +483,16 @@
                     goodGroup.style.display = 'block';
                     badGroup.style.display = 'none';
                     badGroup.querySelectorAll('input').forEach(i => i.checked = false);
-                } else {
+                } else if (type === 'bad') {
                     goodGroup.style.display = 'none';
                     badGroup.style.display = 'block';
                     goodGroup.querySelectorAll('input').forEach(i => i.checked = false);
+                } else {
+                    // na 模式：隱藏兩者並清除勾選
+                    goodGroup.style.display = 'none';
+                    badGroup.style.display = 'none';
+                    goodGroup.querySelectorAll('input').forEach(i => i.checked = false);
+                    badGroup.querySelectorAll('input').forEach(i => i.checked = false);
                 }
             }
 

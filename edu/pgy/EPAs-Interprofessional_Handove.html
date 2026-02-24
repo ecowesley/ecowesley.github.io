@@ -42,16 +42,39 @@
         .feedback-group { display: none; margin-top: 10px; }
         .feedback-item { margin-bottom: 5px; display: block; }
 
-        /* 列印格式優化 */
+        /* 列印格式優化 (套用正確版邏輯) */
         @media print {
+            /* 1. 隱藏不必要的元素 */
             .no-print, .tab-container, .btn-print, .print-exclude { display: none !important; }
             body { padding: 0; }
             .content { display: block !important; border: none; }
             #tab1 { display: none !important; } /* 只印評量表 */
             
-            /* 只顯示被勾選的質性回饋 */
+            /* 2. 還原最原始的顯示方式 */
             .feedback-item { display: none; }
-            .feedback-item:has(input:checked) { display: block !important; }
+            .feedback-item:has(input:checked) { 
+                display: block !important; 
+                margin-bottom: 5px; 
+                line-height: 1.6;
+            }
+            
+            /* 3. 「其他」輸入框的列印修正 (關鍵) */
+            .other-text-input {
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                /* 強制字體、大小、粗細完全繼承自父層 */
+                font: inherit !important;
+                font-weight: normal !important;
+                font-size: 16px !important;
+                /* 解決對齊問題：使用 baseline 讓字坐在同一條基準線上 */
+                vertical-align: baseline !important;
+                background: transparent !important;
+                height: auto !important;
+            }
+
+            /* 隱藏提示字 */
+            .other-text-input::placeholder { color: transparent !important; }
             
             input[type="radio"], input[type="checkbox"] { accent-color: black; }
         }
@@ -202,7 +225,7 @@
         <h3>3. 信賴等級評量：</h3>
         <p>（觀察學員執行狀況，下次遇到類似情境時，你認為此學員勝任之程度)</p>
         
-        <table >
+        <table>
             <tr>
                 <th style="text-align: center; vertical-align: middle; width: 15%;">信賴等級</th>
                 <td style="text-align: center; vertical-align: middle; width: 17%;">Level 1</td>
@@ -265,10 +288,10 @@
             </tr>
         </table>
 
-        <h3>3. 學員質性回饋</h3>
-        <textarea style="width: 100%; height: 200px; padding: 10px; font-size: 16px;" placeholder="請填寫您的學習心得..."></textarea>
+        <h3>5. 學員質性回饋</h3>
+        <textarea style="width: 98%; height: 200px; padding: 10px; font-size: 16px;" placeholder="請填寫您的學習心得..."></textarea>
 
-        <h3>4. 護理臨床教師質性回饋</h3>
+        <h3>6. 護理臨床教師質性回饋</h3>
         
         <div id="commendable-title" style="display:none; font-weight:bold; color:green; margin-top:10px;">值得嘉許：</div>
         
@@ -277,23 +300,39 @@
             <label class="feedback-item"><input type="checkbox"> 你能清楚整合醫療與該專業間重要資訊，使團隊快速掌握病人狀況。</label>
             <label class="feedback-item"><input type="checkbox"> 你對所照護的病人資訊掌握完整，交班時能簡明扼要說出交班重點，有助於接班者快速掌握照護重點。</label>
             <label class="feedback-item"><input type="checkbox"> 你能清晰且不遺漏地統整每位病人的重要資訊，展現出專業的態度。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         <div id="good-feedback-2" class="feedback-group">
             <span class="print-exclude"><b>(2) 依據交接班原則進行交班</b></span>
             <label class="feedback-item"><input type="checkbox"> 你能夠熟練地按照ISBAR的順序完成交班作業，展現出你對交班作業的瞭解。</label>
             <label class="feedback-item"><input type="checkbox"> 你在交班過程中能夠詳細介紹病人的基本資料、現況、過去狀況、重要評估與提醒建議，這對於團隊照護非常有幫助。</label>
             <label class="feedback-item"><input type="checkbox"> 你能完成交班資料的完成整性，讓團隊照護成員可掌控完整訊息。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         <div id="good-feedback-3" class="feedback-group">
             <span class="print-exclude"><b>(3) 對接班者的提問進行確認與釐清</b></span>
             <label class="feedback-item"><input type="checkbox"> 我觀察到你能發現病人問題，主動提出討論，透過良好的溝通，釐清交班內容。</label>
             <label class="feedback-item"><input type="checkbox"> 面對提問，你能即時且準確地回覆，並積極澄清疑慮，確保了資訊在轉移過程中的一致性與正確性。</label>
             <label class="feedback-item"><input type="checkbox"> 在面對提問時，你能保持鎮定與專業的溝通態度，清晰地解釋病人現況，沒有因緊張而遺漏或混淆重要資訊。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         <div id="good-feedback-4" class="feedback-group">
             <span class="print-exclude"><b>(4) 完成護理交班作業規範</b></span>
             <label class="feedback-item"><input type="checkbox"> 你在交班時尊重他專業觀點，展現良好合作態度。</label>
             <label class="feedback-item"><input type="checkbox"> 你能維持良好溝通節奏，使會議內容順暢且聚焦。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <div id="improvement-title" style="display:none; font-weight:bold; color:red; margin-top:10px;">可再精進：</div>
@@ -302,21 +341,37 @@
             <span class="print-exclude"><b>(1) 能統整跨專業照護資訊</b></span>
             <label class="feedback-item"><input type="checkbox"> 可更聚焦於與本次跨專業資訊，避免內容過多而失焦。</label>
             <label class="feedback-item"><input type="checkbox"> 建議交班前先釐清各專業的最新紀錄，以避免資訊過時。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         <div id="bad-feedback-2" class="feedback-group">
             <span class="print-exclude"><b>(2) 依據交接班原則進行交班</b></span>
             <label class="feedback-item"><input type="checkbox"> 說明病況時可再更簡潔，抓重點即可。</label>
             <label class="feedback-item"><input type="checkbox"> 建議在 Recommendation 段落提出更具體的跨專業合作建議。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         <div id="bad-feedback-3" class="feedback-group">
             <span class="print-exclude"><b>(3) 對接班者的提問進行確認與釐清</b></span>
             <label class="feedback-item"><input type="checkbox"> 如遇不確定事項，可誠實回應後立即查證並回報。</label>
             <label class="feedback-item"><input type="checkbox"> 可練習重複確認對方提問，以避免答非所問。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
         <div id="bad-feedback-4" class="feedback-group">
             <span class="print-exclude"><b>(4) 完成護理交班作業規範</b></span>
             <label class="feedback-item"><input type="checkbox"> 可再加强溝通語速與條理性，使交班更流暢。</label>
             <label class="feedback-item"><input type="checkbox"> 建議提出整合性觀點，協助團隊快速達成共識。</label>
+            <label class="feedback-item">
+                <input type="checkbox"> <span class="print-exclude">其他：</span>
+                <input type="text" class="other-text-input" placeholder="請輸入自訂回饋內容..." style="width: 600px; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 16px; font-weight: normal; outline: none;">
+            </label>
         </div>
 
         <br>
