@@ -5,7 +5,10 @@
     box-sizing: border-box; 
     margin: 0; 
     padding: 0; 
+    /* 這裡加入了字體渲染優化，讓文字在深色背景下更細緻 */
     font-family: "Segoe UI", "Microsoft JhengHei", sans-serif; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body { 
@@ -115,6 +118,8 @@ body {
     padding: 20px 40px; 
     overflow-y: auto; 
     background-color: #fff; 
+    /* 加入平滑捲動，讓切換內容時更有質感 */
+    scroll-behavior: smooth;
 }
 
 .content h1 { 
@@ -181,7 +186,58 @@ body {
 }
 
 /* ==========================================================================
-   5. 其他 (卡片、響應式)
+   5. 首頁 Hero Section (全屏深色主視覺區)
+   ========================================================================== */
+
+/* 當內容區包含 hero-section 時，強制移除所有白色內距與背景，實現上下左右全黑 */
+.content:has(.hero-section) {
+    padding: 0 !important;
+    background-color: #282A35 !important;
+}
+
+.hero-section {
+    background-color: #282A35;
+    color: white;
+    height: 100%;             
+    display: flex;
+    flex-direction: column;
+    /* justify-content 改為 flex-start 配合 padding-top 實現內容下移 */
+    justify-content: flex-start;  
+    align-items: center;      
+    text-align: center;
+    padding-top: 100px; /* 大約一個 H1 的格位間距 */
+}
+
+.hero-title {
+    font-size: 72px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.hero-subtitle {
+    font-size: 32px;
+    color: #FFF4A3;           /* 淡黃色字體 */
+    font-weight: bold;        /* 粗體設定 */
+    margin-bottom: 40px;
+}
+
+.hero-divider {
+    width: 60px;
+    height: 4px;
+    background-color: #04AA6D; 
+    margin-bottom: 40px;
+    border-radius: 2px;
+}
+
+.hero-hint {
+    font-size: 20px;
+    line-height: 1.8;
+    color: #ADAFB3;           
+}
+
+/* ==========================================================================
+   6. 其他 (卡片、響應式設定)
    ========================================================================== */
 .resource-grid { 
     display: grid; 
@@ -202,4 +258,9 @@ body {
 @media screen and (max-width: 768px) { 
     .sidebar { width: 180px; min-width: 180px; } 
     .content { padding: 20px; }
+    
+    /* 手機版標題縮放優化，防止字體過大折行 */
+    .hero-title { font-size: 48px; }
+    .hero-subtitle { font-size: 24px; }
+    .hero-section { padding-top: 60px; }
 }
