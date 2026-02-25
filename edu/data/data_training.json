@@ -100,8 +100,18 @@
   {
     "id": "11",
     "title": "11. 病人安全與異常事件通報",
-    "link": "https://drive.google.com/file/d/1TvDu6s7Y-A5nsJPYUxCI0fz7T5ULKvbz/view",
-    "desc": "了解病人安全核心概念，學習異常事件通報流程。"
+    "type": "file_list",
+    "desc": "了解病人安全核心概念，學習異常事件通報流程。本課程包含教學影片與高警訊PUMP給藥講義。",
+    "files": [
+      { 
+        "name": "🎬 線上觀看：病人安全與異常事件通報", 
+        "link": "https://drive.google.com/file/d/1TvDu6s7Y-A5nsJPYUxCI0fz7T5ULKvbz/view" 
+      },
+      { 
+        "name": "📥 下載 Word：高警訊 PUMP 給藥", 
+        "link": "https://docs.google.com/document/d/1_hwMaE8Ns6-dLnFmZn4YGK1BZsmsiRNv/export?format=docx" 
+      }
+    ]
   },
   {
     "id": "12",
@@ -126,11 +136,7 @@
         "link": "https://drive.google.com/uc?export=download&id=15ioSIFVQUo_h6HtRk_6hrLdnpUYePsYG" 
       },
       { 
-        "name": "📥 下載 Word：14-2 高警訊 PUMP 給藥", 
-        "link": "https://docs.google.com/document/d/1_hwMaE8Ns6-dLnFmZn4YGK1BZsmsiRNv/export?format=docx" 
-      },
-      { 
-        "name": "🎬 線上觀看：14-3 胸腔引流病人照護", 
+        "name": "🎬 線上觀看：14-2 胸腔引流病人照護", 
         "link": "https://drive.google.com/file/d/1AyKuSlaPqYmHIOJM82l-tJFTszGFWhl4/view" 
       },
       { 
